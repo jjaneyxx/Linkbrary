@@ -5,8 +5,8 @@ import Login from '../pages/login';
 import Signup from '../pages/signup';
 import Links from '../pages/links';
 import Favorite from '../pages/favorite';
-import MainLayout from '../MainLayout';
-import AuthLayout from '../AuthLayout';
+import MainLayout from '../components/layout/MainLayout';
+import AuthLayout from '../components/layout/AuthLayout';
 
 const AppRouter = () => {
   return (
