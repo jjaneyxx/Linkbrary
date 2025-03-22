@@ -2,13 +2,14 @@ import OAuthSection from './OAuthSection';
 import Button from './Button';
 
 import Input from './Input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import AuthPrompt from './AuthPrompt';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +26,12 @@ const Login: React.FC = () => {
     navigate('/links');
   };
 
-  useEffect(() => {
-    console.log(email, password);
-  }, []);
+  const handleEmailInputValid = (e: React.FocusEvent<HTMLInputElement>) => {
+    const email = e.target.value;
+    const emailRegEx =
+      /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+    setIsEmailValid(emailRegEx.test(email));
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -43,6 +47,8 @@ const Login: React.FC = () => {
           value={email}
           onChange={handleEmailInputChange}
           marginBottom="mb-4"
+          onBlur={handleEmailInputValid}
+          isEmailValid={isEmailValid}
         />
 
         <Input

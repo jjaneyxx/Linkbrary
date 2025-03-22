@@ -1,3 +1,5 @@
+import ErrorMessage from './ErrorMessage';
+
 type InputProps = {
   label: string;
   id: string;
@@ -6,6 +8,8 @@ type InputProps = {
   value: string;
   placeholder?: string; // 선택적으로 받음
   marginBottom?: string;
+  isEmailValid?: boolean;
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -17,6 +21,8 @@ const Input = ({
   value,
   placeholder,
   marginBottom,
+  isEmailValid,
+  onBlur,
   onChange,
 }: InputProps) => {
   return (
@@ -29,8 +35,10 @@ const Input = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        onBlur={onBlur}
         className="px-[15px] py-[18px] h-[60px] border border-[#CCD5E3] rounded-lg bg-white "
       />
+      {isEmailValid === false && <ErrorMessage text="이메일 형식으로 작성해 주세요." />}
     </div>
   );
 };
