@@ -1,26 +1,64 @@
-import logo from '../../assets/logo.svg';
-import loginBtn from '../../assets/login-btn.svg';
-import googleLogin from '../../assets/google-login.svg';
-import kakaoLogin from '../../assets/kakao-login.svg';
+import OAuthSection from './OAuthSection';
+import Button from './Button';
+
+import Input from './Input';
+import { useEffect, useState } from 'react';
+import AuthPrompt from './AuthPrompt';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const navigate = useNavigate();
+
+  const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePwdInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLoginSuccess = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // 로그인 로직 실행 (API 호출)
+    navigate('/links');
+  };
+
+  useEffect(() => {
+    console.log(email, password);
+  }, []);
+
   return (
-    <>
-      <img src={logo} alt="logo" />
-      <span>회원이 아니신가요? </span>
-      <span className="text-primary">회원 가입하기</span>
+    <div className="flex flex-col items-center">
+      <AuthPrompt />
 
-      <div>input component</div>
-      <img src={loginBtn} className="mb-8" />
+      <form onSubmit={handleLoginSuccess}>
+        <Input
+          label="이메일"
+          id="user-email"
+          type="email"
+          name="email"
+          placeholder="이메일을 입력하세요"
+          value={email}
+          onChange={handleEmailInputChange}
+          marginBottom="mb-4"
+        />
 
-      <div className="bg-gray-200 border-gray-300 px-4 py-3 flex justify-between">
-        <span>소셜로그인</span>
-        <div className="flex">
-          <img src={googleLogin} />
-          <img src={kakaoLogin} />
-        </div>
-      </div>
-    </>
+        <Input
+          label="비밀번호"
+          id="user-pwd"
+          type="password"
+          name="password"
+          placeholder="비밀번호를 입력하세요"
+          value={password}
+          onChange={handlePwdInputChange}
+          marginBottom="mb-[30px]"
+        />
+        <Button />
+      </form>
+      <OAuthSection />
+    </div>
   );
 };
 export default Login;
