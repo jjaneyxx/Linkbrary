@@ -1,9 +1,8 @@
 import OAuthSection from './OAuthSection';
 import Button from './Button';
-
+import AuthPrompt from '../../components/common/auth/AuthPrompt';
 import InputWithError from './InputWithError';
 import { useState } from 'react';
-import AuthPrompt from './AuthPrompt';
 import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
@@ -41,7 +40,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <AuthPrompt />
+      <AuthPrompt prompt="회원이 아니신가요?" linkText="회원 가입하기" linkTo="/signup" />
 
       <form onSubmit={handleLoginSuccess}>
         <InputWithError
