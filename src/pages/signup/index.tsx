@@ -1,8 +1,10 @@
 import AuthPrompt from '../../components/common/auth/AuthPrompt';
 import InputWithError from '../../components/common/auth/InputWithError';
+import Button from '../login/Button';
+import api from '../../api/axios';
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../login/Button';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -16,10 +18,30 @@ const Signup: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleSignupSuccess = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 회원가입 로직 실행 (API 호출)
-    navigate('/login');
+
+    // 폼 유효성 검사
+    if (!isEmailValid || !isUserNameValid || !isPasswordValid || !isConfirmPasswordValid) {
+      return;
+    }
+
+    const formData = {
+      email,
+      password,
+      name: userName,
+    };
+
+    try {
+      await api.signUp(formData);
+      alert('회원가입 완료');
+      navigate('/login');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log('서버 응답 : ', error.response.data);
+      }
+      alert('회원가입 실패');
+    }
   };
 
   const handleEmailInputValid = (e: React.FocusEvent<HTMLInputElement>) => {
