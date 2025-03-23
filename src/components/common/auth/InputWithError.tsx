@@ -4,10 +4,10 @@ import clsx from 'clsx';
 type InputProps = {
   label: string;
   id: string;
-  type?: string; // email, password
+  type: string; // email, password
   name: string;
   value: string;
-  placeholder?: string; // 선택적으로 받음
+  placeholder: string;
   marginBottom?: string;
   isInvalid: boolean;
   errorMessage: string;

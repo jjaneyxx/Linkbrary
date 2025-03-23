@@ -12,14 +12,6 @@ const Login: React.FC = () => {
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePwdInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
   const handleLoginSuccess = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 로그인 로직 실행 (API 호출)
@@ -50,23 +42,25 @@ const Login: React.FC = () => {
           name="email"
           placeholder="이메일을 입력하세요"
           value={email}
-          onChange={handleEmailInputChange}
+          onChange={(e) => setEmail(e.target.value)}
           marginBottom="mb-4"
           onBlur={handleEmailInputValid}
-          isEmailValid={isEmailValid}
+          isInvalid={!isEmailValid}
+          errorMessage="이메일 형식으로 작성해 주세요."
         />
 
         <InputWithError
           label="비밀번호"
-          id="user-pwd"
+          id="password"
           type="password"
           name="password"
           placeholder="비밀번호를 입력하세요"
           value={password}
-          onChange={handlePwdInputChange}
+          onChange={(e) => setPassword(e.target.value)}
           marginBottom="mb-[30px]"
           onBlur={handlePasswordInputValid}
-          isPasswordValid={isPasswordValid}
+          isInvalid={!isPasswordValid}
+          errorMessage="비밀번호는 8자 이상 작성해 주세요."
         />
         <Button />
       </form>
