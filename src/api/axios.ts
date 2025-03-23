@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+interface SignupData {
+  email: string;
+  password: string;
+  name: string;
+}
+
 export const apiClient = axios.create({
   baseURL: 'https://linkbrary-api.vercel.app/13-6',
   headers: { 'Content-Type': 'application/json' },
@@ -11,8 +17,8 @@ const apiRoutes = {
 };
 
 const api = {
-  checkEmail: (email) => apiClient.post(apiRoutes.checkEmail, { email }),
-  signUp: (data) => apiClient.post(apiRoutes.signUp, data),
+  checkEmail: (email: string) => apiClient.post(apiRoutes.checkEmail, { email }),
+  signUp: (data: SignupData) => apiClient.post(apiRoutes.signUp, data),
 };
 
 export default api;
