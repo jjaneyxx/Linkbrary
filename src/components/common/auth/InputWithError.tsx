@@ -1,4 +1,5 @@
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from '../../../pages/login/ErrorMessage';
+import clsx from 'clsx';
 
 type InputProps = {
   label: string;
@@ -13,6 +14,8 @@ type InputProps = {
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
+// px-[15px] py-[18px] h-[60px] border border-gray-300 rounded-lg bg-white
 
 const InputWithError = ({
   label,
@@ -38,7 +41,11 @@ const InputWithError = ({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
-        className="px-[15px] py-[18px] h-[60px] border border-gray-300 rounded-lg bg-white "
+        className={clsx(
+          'px-[15px] py-[18px] h-[60px] border border-gray-300 rounded-lg bg-white',
+          isEmailValid === false && 'border-red',
+          isPasswordValid === false && 'border-red',
+        )}
       />
       {isEmailValid === false && <ErrorMessage text="이메일 형식으로 작성해 주세요." />}
       {isPasswordValid === false && <ErrorMessage text="비밀번호는 8자 이상 작성해 주세요. " />}

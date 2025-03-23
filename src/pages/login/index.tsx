@@ -1,7 +1,7 @@
 import OAuthSection from './OAuthSection';
 import Button from './Button';
 import AuthPrompt from '../../components/common/auth/AuthPrompt';
-import InputWithError from './InputWithError';
+import InputWithError from '../../components/common/auth/InputWithError';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
