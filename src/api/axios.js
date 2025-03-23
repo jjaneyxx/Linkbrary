@@ -7,10 +7,12 @@ export const apiClient = axios.create({
 
 const apiRoutes = {
   checkEmail: '/users/check-email',
+  signUp: '/auth/sign-up',
 };
 
 const api = {
   checkEmail: (email) => apiClient.post(apiRoutes.checkEmail, { email }),
+  signUp: (data) => apiClient.post(apiRoutes.signUp, data),
 };
 
 export default api;
