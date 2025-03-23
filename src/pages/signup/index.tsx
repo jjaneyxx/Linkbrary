@@ -7,20 +7,18 @@ import Button from '../login/Button';
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
-  const navigate = useNavigate();
-  const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+  const [isUserNameValid, setIsUserNameValid] = useState<boolean>(true);
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState<boolean>(true);
 
-  const handlePwdInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
+  const navigate = useNavigate();
 
   const handleSignupSuccess = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 로그인 로직 실행 (API 호출)
+    // 회원가입 로직 실행 (API 호출)
     navigate('/login');
   };
 
@@ -31,9 +29,19 @@ const Signup: React.FC = () => {
     setIsEmailValid(emailRegEx.test(email));
   };
 
+  const handleUserNameInputValid = (e: React.FocusEvent<HTMLInputElement>) => {
+    const userName = e.target.value;
+    setIsUserNameValid(userName.length <= 10);
+  };
+
   const handlePasswordInputValid = (e: React.FocusEvent<HTMLInputElement>) => {
     const password = e.target.value;
     setIsPasswordValid(password.length >= 8);
+  };
+
+  const handleConfirmPasswordValid = (e: React.FocusEvent<HTMLInputElement>) => {
+    const confirmPassword = e.target.value;
+    setIsConfirmPasswordValid(password === confirmPassword);
   };
 
   return (
@@ -48,23 +56,49 @@ const Signup: React.FC = () => {
           name="email"
           placeholder="이메일을 입력하세요"
           value={email}
-          onChange={handleEmailInputChange}
+          onChange={(e) => setEmail(e.target.value)}
           marginBottom="mb-4"
           onBlur={handleEmailInputValid}
           isEmailValid={isEmailValid}
         />
 
         <InputWithError
+          label="이름"
+          id="user-name"
+          type="text"
+          name="user-name"
+          placeholder="원하는 닉네임을 적어주세요"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+          marginBottom="mb-4"
+          onBlur={handleUserNameInputValid}
+          isUserNameValid={isUserNameValid}
+        />
+
+        <InputWithError
           label="비밀번호"
-          id="user-pwd"
+          id="password"
           type="password"
           name="password"
           placeholder="비밀번호를 입력하세요"
           value={password}
-          onChange={handlePwdInputChange}
+          onChange={(e) => setPassword(e.target.value)}
           marginBottom="mb-[30px]"
           onBlur={handlePasswordInputValid}
           isPasswordValid={isPasswordValid}
+        />
+
+        <InputWithError
+          label="비밀번호 확인"
+          id="confirm-password"
+          type="password"
+          name="confirmPassword"
+          placeholder="비밀번호를 한번 더 입력해 주세요"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          marginBottom="mb-[30px]"
+          onBlur={handleConfirmPasswordValid}
+          isConfirmPasswordValid={isConfirmPasswordValid}
         />
         <Button />
       </form>
