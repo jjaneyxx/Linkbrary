@@ -59,7 +59,8 @@ const Signup: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           marginBottom="mb-4"
           onBlur={handleEmailInputValid}
-          isEmailValid={isEmailValid}
+          isInvalid={!isEmailValid}
+          errorMessage="이메일 형식으로 작성해 주세요."
         />
 
         <InputWithError
@@ -72,7 +73,8 @@ const Signup: React.FC = () => {
           onChange={(e) => setUserName(e.target.value)}
           marginBottom="mb-4"
           onBlur={handleUserNameInputValid}
-          isUserNameValid={isUserNameValid}
+          isInvalid={!isUserNameValid}
+          errorMessage="닉네임은 열 자 이하로 작성해주세요."
         />
 
         <InputWithError
@@ -85,7 +87,8 @@ const Signup: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           marginBottom="mb-[30px]"
           onBlur={handlePasswordInputValid}
-          isPasswordValid={isPasswordValid}
+          isInvalid={!isPasswordValid}
+          errorMessage="비밀번호는 8자 이상 작성해 주세요."
         />
 
         <InputWithError
@@ -98,7 +101,8 @@ const Signup: React.FC = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           marginBottom="mb-[30px]"
           onBlur={handleConfirmPasswordValid}
-          isConfirmPasswordValid={isConfirmPasswordValid}
+          isInvalid={!isConfirmPasswordValid}
+          errorMessage="비밀번호가 일치하지 않습니다."
         />
         <Button />
       </form>
