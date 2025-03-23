@@ -9,11 +9,12 @@ type InputProps = {
   placeholder?: string; // 선택적으로 받음
   marginBottom?: string;
   isEmailValid?: boolean;
+  isPasswordValid?: boolean;
   onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input = ({
+const InputWithError = ({
   label,
   id,
   type,
@@ -22,6 +23,7 @@ const Input = ({
   placeholder,
   marginBottom,
   isEmailValid,
+  isPasswordValid,
   onBlur,
   onChange,
 }: InputProps) => {
@@ -36,10 +38,11 @@ const Input = ({
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}
-        className="px-[15px] py-[18px] h-[60px] border border-[#CCD5E3] rounded-lg bg-white "
+        className="px-[15px] py-[18px] h-[60px] border border-gray-300 rounded-lg bg-white "
       />
       {isEmailValid === false && <ErrorMessage text="이메일 형식으로 작성해 주세요." />}
+      {isPasswordValid === false && <ErrorMessage text="비밀번호는 8자 이상 작성해 주세요. " />}
     </div>
   );
 };
-export default Input;
+export default InputWithError;

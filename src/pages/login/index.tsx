@@ -1,7 +1,7 @@
 import OAuthSection from './OAuthSection';
 import Button from './Button';
 
-import Input from './Input';
+import InputWithError from './InputWithError';
 import { useState } from 'react';
 import AuthPrompt from './AuthPrompt';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isEmailValid, setIsEmailValid] = useState<boolean>(true);
+  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,12 +34,17 @@ const Login: React.FC = () => {
     setIsEmailValid(emailRegEx.test(email));
   };
 
+  const handlePasswordInputValid = (e: React.FocusEvent<HTMLInputElement>) => {
+    const password = e.target.value;
+    setIsPasswordValid(password.length >= 8);
+  };
+
   return (
     <div className="flex flex-col items-center">
       <AuthPrompt />
 
       <form onSubmit={handleLoginSuccess}>
-        <Input
+        <InputWithError
           label="이메일"
           id="user-email"
           type="email"
@@ -51,7 +57,7 @@ const Login: React.FC = () => {
           isEmailValid={isEmailValid}
         />
 
-        <Input
+        <InputWithError
           label="비밀번호"
           id="user-pwd"
           type="password"
@@ -60,6 +66,8 @@ const Login: React.FC = () => {
           value={password}
           onChange={handlePwdInputChange}
           marginBottom="mb-[30px]"
+          onBlur={handlePasswordInputValid}
+          isPasswordValid={isPasswordValid}
         />
         <Button />
       </form>
