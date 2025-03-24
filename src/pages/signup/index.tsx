@@ -131,7 +131,7 @@ const Signup: React.FC = () => {
           isInvalid={!isConfirmPasswordValid}
           errorMessage="비밀번호가 일치하지 않습니다."
         />
-        <Button text="회원가입" className="w-[400px] h-[53px]" />
+        <Button text="회원가입" className="w-[400px] h-[53px] mb-8 " />
       </form>
     </div>
   );
