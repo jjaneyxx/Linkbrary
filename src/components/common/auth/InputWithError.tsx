@@ -7,6 +7,7 @@ type InputProps = {
   type: string; // email, password
   name: string;
   value: string;
+  autoComplete?: string;
   placeholder: string;
   marginBottom?: string;
   isInvalid: boolean;
@@ -21,6 +22,7 @@ const InputWithError = ({
   type,
   name,
   value,
+  autoComplete,
   placeholder,
   marginBottom,
   isInvalid,
@@ -36,6 +38,7 @@ const InputWithError = ({
         type={type}
         name={name}
         value={value}
+        autoComplete={autoComplete}
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}

@@ -76,6 +76,7 @@ const Signup: React.FC = () => {
           id="user-email"
           type="email"
           name="email"
+          autoComplete="email"
           placeholder="이메일을 입력하세요"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -90,6 +91,7 @@ const Signup: React.FC = () => {
           id="user-name"
           type="text"
           name="user-name"
+          autoComplete="username"
           placeholder="원하는 닉네임을 적어주세요"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
@@ -104,6 +106,7 @@ const Signup: React.FC = () => {
           id="password"
           type="password"
           name="password"
+          autoComplete="new-password"
           placeholder="비밀번호를 입력하세요"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -118,6 +121,7 @@ const Signup: React.FC = () => {
           id="confirm-password"
           type="password"
           name="confirmPassword"
+          autoComplete="new-password"
           placeholder="비밀번호를 한번 더 입력해 주세요"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
