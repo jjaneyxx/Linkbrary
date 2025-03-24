@@ -33,8 +33,9 @@ const Signup: React.FC = () => {
     };
 
     try {
-      await api.signUp(formData);
-      alert('회원가입 완료');
+      const response = await api.signUp(formData);
+      localStorage.setItem('accessToken', response.data.accessToken);
+      alert('회원가입 성공');
       navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
