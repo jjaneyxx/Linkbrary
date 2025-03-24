@@ -86,7 +86,7 @@ const Login: React.FC = () => {
           isInvalid={!isPasswordValid}
           errorMessage="비밀번호는 8자 이상 작성해 주세요."
         />
-        <Button text="로그인" className="w-[400px] h-[53px]" />
+        <Button text="로그인" className="w-[400px] h-[53px] mb-8 " />
       </form>
       <OAuthSection />
     </div>
