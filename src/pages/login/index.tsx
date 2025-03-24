@@ -4,6 +4,8 @@ import AuthPrompt from '../../components/common/auth/AuthPrompt';
 import InputWithError from '../../components/common/auth/InputWithError';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../api/axios';
+import axios from 'axios';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -12,10 +14,30 @@ const Login: React.FC = () => {
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const handleLoginSuccess = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLoginSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // 로그인 로직 실행 (API 호출)
-    navigate('/links');
+
+    // 폼 유효성 검사
+    if (!isEmailValid || !isPasswordValid) {
+      return;
+    }
+
+    const formData = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await api.signIn(formData);
+      localStorage.setItem('accessToken', response.data.accessToken);
+      alert('로그인 성공');
+      navigate('/links');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log('서버 응답 : ', error.response.data);
+      }
+      alert('로그인 실패');
+    }
   };
 
   const handleEmailInputValid = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -40,6 +62,7 @@ const Login: React.FC = () => {
           id="user-email"
           type="email"
           name="email"
+          autoComplete="email"
           placeholder="이메일을 입력하세요"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -54,6 +77,7 @@ const Login: React.FC = () => {
           id="password"
           type="password"
           name="password"
+          autoComplete="password"
           placeholder="비밀번호를 입력하세요"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
