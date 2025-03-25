@@ -24,7 +24,7 @@ interface GetFolderByIdResponse {
 }
 
 // folder delete (4xx)
-interface DeleteFolderByIdResponse {
+export interface ErrorResponse {
   message: string;
 }
 
@@ -54,7 +54,7 @@ export const getFolderById = async ({ folderId }: { folderId: number }) => {
 
 // delete
 export const deleteFolderById = async ({ folderId }: { folderId: number }) => {
-  return await apiClient.delete<DeleteFolderByIdResponse>(`/folders/${folderId}`);
+  return await apiClient.delete<void>(`/folders/${folderId}`);
 };
 
 // put
