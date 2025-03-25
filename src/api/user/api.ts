@@ -1,11 +1,27 @@
-import { apiClient } from '../apiClient';
+import { apiClient } from '../axios';
 
-const apiRoutes = {
-  checkEmail: '/users/check-email',
+interface GetUserResponse {
+  id: number;
+  name: string;
+  imageSource: string;
+  email: string;
+  createdAt: string;
+}
+
+interface PostCheckEmailBody {
+  email: string;
+}
+
+interface PostCheckEmailResponse {
+  isUsableEmail: boolean;
+}
+
+export const getUser = async () => {
+  const response = await apiClient.get<GetUserResponse>('/users');
+  return response.data;
 };
 
-const api = {
-  checkEmail: (email: string) => apiClient.post(apiRoutes.checkEmail, { email }),
+export const postCheckEmail = async (data: PostCheckEmailBody) => {
+  const response = await apiClient.post<PostCheckEmailResponse>('/users/check-email', data);
+  return response.data;
 };
-
-export default api;

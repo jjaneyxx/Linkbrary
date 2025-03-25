@@ -1,4 +1,4 @@
-import { apiClient } from '../apiClient';
+import { apiClient } from '../axios';
 
 interface GetFoldersResponse {
   id: number;
@@ -21,11 +21,6 @@ interface GetFolderByIdResponse {
   id: number;
   createdAt: string;
   name: string;
-}
-
-// folder delete (4xx)
-export interface ErrorResponse {
-  message: string;
 }
 
 interface PutFolderByIdResponse {
