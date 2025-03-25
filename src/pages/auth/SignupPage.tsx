@@ -1,6 +1,6 @@
-import AuthPrompt from '../../components/common/auth/AuthPrompt';
-import InputWithError from '../../components/common/auth/InputWithError';
-import Button from '../login/Button';
+import AuthPrompt from './components/AuthPrompt';
+import InputWithError from './components/InputWithError';
+import Button from '../../components/common/Button';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from '../../api/auth/api';

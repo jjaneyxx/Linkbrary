@@ -1,5 +1,5 @@
 import logo from '../../assets/logo.svg';
-import Button from '../../pages/login/Button';
+import Button from '../common/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
