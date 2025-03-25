@@ -3,7 +3,7 @@ import InputWithError from '../../components/common/auth/InputWithError';
 import Button from '../login/Button';
 import api from '../../api/axios';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Signup: React.FC = () => {
@@ -11,17 +11,14 @@ const Signup: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-
   const navigate = useNavigate();
 
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     // 폼 유효성 검사
     if (!isEmailValid || !isUserNameValid || !isPasswordValid || !isConfirmPasswordValid) {
       return;
     }
-
     // API 로직
     const formData = {
       email,
@@ -41,13 +38,26 @@ const Signup: React.FC = () => {
     }
   };
 
-  const emailRegEx =
-    /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-
-  const isEmailValid = emailRegEx.test(email);
   const isUserNameValid = userName.length <= 10;
-  const isPasswordValid = password.length >= 8;
   const isConfirmPasswordValid = password === confirmPassword;
+
+  const isEmailValid = useMemo(() => {
+    const emailRegEx =
+      /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+    if (email === '') {
+      return true;
+    } else {
+      return emailRegEx.test(email);
+    }
+  }, [email]);
+
+  const isPasswordValid = useMemo(() => {
+    if (password === '') {
+      return true;
+    } else {
+      return password.length >= 8;
+    }
+  }, [password]);
 
   return (
     <div className="flex flex-col items-center">
