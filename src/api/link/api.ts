@@ -1,12 +1,18 @@
 import { apiClient } from '../axios';
 
-interface GetFolderLinksBody {
-  folderId: number;
-  page?: number;
-  pageSize?: number;
+// request link type
+interface LinkBody {
+  id: number;
+  favorite: boolean;
+  url: string;
+  title: string;
+  imageSource: string;
+  description: string;
+  createdAt: string;
 }
 
-interface GetFolderLinksResponse {
+// response links type
+interface LinksResponse {
   totalCount: number;
   list: {
     id: number;
@@ -19,19 +25,15 @@ interface GetFolderLinksResponse {
   }[];
 }
 
+interface GetFolderLinksBody {
+  folderId: number;
+  page?: number;
+  pageSize?: number;
+}
+
 interface PostLinkBody {
   url: string;
   folderId: number;
-}
-
-interface PostLinkResponse {
-  id: number;
-  favorite: boolean;
-  url: string;
-  title: string;
-  imageSource: string;
-  description: string;
-  createdAt: string;
 }
 
 interface GetAllLinksBody {
@@ -40,69 +42,23 @@ interface GetAllLinksBody {
   search: string;
 }
 
-interface GetAllLinksResponse {
-  totalCount: number;
-  list: {
-    id: number;
-    favorite: boolean;
-    url: string;
-    title: string;
-    imageSource: string;
-    description: string;
-    createdAt: string;
-  }[];
-}
-
 interface GetFavoriteLinksBody {
   page?: number;
   pageSize?: number;
-}
-
-interface GetFavoriteLinksResponse {
-  totalCount: number;
-  list: {
-    id: number;
-    favorite: boolean;
-    url: string;
-    title: string;
-    imageSource: string;
-    description: string;
-    createdAt: string;
-  }[];
 }
 
 interface PutLinkBody {
   url: string;
 }
 
-interface PutLinkResponse {
-  id: number;
-  favorite: boolean;
-  url: string;
-  title: string;
-  imageSource: string;
-  description: string;
-  createdAt: string;
-}
-
 interface PutFavoriteLinkBody {
   favorite: boolean;
-}
-
-interface PutFavoriteLinkResponse {
-  id: number;
-  favorite: boolean;
-  url: string;
-  title: string;
-  imageSource: string;
-  description: string;
-  createdAt: string;
 }
 
 // get folder links
 export const getFolderLinks = async (data: GetFolderLinksBody) => {
   const { folderId, page = 1, pageSize = 10 } = data;
-  const response = await apiClient.get<GetFolderLinksResponse>(`/folders/${folderId}/links`, {
+  const response = await apiClient.get<LinksResponse>(`/folders/${folderId}/links`, {
     params: { page, pageSize },
   });
   return response.data;
@@ -110,14 +66,14 @@ export const getFolderLinks = async (data: GetFolderLinksBody) => {
 
 // post link in folder
 export const postLink = async (data: PostLinkBody) => {
-  const response = await apiClient.post<PostLinkResponse>('/links', data);
+  const response = await apiClient.post<LinkBody>('/links', data);
   return response.data;
 };
 
 // get all Links
 export const getAllLinks = async (data: GetAllLinksBody) => {
   const { page = 1, pageSize = 10, search } = data;
-  const response = await apiClient.get<GetAllLinksResponse>('/links', {
+  const response = await apiClient.get<LinksResponse>('/links', {
     params: { page, pageSize, search },
   });
   return response.data;
@@ -126,7 +82,7 @@ export const getAllLinks = async (data: GetAllLinksBody) => {
 // get favorite links
 export const getFavoriteLinks = async (data: GetFavoriteLinksBody) => {
   const { page = 1, pageSize = 10 } = data;
-  const response = await apiClient.get<GetFavoriteLinksResponse>('/favorites', {
+  const response = await apiClient.get<LinksResponse>('/favorites', {
     params: { page, pageSize },
   });
   return response.data;
@@ -134,7 +90,7 @@ export const getFavoriteLinks = async (data: GetFavoriteLinksBody) => {
 
 // put link
 export const putLink = async (linkId: number, data: PutLinkBody) => {
-  const response = await apiClient.put<PutLinkResponse>(`links/${linkId}`, data);
+  const response = await apiClient.put<LinkBody>(`links/${linkId}`, data);
   return response.data;
 };
 
@@ -145,6 +101,6 @@ export const deleteLink = async (linkId: number) => {
 
 // put favorite link
 export const putFavoriteLink = async (linkId: number, data: PutFavoriteLinkBody) => {
-  const response = await apiClient.put<PutFavoriteLinkResponse>(`/links/${linkId}/favorite`, data);
+  const response = await apiClient.put<LinkBody>(`/links/${linkId}/favorite`, data);
   return response.data;
 };
