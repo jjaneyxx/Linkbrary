@@ -13,16 +13,20 @@ const Header = () => {
     setIsLoggedIn(!!token);
   }, []);
 
-  const handleLoginClick = () => {
-    // local storage 에 accessToken 이 있는지 확인 필요
+  const handleLogin = () => {
     const accessToken = localStorage.getItem('accessToken');
-
     if (accessToken) {
-      navigate('/login'); // 아래 구현 후 삭제
-      // 즐겨찾기, 게정 정보 띄우기
+      // 토큰 유효성 검사 필요
     } else {
       navigate('/login');
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    setIsLoggedIn(false);
+    alert('로그아웃 성공');
+    navigate('/login');
   };
 
   return (
@@ -32,9 +36,9 @@ const Header = () => {
           <img src={logo} alt="logo" className="h-4 md:h-6" />
         </Link>
         {isLoggedIn ? (
-          <UserMenu />
+          <UserMenu onLogout={handleLogout} />
         ) : (
-          <Button text="로그인" className="w-[128px] h-[53px]" onClick={handleLoginClick} />
+          <Button text="로그인" className="w-[128px] h-[53px]" onClick={handleLogin} />
         )}
       </div>
     </div>
