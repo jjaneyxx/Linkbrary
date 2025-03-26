@@ -1,10 +1,10 @@
-import OAuthSection from './OAuthSection';
-import Button from './Button';
-import AuthPrompt from '../../components/common/auth/AuthPrompt';
-import InputWithError from '../../components/common/auth/InputWithError';
+import AuthPrompt from './components/AuthPrompt';
+import InputWithError from './components/InputWithError';
+import OAuthSection from './components/OAuthSection';
+import Button from '../../components/common/Button';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api/axios';
+import { signIn } from '../../api/auth/api';
 import axios from 'axios';
 
 const Login: React.FC = () => {
@@ -26,8 +26,8 @@ const Login: React.FC = () => {
     };
 
     try {
-      const response = await api.signIn(formData);
-      localStorage.setItem('accessToken', response.data.accessToken);
+      const response = await signIn(formData);
+      localStorage.setItem('accessToken', response.accessToken);
       alert('로그인 성공');
       navigate('/links');
     } catch (error) {

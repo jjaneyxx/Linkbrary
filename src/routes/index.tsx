@@ -1,10 +1,10 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
-import Landing from '../pages/landing';
-import Login from '../pages/login';
-import Signup from '../pages/signup';
-import Links from '../pages/links';
-import Favorite from '../pages/favorite';
+import Landing from '../pages/Landing/Landing';
+import Links from '../pages/Links/Links';
+import Favorite from '../pages/Favorite/Favorite';
+import Login from '../pages/auth/LoginPage';
+import Signup from '../pages/auth/SignupPage';
 import MainLayout from '../components/layout/MainLayout';
 import AuthLayout from '../components/layout/AuthLayout';
 

@@ -1,4 +1,4 @@
-import ErrorMessage from '../../../pages/login/ErrorMessage';
+import ErrorMessage from './ErrorMessage';
 import clsx from 'clsx';
 
 type InputProps = {
@@ -13,7 +13,7 @@ export const Label = ({ label, id }: { label: string; id: string }) => {
 
 const InputWithError = ({ className, disabled, errorMessage, ...rest }: InputProps) => {
   return (
-    <div className={`flex flex-col gap-3 mb-6 ${className}`}>
+    <div className={`flex flex-col gap-3 mt-3 mb-6 ${className}`}>
       <input
         {...rest}
         className={clsx(

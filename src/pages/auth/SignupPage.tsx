@@ -1,10 +1,10 @@
-import AuthPrompt from '../../components/common/auth/AuthPrompt';
-import InputWithError from '../../components/common/auth/InputWithError';
-import Button from '../login/Button';
-import api from '../../api/axios';
-import axios from 'axios';
+import AuthPrompt from './components/AuthPrompt';
+import InputWithError from './components/InputWithError';
+import Button from '../../components/common/Button';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signUp } from '../../api/auth/api';
+import axios from 'axios';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -26,8 +26,8 @@ const Signup: React.FC = () => {
       name: userName,
     };
     try {
-      const response = await api.signUp(formData);
-      localStorage.setItem('accessToken', response.data.accessToken);
+      const response = await signUp(formData);
+      localStorage.setItem('accessToken', response.accessToken);
       alert('회원가입 성공');
       navigate('/links');
     } catch (error) {
