@@ -15,10 +15,11 @@ const Header = () => {
 
   const handleLogin = () => {
     const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      // 토큰 유효성 검사 필요
-    } else {
+
+    if (!accessToken) {
+      // token 이 없을 경우 바로 로그인 화면으로 이동
       navigate('/login');
+      return;
     }
   };
 
