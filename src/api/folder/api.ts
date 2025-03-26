@@ -7,23 +7,13 @@ interface GetFoldersResponse {
   linkCount: number;
 }
 
-interface PostFolderBody {
+// request folder type
+interface FolderBody {
   name: string;
 }
 
-interface PostFoldersResponse {
-  id: number;
-  createdAt: string;
-  name: string;
-}
-
-interface GetFolderByIdResponse {
-  id: number;
-  createdAt: string;
-  name: string;
-}
-
-interface PutFolderByIdResponse {
+// response folder type
+interface FolderResponse {
   id: number;
   createdAt: string;
   name: string;
@@ -36,24 +26,24 @@ export const getAllFolders = async () => {
 };
 
 // post
-export const postFolder = async (data: PostFolderBody) => {
-  const response = await apiClient.post<PostFoldersResponse>('/folders', data);
+export const postFolder = async (data: FolderBody) => {
+  const response = await apiClient.post<FolderResponse>('/folders', data);
   return response.data;
 };
 
 // get
-export const getFolderById = async ({ folderId }: { folderId: number }) => {
-  const response = await apiClient.get<GetFolderByIdResponse>(`/folders/${folderId}`);
+export const getFolderById = async (folderId: number) => {
+  const response = await apiClient.get<FolderResponse>(`/folders/${folderId}`);
   return response.data;
 };
 
 // delete
-export const deleteFolderById = async ({ folderId }: { folderId: number }) => {
+export const deleteFolderById = async (folderId: number) => {
   await apiClient.delete<void>(`/folders/${folderId}`);
 };
 
 // put
-export const putFolderById = async ({ folderId, name }: { folderId: number; name: string }) => {
-  const response = await apiClient.put<PutFolderByIdResponse>(`/folders/${folderId}`, { name });
+export const putFolderById = async (folderId: number, data: FolderBody) => {
+  const response = await apiClient.put<FolderResponse>(`/folders/${folderId}`, data);
   return response.data;
 };
