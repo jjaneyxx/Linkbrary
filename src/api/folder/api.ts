@@ -49,7 +49,7 @@ export const getFolderById = async ({ folderId }: { folderId: number }) => {
 
 // delete
 export const deleteFolderById = async ({ folderId }: { folderId: number }) => {
-  return await apiClient.delete<void>(`/folders/${folderId}`);
+  await apiClient.delete<void>(`/folders/${folderId}`);
 };
 
 // put
