@@ -65,7 +65,6 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         setUser(response);
         setIsLoggedIn(true);
         navigate('/links');
-        console.log('로그인 성공', isLoggedIn);
       } catch (error) {
         // 토큰이 만료된 경우
         if (axios.isAxiosError(error) && error.response) {

@@ -8,10 +8,6 @@ import { useEffect } from 'react';
 const Header = () => {
   const { isLoggedIn, user, handleLogin, handleLogout } = useAuth();
 
-  useEffect(() => {
-    console.log('헤더 로그인', isLoggedIn);
-  }, [isLoggedIn]);
-
   return (
     <div className="bg-gray-100 px-8 lg:px-[200px] py-5">
       <div className="flex justify-between items-center">
