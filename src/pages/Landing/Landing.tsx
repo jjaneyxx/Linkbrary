@@ -22,12 +22,11 @@ const Landing: React.FC = () => {
             원하는 링크<span className="text-black">를</span>
           </span>
           저장하세요
-          <p className="text-[#6B6B6B] font-medium text-base">
-            나중에 읽고 싶은 글, 다시 보고 싶은 영상,
-            <br />
-            사고 싶은 옷, 기억하고 싶은 모든 것을
-            <br />한 공간에 저장하세요
-          </p>
+          <div className="flex flex-col text-[#6B6B6B] font-medium text-base">
+            <span>나중에 읽고 싶은 글, 다시 보고 싶은 영상,</span>
+            <span>사고 싶은 옷, 기억하고 싶은 모든 것을</span>
+            <span>한 공간에 저장하세요</span>
+          </div>
         </div>
         <img src={landingSave} className="w-[550px]" />
       </section>
