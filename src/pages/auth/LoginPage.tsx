@@ -6,11 +6,13 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signIn } from '../../api/auth/api';
 import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  const { handleLogin } = useAuth();
 
   const handleLoginSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,6 +31,7 @@ const Login: React.FC = () => {
       const response = await signIn(formData);
       localStorage.setItem('accessToken', response.accessToken);
       alert('로그인 성공');
+      handleLogin();
       navigate('/links');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
