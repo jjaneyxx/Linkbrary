@@ -21,11 +21,14 @@ const Login: React.FC = () => {
     if (!isEmailValid || !isPasswordValid) {
       return;
     }
-    // API 로직
+
     const formData = {
       email,
       password,
     };
+
+    // api 요청 전 token 제거
+    localStorage.removeItem('accessToken');
 
     try {
       const response = await signIn(formData);

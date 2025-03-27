@@ -38,11 +38,13 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
 
   const handleLogin = () => {
     const accessToken = localStorage.getItem('accessToken');
+
     if (!accessToken) {
       navigate('/login');
       return;
     }
 
+    // 토큰이 있는 경우
     const verifyUser = async () => {
       try {
         const response = await getUser();
@@ -51,11 +53,13 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         navigate('/links');
         console.log('로그인 성공', isLoggedIn);
       } catch (error) {
+        // 토큰이 만료된 경우
         if (axios.isAxiosError(error) && error.response) {
           console.log('서버 응답 : ', error.response);
         }
         setIsLoggedIn(false);
-        alert('로그인 실패');
+        alert('토큰이 만료되었습니다. 다시 로그인해주세요');
+        navigate('/login');
       }
     };
     verifyUser();
