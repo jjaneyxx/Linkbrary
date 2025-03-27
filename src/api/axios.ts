@@ -10,7 +10,7 @@ export interface ErrorResponse {
   message: string;
 }
 
-// request interceptor : 모든 요청에 accessToken 추가
+// request interceptor : token 있는 경우 헤더에 Bearer token 추가
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
   if (token) {
