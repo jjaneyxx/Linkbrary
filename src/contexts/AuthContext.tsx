@@ -20,17 +20,31 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<AuthContextType['user']>(undefined);
+  const [user, setUser] = useState<AuthContextType['user'] | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  // 자동 로그인, 새로고침 이후에도 로그인 상태를 유지
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
+
     const fetchGetUser = async () => {
-      if (accessToken) {
+      // no accessToken
+      if (!accessToken) {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+      // has accessToken
+      try {
         const response = await getUser();
         setUser(response);
         setIsLoggedIn(true);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          setUser(null);
+          setIsLoggedIn(false);
+          console.log('응답 : ', error.response.status);
+        }
       }
     };
     fetchGetUser();

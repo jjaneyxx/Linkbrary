@@ -38,7 +38,7 @@ const Login: React.FC = () => {
       navigate('/links');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.log('서버 응답 : ', error.response.data);
+        console.log('응답 : ', error.response.data);
       }
       alert('로그인 실패');
     }
