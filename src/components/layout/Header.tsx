@@ -1,14 +1,14 @@
 import logo from '../../assets/icons/logo.svg';
 import Button from '../common/Button';
 import UserMenu from '../UserMenu';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser } from '../../api/user/api';
+import { useAuth } from '../../contexts/AuthContext';
 import axios from 'axios';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
 
   const handleLoginWithToken = () => {
     const accessToken = localStorage.getItem('accessToken');
