@@ -1,4 +1,4 @@
-import userProfile from '../assets/images/user-profile.svg';
+import userProfile from '../assets/icons/user-profile.svg';
 
 type UserMenuProps = {
   onLogout: () => void;
