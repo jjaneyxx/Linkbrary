@@ -7,7 +7,7 @@ const SearchLinkInput = () => {
     console.log('search link');
   };
   return (
-    <form onSubmit={handleSearchLink} className="mt-10 lg:px-[190px]">
+    <form onSubmit={handleSearchLink} className="mt-10">
       {/*검색 박스*/}
       <div className="flex rounded-[10px] bg-[#F5F5F5] px-4 py-[15px]">
         {/*icon, input*/}
