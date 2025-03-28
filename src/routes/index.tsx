@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Landing from '../pages/Landing/Landing';
-import Links from '../pages/Links/Links';
+import LinkPage from '../pages/Links/LinkPage';
 import Favorite from '../pages/Favorite/Favorite';
 import Login from '../pages/auth/LoginPage';
 import Signup from '../pages/auth/SignupPage';
@@ -16,7 +16,7 @@ const AppRouter = () => {
         <Routes>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Landing />}></Route>
-            <Route path="/links" element={<Links />}></Route>
+            <Route path="/links" element={<LinkPage />}></Route>
             <Route path="/favorite" element={<Favorite />}></Route>
           </Route>
 

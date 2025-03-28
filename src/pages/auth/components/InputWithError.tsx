@@ -13,11 +13,11 @@ export const Label = ({ label, id }: { label: string; id: string }) => {
 
 const InputWithError = ({ className, disabled, errorMessage, ...rest }: InputProps) => {
   return (
-    <div className={`flex flex-col gap-3 mt-3 mb-6 ${className}`}>
+    <div className={`mt-3 mb-6 flex flex-col gap-3 ${className}`}>
       <input
         {...rest}
         className={clsx(
-          'px-[15px] py-[18px] h-[60px] border border-gray-300 rounded-lg bg-white',
+          'h-[60px] rounded-lg border border-gray-300 bg-white px-[15px] py-[18px]',
           disabled && 'border-red',
         )}
       />
