@@ -8,7 +8,7 @@ const Header = () => {
   const { isLoggedIn, user, handleLogin, handleLogout } = useAuth();
 
   return (
-    <div className="bg-gray-100 px-8 lg:px-[200px] py-5">
+    <div className="bg-gray-100 px-8 py-5 lg:px-[200px]">
       <div className="flex justify-between items-center">
         <Link to="/">
           <img src={logo} alt="logo" className="h-4 md:h-6" />

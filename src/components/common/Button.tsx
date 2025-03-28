@@ -9,7 +9,7 @@ const Button = ({ text, className, onClick, type = 'submit' }: ButtonProps) => {
   return (
     <button
       type={type}
-      className={`${className} rounded-lg px-5 py-4 font-semibold text-white bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE] cursor-pointer`}
+      className={`${className} rounded-lg text-center font-semibold text-white bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE] cursor-pointer`}
       onClick={onClick}
     >
       {text}

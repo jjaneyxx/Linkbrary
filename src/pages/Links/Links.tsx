@@ -1,4 +1,6 @@
+import LinkInput from './LinkInput';
+
 const Links: React.FC = () => {
-  return <div>Links</div>;
+  return <LinkInput />;
 };
 export default Links;

@@ -16,7 +16,7 @@ const Landing: React.FC = () => {
         </div>
         <Button
           text="링크 추가하기"
-          className="w-[350px] mt-10"
+          className="w-[350px] mt-10 py-4"
           type="button"
           onClick={handleLogin}
         />
