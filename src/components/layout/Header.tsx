@@ -3,7 +3,6 @@ import Button from '../common/Button';
 import UserMenu from '../UserMenu';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { useEffect } from 'react';
 
 const Header = () => {
   const { isLoggedIn, user, handleLogin, handleLogout } = useAuth();

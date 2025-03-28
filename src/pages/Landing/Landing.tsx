@@ -1,9 +1,10 @@
 import Button from '../../components/common/Button';
 import landingHome from '../../assets/images/landing-home.png';
 import landingSave from '../../assets/images/landing-save.png';
+import { useAuth } from '../../contexts/AuthContext';
 
-// TODO : button onClick 추가
 const Landing: React.FC = () => {
+  const { handleLogin } = useAuth();
   return (
     <div>
       <section className="bg-gray-100 text-center">
@@ -13,7 +14,12 @@ const Landing: React.FC = () => {
           </span>
           쉽게 저장하고 관리해 보세요
         </div>
-        <Button text="링크 추가하기" className="w-[350px] mt-10" type="button" />
+        <Button
+          text="링크 추가하기"
+          className="w-[350px] mt-10"
+          type="button"
+          onClick={handleLogin}
+        />
         <img src={landingHome} />
       </section>
       <section className="mt-[120px] mb-[50px] flex justify-center items-center gap-[157px]">

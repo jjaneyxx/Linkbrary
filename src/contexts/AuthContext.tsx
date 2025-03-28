@@ -20,7 +20,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<AuthContextType['user'] | null>(null);
+  const [user, setUser] = useState<AuthContextType['user'] | undefined>(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     const fetchGetUser = async () => {
       // no accessToken
       if (!accessToken) {
-        setUser(null);
+        setUser(undefined);
         setIsLoggedIn(false);
       }
       // has accessToken
@@ -41,7 +41,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         setIsLoggedIn(true);
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-          setUser(null);
+          setUser(undefined);
           setIsLoggedIn(false);
           console.log('응답 : ', error.response.status);
         }
@@ -53,6 +53,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const handleLogin = () => {
     const accessToken = localStorage.getItem('accessToken');
 
+    // 토큰이 있는 경우
     if (!accessToken) {
       navigate('/login');
       return;
