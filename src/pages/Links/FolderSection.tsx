@@ -1,10 +1,14 @@
 import FolderTabs from './FolderTabs';
+import { useModalStore } from '../../store/useModalStore';
 
 const FolderSection = () => {
+  const handleOpenModal = useModalStore((state) => state.openModal);
   return (
     <div className="mt-10 flex justify-between">
       <FolderTabs />
-      <button className="text-primary leading-none font-medium">폴더 추가 + </button>
+      <button className="text-primary leading-none font-medium" onClick={handleOpenModal}>
+        폴더 추가 +{' '}
+      </button>
     </div>
   );
 };
