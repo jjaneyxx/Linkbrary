@@ -2,6 +2,8 @@ import { useModalStore } from '../../store/useModalStore';
 import Button from './Button';
 import closeModal from '../../assets/icons/close-modal.svg';
 import { ChangeEvent, MouseEvent } from 'react';
+import { useFolderStore } from '../../store/useFolderStore';
+import { clsx } from 'clsx';
 
 const Modal = () => {
   const handleModalClose = useModalStore((state) => state.closeModal);
@@ -10,6 +12,9 @@ const Modal = () => {
   const modalInput = useModalStore((state) => state.input);
   const setModalInput = useModalStore((state) => state.setInput);
   const modalOnConfirm = useModalStore((state) => state.onConfirm);
+  const modalMode = useModalStore((state) => state.mode);
+  const selectedFolder = useFolderStore((state) => state.selectedFolder);
+  // modalMode 가 'delete' 이면 input 대신 폴더 이름이 와야함.
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
     // event bubbling 방지
@@ -27,16 +32,25 @@ const Modal = () => {
           <span className="rounded-lg px-[15px] py-[18px] text-xl leading-1 font-bold text-[#373740]">
             {modalTitle}
           </span>
-          <input
-            placeholder="내용 입력"
-            className="mt-4 mb-[15px] h-15 w-[280px] rounded-md border border-[#CCD5E3] px-[15px] py-[18px] focus:outline-none"
-            value={modalInput}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setModalInput(e.target.value);
-            }}
-          />
+
+          {modalMode === 'delete' ? (
+            <div className="mb-6">{selectedFolder}</div>
+          ) : (
+            <input
+              placeholder="내용 입력"
+              className="mt-4 mb-[15px] h-15 w-[280px] rounded-md border border-[#CCD5E3] px-[15px] py-[18px] focus:outline-none"
+              value={modalInput}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setModalInput(e.target.value);
+              }}
+            />
+          )}
+
           <Button
-            className="h-[51px] w-[280px]"
+            className={clsx(
+              'h-[51px] w-[280px]',
+              modalMode === 'delete' ? 'bg-red' : 'bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE]',
+            )}
             text={modalButtonText}
             type="submit"
             onClick={() => {
