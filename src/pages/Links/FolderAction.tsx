@@ -4,22 +4,25 @@ import deleteFolder from '../../assets/icons/delete-folder.svg';
 import { useModalStore } from '../../store/useModalStore';
 import { useFolderStore } from '../../store/useFolderStore';
 import { putFolderById } from '../../api/folder/api';
+import { useParams } from 'react-router-dom';
 
 export const FolderAction = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const selectedFolder = useFolderStore((state) => state.selectedFolder);
+  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+  const { folderId } = useParams(); // get folderId from path
 
   const handlePutFolder = async (input: string) => {
-    if (input === '') return;
+    if (input === '' || !folderId) return;
 
     const folderData = {
       name: input,
     };
 
     try {
-      const response = await putFolderById(1125, folderData);
-      console.log(response);
+      const response = await putFolderById(parseInt(folderId), folderData);
+      setSelectedFolder(response.name);
       closeModal();
     } catch (error) {
       console.log('폴더 수정 실패', error);
