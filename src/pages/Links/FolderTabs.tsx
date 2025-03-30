@@ -1,33 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Folder from './components/Folder';
 import { clsx } from 'clsx';
+import { getAllFolders, GetFoldersResponse } from '../../api/folder/api';
+import { useFolderStore } from '../../store/useFolderStore';
 
 // show added folders
 const FolderTabs = () => {
-  // selected folder name
-  const [isSelectedFolder, setIsSelectedFolder] = useState<string>('');
+  const selectedFolder = useFolderStore((state) => state.selectedFolder);
+  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+
+  // getAllFolders API 응답을 state 로 저장
+  const [folders, setFolders] = useState<GetFoldersResponse[]>([]);
+
+  useEffect(() => {
+    const showAllFolders = async () => {
+      try {
+        const response = await getAllFolders();
+        console.log(response);
+        setFolders(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    showAllFolders();
+  }, []);
 
   const handleFolderSelected = (folderName: string) => {
-    setIsSelectedFolder(folderName);
+    setSelectedFolder(folderName);
   };
 
   return (
     <div className="border-blue flex gap-2">
-      <Folder
-        children="전체"
-        onClick={() => handleFolderSelected('전체')}
-        className={clsx(isSelectedFolder === '전체' && 'bg-primary text-white')}
-      />
-      <Folder
-        children="음악"
-        onClick={() => handleFolderSelected('음악')}
-        className={clsx(isSelectedFolder === '음악' && 'bg-primary text-white')}
-      />
-      <Folder
-        children="카페"
-        onClick={() => handleFolderSelected('카페')}
-        className={clsx(isSelectedFolder === '카페' && 'bg-primary text-white')}
-      />
+      {folders.map((folder) => (
+        <Folder
+          key={folder.id}
+          children={folder.name}
+          onClick={() => handleFolderSelected(folder.name)}
+          className={clsx(selectedFolder === folder.name && 'bg-primary text-white')}
+        />
+      ))}
     </div>
   );
 };

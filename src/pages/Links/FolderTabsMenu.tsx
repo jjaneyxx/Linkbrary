@@ -3,7 +3,7 @@ import { useModalStore } from '../../store/useModalStore';
 import { postFolder } from '../../api/folder/api';
 import axios from 'axios';
 
-const FolderSection = () => {
+const FolderTabsMenu = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -11,11 +11,9 @@ const FolderSection = () => {
     if (input === '') {
       return;
     }
-
     const folderData = {
       name: input,
     };
-
     try {
       const response = await postFolder(folderData);
       alert('폴더 추가 성공');
@@ -46,4 +44,4 @@ const FolderSection = () => {
   );
 };
 
-export default FolderSection;
+export default FolderTabsMenu;

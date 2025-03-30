@@ -1,5 +1,5 @@
 import AddLinkInput from './AddLinkInput';
-import FolderSection from './FolderSection';
+import FolderTabsMenu from './FolderTabsMenu';
 import SearchLinkInput from './SearchLinkInput';
 import { useModalStore } from '../../store/useModalStore';
 import Modal from '../../components/common/Modal';
@@ -12,7 +12,7 @@ const LinkPage: React.FC = () => {
       <AddLinkInput />
       <div className="lg:px-[190px]">
         <SearchLinkInput />
-        <FolderSection />
+        <FolderTabsMenu />
         <FolderAction />
       </div>
       {isOpen && <Modal />}

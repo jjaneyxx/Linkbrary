@@ -1,6 +1,6 @@
 import { apiClient } from '../axios';
 
-interface GetFoldersResponse {
+export interface GetFoldersResponse {
   id: number;
   createdAt: string;
   name: string;
