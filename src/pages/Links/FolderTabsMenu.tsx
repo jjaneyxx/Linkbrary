@@ -28,7 +28,7 @@ const FolderTabsMenu = () => {
   };
 
   const handleOpenModal = () => {
-    openModal('폴더 추가', '추가하기', handlePostFolder);
+    openModal('폴더 추가', '추가하기', handlePostFolder, 'add');
   };
 
   return (
