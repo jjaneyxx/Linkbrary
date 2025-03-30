@@ -3,16 +3,27 @@ import renameFolder from '../../assets/icons/rename-folder.svg';
 import deleteFolder from '../../assets/icons/delete-folder.svg';
 import { useModalStore } from '../../store/useModalStore';
 import { useFolderStore } from '../../store/useFolderStore';
+import { putFolderById } from '../../api/folder/api';
 
 export const FolderAction = () => {
   const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
   const selectedFolder = useFolderStore((state) => state.selectedFolder);
 
   const handlePutFolder = async (input: string) => {
     if (input === '') return;
-    // putFolderById api
-    // folderId, FolderName
-    // 아래 폴더 이름에서 folderId 함께 가져와야.
+
+    const folderData = {
+      name: input,
+    };
+
+    try {
+      const response = await putFolderById(1125, folderData);
+      console.log(response);
+      closeModal();
+    } catch (error) {
+      console.log('폴더 수정 실패', error);
+    }
   };
 
   const handleOpenModal = () => {

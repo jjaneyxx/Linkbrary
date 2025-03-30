@@ -16,7 +16,6 @@ const FolderTabs = () => {
     const showAllFolders = async () => {
       try {
         const response = await getAllFolders();
-        console.log(response);
         setFolders(response);
       } catch (error) {
         console.log(error);
