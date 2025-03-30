@@ -3,11 +3,13 @@ import Folder from './components/Folder';
 import { clsx } from 'clsx';
 import { getAllFolders, GetFoldersResponse } from '../../api/folder/api';
 import { useFolderStore } from '../../store/useFolderStore';
+import { useNavigate } from 'react-router-dom';
 
 // show added folders
 const FolderTabs = () => {
   const selectedFolder = useFolderStore((state) => state.selectedFolder);
   const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+  const navigate = useNavigate();
 
   // getAllFolders API 응답을 state 로 저장
   const [folders, setFolders] = useState<GetFoldersResponse[]>([]);
@@ -24,8 +26,9 @@ const FolderTabs = () => {
     showAllFolders();
   }, []);
 
-  const handleFolderSelected = (folderName: string) => {
+  const handleFolderSelected = (folderName: string, folderId: number) => {
     setSelectedFolder(folderName);
+    navigate(`/links/folder/${folderId}`);
   };
 
   return (
@@ -34,7 +37,7 @@ const FolderTabs = () => {
         <Folder
           key={folder.id}
           children={folder.name}
-          onClick={() => handleFolderSelected(folder.name)}
+          onClick={() => handleFolderSelected(folder.name, folder.id)}
           className={clsx(selectedFolder === folder.name && 'bg-primary text-white')}
         />
       ))}
