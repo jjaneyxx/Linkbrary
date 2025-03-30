@@ -1,11 +1,38 @@
 import FolderTabs from './FolderTabs';
 import { useModalStore } from '../../store/useModalStore';
+import { postFolder } from '../../api/folder/api';
+import axios from 'axios';
 
 const FolderSection = () => {
   const openModal = useModalStore((state) => state.openModal);
-  const handleOpenModal = () => {
-    openModal('폴더 추가', '추가하기');
+  const closeModal = useModalStore((state) => state.closeModal);
+
+  const handlePostFolder = async (input: string) => {
+    if (input === '') {
+      return;
+    }
+
+    const folderData = {
+      name: input,
+    };
+
+    try {
+      const response = await postFolder(folderData);
+      alert('폴더 추가 성공');
+      console.log(response);
+      closeModal();
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log('응답 : ', error.response.data);
+      }
+      alert('폴더 추가 실패');
+    }
   };
+
+  const handleOpenModal = () => {
+    openModal('폴더 추가', '추가하기', handlePostFolder);
+  };
+
   return (
     <div className="mt-10 flex justify-between">
       <FolderTabs />

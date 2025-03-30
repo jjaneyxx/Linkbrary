@@ -15,7 +15,7 @@ const LinkPage: React.FC = () => {
         <FolderSection />
         <FolderAction />
       </div>
-      {isOpen && <Modal children="폴더 추가" />}
+      {isOpen && <Modal />}
     </div>
   );
 };

@@ -1,12 +1,15 @@
 import { useModalStore } from '../../store/useModalStore';
 import Button from './Button';
 import closeModal from '../../assets/icons/close-modal.svg';
-import { MouseEvent } from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
 
 const Modal = () => {
   const handleModalClose = useModalStore((state) => state.closeModal);
   const modalTitle = useModalStore((state) => state.title);
   const modalButtonText = useModalStore((state) => state.buttonText);
+  const modalInput = useModalStore((state) => state.input);
+  const setModalInput = useModalStore((state) => state.setInput);
+  const modalOnConfirm = useModalStore((state) => state.onConfirm);
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
     // event bubbling 방지
@@ -27,8 +30,19 @@ const Modal = () => {
           <input
             placeholder="내용 입력"
             className="mt-4 mb-[15px] h-15 w-[280px] rounded-md border border-[#CCD5E3] px-[15px] py-[18px] focus:outline-none"
+            value={modalInput}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setModalInput(e.target.value);
+            }}
           />
-          <Button className="h-[51px] w-[280px]" text={modalButtonText} type="submit" />
+          <Button
+            className="h-[51px] w-[280px]"
+            text={modalButtonText}
+            type="submit"
+            onClick={() => {
+              modalOnConfirm(modalInput);
+            }}
+          />
           {/*close button*/}
           <button className="absolute -top-4 -right-6">
             <img
