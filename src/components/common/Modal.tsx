@@ -3,7 +3,6 @@ import Button from './Button';
 import closeModal from '../../assets/icons/close-modal.svg';
 import { ChangeEvent, MouseEvent } from 'react';
 import { useFolderStore } from '../../store/useFolderStore';
-import { clsx } from 'clsx';
 
 const Modal = () => {
   const handleModalClose = useModalStore((state) => state.closeModal);
@@ -47,12 +46,10 @@ const Modal = () => {
           )}
 
           <Button
-            className={clsx(
-              'h-[51px] w-[280px]',
-              modalMode === 'delete' ? 'bg-red' : 'bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE]',
-            )}
+            className={'h-[51px] w-[280px]'}
             text={modalButtonText}
             type="submit"
+            modalMode={modalMode}
             onClick={() => {
               modalOnConfirm(modalInput);
             }}
