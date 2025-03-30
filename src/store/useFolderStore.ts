@@ -6,6 +6,6 @@ interface FolderState {
 }
 
 export const useFolderStore = create<FolderState>((set) => ({
-  selectedFolder: '',
+  selectedFolder: '전체', // default
   setSelectedFolder: (value) => set({ selectedFolder: value }),
 }));

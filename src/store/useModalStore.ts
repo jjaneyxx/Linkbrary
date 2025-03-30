@@ -31,5 +31,5 @@ export const useModalStore = create<ModalState>((set) => ({
     set({ isOpen: true, title, buttonText, onConfirm, mode }),
   // modal 이 닫힐 때 데이터 초기화
   closeModal: () =>
-    set({ isOpen: false, title: '', buttonText: '', onConfirm: () => {}, input: '' }),
+    set({ isOpen: false, title: '', buttonText: '', onConfirm: () => {}, input: '', mode: '' }),
 }));

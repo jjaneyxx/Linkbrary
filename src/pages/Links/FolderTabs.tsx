@@ -26,13 +26,23 @@ const FolderTabs = () => {
     showAllFolders();
   }, []);
 
-  const handleFolderSelected = (folderName: string, folderId: number) => {
+  const handleFolderSelected = (folderName: string, folderId?: number) => {
     setSelectedFolder(folderName);
-    navigate(`/links/folder/${folderId}`);
+
+    if (!folderId) {
+      navigate(`/links`);
+    } else {
+      navigate(`/links/folder/${folderId}`);
+    }
   };
 
   return (
     <div className="border-blue flex gap-2">
+      <Folder
+        children="전체"
+        onClick={() => handleFolderSelected('전체')}
+        className={clsx(selectedFolder === '전체' && 'bg-primary text-white')}
+      />
       {folders.map((folder) => (
         <Folder
           key={folder.id}

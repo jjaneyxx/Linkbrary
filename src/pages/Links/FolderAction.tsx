@@ -13,6 +13,9 @@ export const FolderAction = () => {
   const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
   const { folderId } = useParams(); // get folderId from path
 
+  // remove component from DOM
+  if (selectedFolder === '전체') return null;
+
   // rename folder
   const handlePutFolder = async (input: string) => {
     if (input === '' || !folderId) return;
@@ -43,12 +46,14 @@ export const FolderAction = () => {
     }
   };
 
+  // open modal
   const handleOpenModal = (mode: string) => {
     if (mode === 'rename') {
       openModal('폴더 변경', '변경하기', handlePutFolder, mode);
     } else if (mode === 'delete') {
       openModal('폴더 삭제', '삭제하기', handleDeleteFolder, mode);
     } else if (mode === 'share') {
+      alert('아직 개발 중인 기능입니다 ⚒️');
       // openModal('폴더 공유', '', handleShareFolder, mode)
     }
   };
