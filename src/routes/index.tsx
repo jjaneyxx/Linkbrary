@@ -17,6 +17,7 @@ const AppRouter = () => {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Landing />}></Route>
             <Route path="/links" element={<LinkPage />}></Route>
+            <Route path="/links/folder/:folderId" element={<LinkPage />}></Route>
             <Route path="/favorite" element={<Favorite />}></Route>
           </Route>
 

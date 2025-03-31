@@ -1,7 +1,7 @@
 import { apiClient } from '../axios';
 
-// request link type
-interface LinkBody {
+// response link type
+export interface LinkResponse {
   id: number;
   favorite: boolean;
   url: string;
@@ -39,7 +39,7 @@ interface PostLinkBody {
 interface GetAllLinksBody {
   page?: number;
   pageSize?: number;
-  search: string;
+  search?: string;
 }
 
 interface GetFavoriteLinksBody {
@@ -66,7 +66,7 @@ export const getFolderLinks = async (data: GetFolderLinksBody) => {
 
 // post link in folder
 export const postLink = async (data: PostLinkBody) => {
-  const response = await apiClient.post<LinkBody>('/links', data);
+  const response = await apiClient.post<LinkResponse>('/links', data);
   return response.data;
 };
 
@@ -90,7 +90,7 @@ export const getFavoriteLinks = async (data: GetFavoriteLinksBody) => {
 
 // put link
 export const putLink = async (linkId: number, data: PutLinkBody) => {
-  const response = await apiClient.put<LinkBody>(`links/${linkId}`, data);
+  const response = await apiClient.put<LinkResponse>(`links/${linkId}`, data);
   return response.data;
 };
 
@@ -101,6 +101,6 @@ export const deleteLink = async (linkId: number) => {
 
 // put favorite link
 export const putFavoriteLink = async (linkId: number, data: PutFavoriteLinkBody) => {
-  const response = await apiClient.put<LinkBody>(`/links/${linkId}/favorite`, data);
+  const response = await apiClient.put<LinkResponse>(`/links/${linkId}/favorite`, data);
   return response.data;
 };
