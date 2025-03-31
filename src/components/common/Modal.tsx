@@ -3,6 +3,8 @@ import Button from './Button';
 import closeModal from '../../assets/icons/close-modal.svg';
 import { ChangeEvent, MouseEvent } from 'react';
 import { useFolderStore } from '../../store/useFolderStore';
+import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 
 const Modal = () => {
   const handleModalClose = useModalStore((state) => state.closeModal);
@@ -12,14 +14,27 @@ const Modal = () => {
   const setModalInput = useModalStore((state) => state.setInput);
   const modalOnConfirm = useModalStore((state) => state.onConfirm);
   const modalMode = useModalStore((state) => state.mode);
+
+  const modalLink = useModalStore((state) => state.linkInput);
+
+  const folders = useFolderStore((state) => state.folders);
   const selectedFolder = useFolderStore((state) => state.selectedFolder);
-  // modalMode 가 'delete' 이면 input 대신 폴더 이름이 와야함.
+  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+  const navigate = useNavigate();
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
     // event bubbling 방지
     e.stopPropagation();
   };
 
+  const handleFolderSelected = (folderName: string, folderId?: number) => {
+    setSelectedFolder(folderName);
+    if (!folderId) {
+      navigate(`/links`);
+    } else {
+      navigate(`/links/folder/${folderId}`);
+    }
+  };
   return (
     <div className="fixed inset-0 z-40 bg-black/50" onClick={handleModalClose}>
       {/* Modal */}
@@ -32,9 +47,32 @@ const Modal = () => {
             {modalTitle}
           </span>
 
-          {modalMode === 'delete' ? (
-            <div className="mb-6">{selectedFolder}</div>
-          ) : (
+          {/* 링크 추가 */}
+          {modalMode === 'addLink' && (
+            <div>
+              <div className="mb-6">{modalLink}</div>
+              <div className="mb-6 flex flex-col gap-0.5">
+                {folders.map((folder) => (
+                  <div
+                    key={folder.id}
+                    children={folder.name}
+                    onClick={() => {
+                      handleFolderSelected(folder.name, folder.id);
+                    }}
+                    className={clsx(
+                      'p-2',
+                      selectedFolder === folder.name && 'text-primary rounded-lg bg-[#F0F6FF]',
+                    )}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 폴더 삭제 */}
+          {modalMode === 'delete' && <div className="mb-6">{selectedFolder}</div>}
+
+          {modalMode !== 'delete' && modalMode !== 'addLink' && (
             <input
               placeholder="내용 입력"
               className="mt-4 mb-[15px] h-15 w-[280px] rounded-md border border-[#CCD5E3] px-[15px] py-[18px] focus:outline-none"
@@ -54,6 +92,7 @@ const Modal = () => {
               modalOnConfirm(modalInput);
             }}
           />
+
           {/*close button*/}
           <button className="absolute -top-4 -right-6">
             <img

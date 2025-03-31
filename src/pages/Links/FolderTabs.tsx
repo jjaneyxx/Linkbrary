@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const FolderTabs = () => {
   const selectedFolder = useFolderStore((state) => state.selectedFolder);
   const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+  const setFoldersStore = useFolderStore((state) => state.setFolders);
   const navigate = useNavigate();
 
   // getAllFolders API 응답을 state 로 저장
@@ -18,7 +19,9 @@ const FolderTabs = () => {
     const showAllFolders = async () => {
       try {
         const response = await getAllFolders();
+        // 로컬, 전역 상태에 각각 folders 를 저장
         setFolders(response);
+        setFoldersStore(response);
       } catch (error) {
         console.log(error);
       }
