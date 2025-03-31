@@ -38,7 +38,7 @@ const AddLinkInput = () => {
   const handleAddLink = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const urlRegex = /^(https?|ftp):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
+    const urlRegex = /^(https?|ftp):\/\/(-\.)?([^\s/?.#-]+\.)+(\/[^\s]*)?$/i;
     if (linkInput === '' || !urlRegex.test(linkInput)) {
       alert('유효한 링크를 입력해주세요🔗');
       return;
