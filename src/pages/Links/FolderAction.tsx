@@ -60,7 +60,7 @@ export const FolderAction = () => {
 
   return (
     <div className="mt-6 flex justify-between">
-      <div>{selectedFolder}</div>
+      <div className="text-2xl font-semibold">{selectedFolder}</div>
       <div className="flex gap-3">
         <button className="cursor-pointer" onClick={() => handleOpenModal('share')}>
           <img src={shareFolder} />
