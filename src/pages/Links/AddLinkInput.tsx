@@ -6,18 +6,21 @@ import { postLink } from '../../api/link/api';
 import { useParams } from 'react-router-dom';
 
 const AddLinkInput = () => {
-  const [linkInput, setLinkInput] = useState<string>('');
+  const [linkInput, setLinkInput] = useState<string>(''); // local
   const openModal = useModalStore((state) => state.openModal);
   const { folderId } = useParams();
 
-  const handlePostLink = async (linkInput: string) => {
-    if (!folderId) {
+  const handlePostLink = async () => {
+    // store 의 최신 상태 link 가져옴
+    const modalLink = useModalStore.getState().linkInput;
+
+    if (!folderId || !modalLink) {
       return;
     }
-    console.log(linkInput); // 출력 안됨. linkInput 을 모름.
+    console.log(folderId, modalLink);
 
     const linkData = {
-      url: linkInput,
+      url: modalLink,
       folderId: parseInt(folderId),
     };
 
