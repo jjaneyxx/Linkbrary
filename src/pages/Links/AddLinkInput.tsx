@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 const AddLinkInput = () => {
   const [linkInput, setLinkInput] = useState<string>(''); // local
   const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
   const { folderId } = useParams();
 
   const handlePostLink = async () => {
@@ -17,7 +18,6 @@ const AddLinkInput = () => {
     if (!folderId || !modalLink) {
       return;
     }
-    console.log(folderId, modalLink);
 
     const linkData = {
       url: modalLink,
@@ -27,6 +27,9 @@ const AddLinkInput = () => {
     try {
       const response = await postLink(linkData);
       console.log(response);
+      closeModal();
+      setLinkInput('');
+      alert('링크 추가 성공');
     } catch (error) {
       console.log('링크 추가 실패', error);
     }
