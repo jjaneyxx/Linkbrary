@@ -24,6 +24,8 @@ const AddLinkInput = () => {
       folderId: parseInt(folderId),
     };
 
+    console.log(linkData);
+
     try {
       const response = await postLink(linkData);
       console.log(response);

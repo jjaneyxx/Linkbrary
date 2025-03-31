@@ -61,7 +61,8 @@ const Modal = () => {
                     }}
                     className={clsx(
                       'p-2',
-                      selectedFolder === folder.name && 'text-primary rounded-lg bg-[#F0F6FF]',
+                      selectedFolder === folder.name &&
+                        'text-primary cursor-pointer rounded-lg bg-[#F0F6FF]',
                     )}
                   />
                 ))}
