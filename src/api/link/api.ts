@@ -1,7 +1,7 @@
 import { apiClient } from '../axios';
 
 // response link type
-interface LinkResponse {
+export interface LinkResponse {
   id: number;
   favorite: boolean;
   url: string;
@@ -39,7 +39,7 @@ interface PostLinkBody {
 interface GetAllLinksBody {
   page?: number;
   pageSize?: number;
-  search: string;
+  search?: string;
 }
 
 interface GetFavoriteLinksBody {

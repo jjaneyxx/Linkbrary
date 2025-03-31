@@ -36,6 +36,7 @@ export const FolderAction = () => {
   // delete folder
   const handleDeleteFolder = async () => {
     if (!folderId) return;
+    console.log('folderId', folderId);
 
     try {
       await deleteFolderById(parseInt(folderId));
