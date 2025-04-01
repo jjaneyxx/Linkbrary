@@ -1,8 +1,8 @@
-import { useModalStore } from '../../store/useModalStore';
+import { useModalStore } from '@store/useModalStore';
 import Button from './Button';
-import closeModal from '../../assets/icons/close-modal.svg';
+import closeModal from '@assets/icons/close-modal.svg';
 import { ChangeEvent, MouseEvent } from 'react';
-import { useFolderStore } from '../../store/useFolderStore';
+import { useFolderStore } from '@store/useFolderStore';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 

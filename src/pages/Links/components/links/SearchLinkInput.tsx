@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import searchLink from '../../assets/icons/search-link.svg';
+import searchLink from '@assets/icons/search-link.svg';
 
 const SearchLinkInput = () => {
   const handleSearchLink = (e: FormEvent<HTMLFormElement>) => {

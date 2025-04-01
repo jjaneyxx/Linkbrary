@@ -1,9 +1,9 @@
 import FolderTabs from './FolderTabs';
-import { useModalStore } from '../../store/useModalStore';
-import { postFolder } from '../../api/folder/api';
+import { useModalStore } from '@store/useModalStore';
+import { postFolder } from '@api/folder/api';
 import axios from 'axios';
 
-const FolderTabsMenu = () => {
+const FolderTabsWithCreate = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
@@ -44,4 +44,4 @@ const FolderTabsMenu = () => {
   );
 };
 
-export default FolderTabsMenu;
+export default FolderTabsWithCreate;

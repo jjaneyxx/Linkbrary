@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import Card from '../../components/common/Card';
-import { useLinkStore } from '../../store/useLinkStore';
+import Card from './Card';
+import { useLinkStore } from '@store/useLinkStore';
 
-const LinkCardsSection = () => {
+export const LinkGallery = () => {
   const linkList = useLinkStore((state) => state.linkList);
   const navigate = useNavigate();
   const { folderId } = useParams();
@@ -23,4 +23,3 @@ const LinkCardsSection = () => {
     </div>
   );
 };
-export default LinkCardsSection;

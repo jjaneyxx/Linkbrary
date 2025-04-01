@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import Folder from './components/Folder';
+import Folder from './Folder';
 import { clsx } from 'clsx';
-import { getAllFolders, GetFoldersResponse } from '../../api/folder/api';
-import { useFolderStore } from '../../store/useFolderStore';
+import { getAllFolders, GetFoldersResponse } from '@api/folder/api';
+import { useFolderStore } from '@store/useFolderStore';
 import { useNavigate } from 'react-router-dom';
 
 // show added folders

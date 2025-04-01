@@ -1,7 +1,7 @@
-import Button from '../../components/common/Button';
-import landingHome from '../../assets/images/landing-home.png';
-import landingSave from '../../assets/images/landing-save.png';
-import { useAuth } from '../../contexts/AuthContext';
+import Button from '@components/common/Button';
+import landingHome from '@assets/images/landing-home.png';
+import landingSave from '@assets/images/landing-save.png';
+import { useAuth } from '@contexts/AuthContext';
 
 const Landing: React.FC = () => {
   const { handleLogin } = useAuth();

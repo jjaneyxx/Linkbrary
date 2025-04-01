@@ -1,8 +1,8 @@
-import logo from '../../assets/icons/logo.svg';
+import logo from '@assets/icons/logo.svg';
 import Button from '../common/Button';
-import UserMenu from '../UserMenu';
+import UserMenu from './UserMenu';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '@contexts/AuthContext';
 
 const Header = () => {
   const { isLoggedIn, user, handleLogin, handleLogout } = useAuth();

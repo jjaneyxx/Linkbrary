@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { GetFoldersResponse } from '../api/folder/api';
+import { GetFoldersResponse } from '@api/folder/api';
 
 interface FolderState {
   selectedFolder: string | '';

@@ -1,10 +1,10 @@
-import addLinkIcon from '../../assets/icons/add-link.svg';
-import Button from '../../components/common/Button';
+import addLinkIcon from '@assets/icons/add-link.svg';
+import Button from '@components/common/Button';
 import { FormEvent, useState } from 'react';
-import { useModalStore } from '../../store/useModalStore';
-import { postLink } from '../../api/link/api';
+import { useModalStore } from '@store/useModalStore';
+import { postLink } from '@api/link/api';
 import { useParams } from 'react-router-dom';
-import { useLinkStore } from '../../store/useLinkStore';
+import { useLinkStore } from '@store/useLinkStore';
 
 const AddLinkInput = () => {
   const [linkInput, setLinkInput] = useState<string>(''); // local

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
-import { useModalStore } from '../../../store/useModalStore';
-import { deleteLink, putLink } from '../../../api/link/api';
+import { useModalStore } from '@store/useModalStore';
+import { deleteLink, putLink } from '@api/link/api';
 import { useParams } from 'react-router-dom';
 
 const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {

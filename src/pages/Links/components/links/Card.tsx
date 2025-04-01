@@ -1,8 +1,8 @@
-import { LinkResponse } from '../../api/link/api';
-import fallBackImage from '../../assets/images/card-fallback.svg';
-import kebap from '../../assets/icons/link-kebap.svg';
+import { LinkResponse } from '@api/link/api';
+import fallBackImage from '@assets/images/card-fallback.svg';
+import kebap from '@assets/icons/link-kebap.svg';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
-import CardDropDown from '../../pages/Links/components/CardDropDown';
+import CardDropDown from './CardDropDown';
 
 type CardProps = {
   link: LinkResponse;

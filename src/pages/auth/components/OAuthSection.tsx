@@ -1,5 +1,5 @@
-import googleLogin from '../../../assets/icons/google-login.svg';
-import kakaoLogin from '../../../assets/icons/kakao-login.svg';
+import googleLogin from '@assets/icons/google-login.svg';
+import kakaoLogin from '@assets/icons/kakao-login.svg';
 
 const OAuthSection = () => {
   return (

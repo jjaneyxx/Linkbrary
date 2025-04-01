@@ -1,12 +1,12 @@
-import shareFolder from '../../assets/icons/share-folder.svg';
-import renameFolder from '../../assets/icons/rename-folder.svg';
-import deleteFolder from '../../assets/icons/delete-folder.svg';
-import { useModalStore } from '../../store/useModalStore';
-import { useFolderStore } from '../../store/useFolderStore';
-import { deleteFolderById, putFolderById } from '../../api/folder/api';
+import shareFolder from '@assets/icons/share-folder.svg';
+import renameFolder from '@assets/icons/rename-folder.svg';
+import deleteFolder from '@assets/icons/delete-folder.svg';
+import { useModalStore } from '@store/useModalStore';
+import { useFolderStore } from '@store/useFolderStore';
+import { deleteFolderById, putFolderById } from '@api/folder/api';
 import { useParams } from 'react-router-dom';
 
-export const FolderAction = () => {
+export const FolderControls = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const selectedFolder = useFolderStore((state) => state.selectedFolder);

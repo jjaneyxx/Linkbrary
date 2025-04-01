@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { LinkResponse } from '../api/link/api';
+import { LinkResponse } from '@api/link/api';
 
 // 전체 링크 리스트 관리
 interface LinkListState {
