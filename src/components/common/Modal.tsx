@@ -29,14 +29,19 @@ const Modal = () => {
     e.stopPropagation();
   };
 
-  const handleFolderSelected = (folderId: number) => {
-    setSelectedFolderId(selectedFolderId);
+  const handleFolderSelected = (folderId: number | null) => {
+    setSelectedFolderId(folderId);
+
     if (!folderId) {
-      navigate(`/links`);
-    } else {
-      navigate(`/links/folder/${folderId}`);
+      navigate('/links');
+      return;
     }
+    // add query string
+    const params = new URLSearchParams();
+    params.set('folder', folderId.toString());
+    navigate(`?${params.toString()}`);
   };
+
   return (
     <div className="fixed inset-0 z-40 bg-black/50" onClick={handleModalClose}>
       {/* Modal */}

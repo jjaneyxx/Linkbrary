@@ -1,24 +1,20 @@
+import Modal from '@components/common/Modal';
+import { useModalStore } from '@store/useModalStore';
 import FolderTabsWithCreate from './components/folders/FolderTabsWithCreate';
 import SearchLinkInput from './components/links/SearchLinkInput';
-import { useModalStore } from '@store/useModalStore';
-import Modal from '@components/common/Modal';
 
-import { useEffect, useState } from 'react';
-import { getAllLinks, getFolderLinks } from '@api/link/api';
+import { getAllLinks } from '@api/link/api';
 import { useLinkStore } from '@store/useLinkStore';
-import { useFolderStore } from '@store/useFolderStore';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import { FolderControls } from './components/folders/FolderControls';
+import AddLinkInput from './components/links/AddLinkInput';
 import { LinkGallery } from './components/links/LinkGallery';
 import { LinkPagination } from './components/links/LinkPagination';
-import AddLinkInput from './components/links/AddLinkInput';
 
 const LinkPage: React.FC = () => {
   const setLinkList = useLinkStore((state) => state.setLinkList);
-  const selectedFolder = useFolderStore((state) => state.selectedFolder);
   const [totalLinkCount, setTotalLinkCount] = useState<number>(0);
-  const { folderId } = useParams();
 
   useEffect(() => {
     const fetchAllLinks = async () => {
@@ -28,23 +24,6 @@ const LinkPage: React.FC = () => {
     };
     fetchAllLinks();
   }, []);
-
-  useEffect(() => {
-    const fetchFolderLinks = async () => {
-      if (!folderId) {
-        return;
-      }
-
-      const response = await getFolderLinks({
-        folderId: parseInt(folderId),
-        page: 1,
-        pageSize: 10,
-      });
-
-      setLinkList(response.list);
-    };
-    fetchFolderLinks();
-  }, [selectedFolder]);
 
   const isOpen = useModalStore((state) => state.isOpen);
   return (

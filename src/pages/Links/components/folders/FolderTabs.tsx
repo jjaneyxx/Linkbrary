@@ -10,7 +10,6 @@ const FolderTabs = () => {
   const setFoldersStore = useFolderStore((state) => state.setFolders);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
-
   const navigate = useNavigate();
 
   // getAllFolders API

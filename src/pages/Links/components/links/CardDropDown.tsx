@@ -1,20 +1,22 @@
+import { deleteLink, putLink } from '@api/link/api';
+import { useLinkStore } from '@store/useLinkStore';
+import { useModalStore } from '@store/useModalStore';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { useModalStore } from '@store/useModalStore';
-import { deleteLink, putLink } from '@api/link/api';
-import { useParams } from 'react-router-dom';
 
 const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
-  const [isSelected, setIsSelected] = useState<string>('');
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const { linkId } = useParams();
-  const linkIdNumber = Number(linkId);
+  const selectedLinkId = useLinkStore((state) => state.selectedLinkId);
+
+  const [isSelected, setIsSelected] = useState<string>('');
 
   const handleDeleteLink = async () => {
+    if (!selectedLinkId) return;
+
     try {
-      await deleteLink(linkIdNumber);
+      await deleteLink(selectedLinkId);
       alert('링크 삭제 성공');
       closeModal();
     } catch (error) {
@@ -24,9 +26,12 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
   };
 
   const handlePutLink = async () => {
+    if (!selectedLinkId) return;
+
     // brings recent input
     const modalLinkInput = useModalStore.getState().input;
     console.log(modalLinkInput);
+
     if (!modalLinkInput) {
       alert('유효한 링크를 입력하세요');
       return;
@@ -39,7 +44,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
 
     // test
     try {
-      const response = await putLink(linkIdNumber, linkData);
+      const response = await putLink(selectedLinkId, linkData);
       console.log(response); // 수정된 링크 본문
       closeModal();
     } catch (error) {
