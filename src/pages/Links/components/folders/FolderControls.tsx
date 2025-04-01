@@ -1,20 +1,26 @@
-import shareFolder from '@assets/icons/share-folder.svg';
-import renameFolder from '@assets/icons/rename-folder.svg';
-import deleteFolder from '@assets/icons/delete-folder.svg';
-import { useModalStore } from '@store/useModalStore';
-import { useFolderStore } from '@store/useFolderStore';
 import { deleteFolderById, putFolderById } from '@api/folder/api';
+import deleteFolder from '@assets/icons/delete-folder.svg';
+import renameFolder from '@assets/icons/rename-folder.svg';
+import shareFolder from '@assets/icons/share-folder.svg';
+import { useFolderStore } from '@store/useFolderStore';
+import { useModalStore } from '@store/useModalStore';
 import { useParams } from 'react-router-dom';
 
 export const FolderControls = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
-  const selectedFolder = useFolderStore((state) => state.selectedFolder);
-  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+
+  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolderId);
+
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
+  const folders = useFolderStore((state) => state.folders);
+  // get folder name from folder id
+  const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
+
   const { folderId } = useParams(); // get folderId from path
 
   // remove component from DOM
-  if (selectedFolder === '전체') return null;
+  if (selectedFolderId === '전체') return null;
 
   // rename folder
   const handlePutFolder = async (input: string) => {
@@ -61,7 +67,7 @@ export const FolderControls = () => {
 
   return (
     <div className="mt-6 flex justify-between">
-      <div className="text-2xl font-semibold">{selectedFolder}</div>
+      <div className="text-2xl font-semibold">{selectedFolderName}</div>
       <div className="flex gap-3">
         <button className="cursor-pointer" onClick={() => handleOpenModal('share')}>
           <img src={shareFolder} />
