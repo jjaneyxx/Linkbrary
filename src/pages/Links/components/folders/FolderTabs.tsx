@@ -29,21 +29,26 @@ const FolderTabs = () => {
     showAllFolders();
   }, []);
 
-  const handleFolderSelected = (folderId: number | string) => {
+  // set selectedFolder, query string
+  const handleFolderSelected = (folderId: number | null) => {
     setSelectedFolderId(folderId);
+
     if (!folderId) {
-      navigate(`/links`);
-    } else {
-      navigate(`/links/folder/${folderId}`);
+      navigate('/links');
+      return;
     }
+    // add query string
+    const params = new URLSearchParams();
+    params.set('folder', folderId.toString());
+    navigate(`?${params.toString()}`);
   };
 
   return (
     <div className="border-blue flex gap-2">
       <Folder
         children="전체"
-        onClick={() => handleFolderSelected('전체')}
-        className={clsx(selectedFolderId === '전체' && 'bg-primary text-white')}
+        onClick={() => handleFolderSelected(null)}
+        className={clsx(!selectedFolderId && 'bg-primary text-white')}
       />
       {folders.map((folder) => (
         <Folder

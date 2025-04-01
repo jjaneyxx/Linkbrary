@@ -4,13 +4,13 @@ import { create } from 'zustand';
 interface FolderState {
   folders: GetFoldersResponse[];
   setFolders: (folders: GetFoldersResponse[]) => void;
-  selectedFolderId: number | string;
-  setSelectedFolderId: (value: number | string) => void;
+  selectedFolderId: number | null;
+  setSelectedFolderId: (value: number | null) => void;
 }
 
 export const useFolderStore = create<FolderState>((set) => ({
   folders: [],
   setFolders: (folders) => set({ folders }),
-  selectedFolderId: '전체', // default
+  selectedFolderId: null,
   setSelectedFolderId: (value) => set({ selectedFolderId: value }),
 }));

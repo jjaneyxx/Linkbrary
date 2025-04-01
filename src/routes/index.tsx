@@ -15,9 +15,6 @@ const AppRouter = () => {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Landing />}></Route>
             <Route path="/links" element={<LinkPage />}></Route>
-            {/*@todo folderId, linkId query 로 수정*/}
-            <Route path="/links/folder/:folderId" element={<LinkPage />}></Route>
-            <Route path="/links/folder/:folderId/link/:linkId" element={<LinkPage />}></Route>
           </Route>
 
           <Route element={<AuthLayout />}>
