@@ -1,38 +1,37 @@
+import { ErrorResponse } from '@api/axios';
 import { deleteFolderById, putFolderById } from '@api/folder/api';
 import deleteFolder from '@assets/icons/delete-folder.svg';
 import renameFolder from '@assets/icons/rename-folder.svg';
 import shareFolder from '@assets/icons/share-folder.svg';
 import { useFolderStore } from '@store/useFolderStore';
 import { useModalStore } from '@store/useModalStore';
-import { useParams } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 export const FolderControls = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolderId);
+  const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
 
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const folders = useFolderStore((state) => state.folders);
   // get folder name from folder id
   const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
 
-  const { folderId } = useParams(); // get folderId from path
-
   // remove component from DOM
-  if (selectedFolderId === '전체') return null;
+  if (selectedFolderId === null) return null;
 
   // rename folder
   const handlePutFolder = async (input: string) => {
-    if (input === '' || !folderId) return;
+    if (input === '' || !selectedFolderId) return;
 
     const folderData = {
       name: input,
     };
 
     try {
-      const response = await putFolderById(parseInt(folderId), folderData);
-      setSelectedFolder(response.name);
+      const response = await putFolderById(selectedFolderId, folderData);
+      setSelectedFolderId(response.id);
       closeModal();
     } catch (error) {
       console.log('폴더 수정 실패', error);
@@ -41,15 +40,21 @@ export const FolderControls = () => {
 
   // delete folder
   const handleDeleteFolder = async () => {
-    if (!folderId) return;
-    console.log('folderId', folderId);
+    if (!selectedFolderId) return;
 
     try {
-      await deleteFolderById(parseInt(folderId));
+      await deleteFolderById(selectedFolderId);
       alert('폴더 삭제 성공');
       closeModal();
     } catch (error) {
-      console.log('폴더 삭제 실패', error);
+      const axiosError = error as AxiosError<ErrorResponse>;
+      console.error('폴더 삭제 실패', axiosError.response?.data.name);
+
+      const errorName = axiosError.response?.data.name;
+      if (errorName === 'PrismaClientKnownRequestError') {
+        alert('폴더 안 링크를 먼저 삭제해주세요');
+        closeModal();
+      }
     }
   };
 
@@ -61,7 +66,6 @@ export const FolderControls = () => {
       openModal('폴더 삭제', '삭제하기', handleDeleteFolder, mode);
     } else if (mode === 'share') {
       alert('아직 개발 중인 기능입니다 ⚒️');
-      // openModal('폴더 공유', '', handleShareFolder, mode)
     }
   };
 

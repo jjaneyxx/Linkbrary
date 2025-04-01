@@ -7,6 +7,7 @@ export const apiClient = axios.create({
 
 // 4xx error
 export interface ErrorResponse {
+  name: string;
   message: string;
 }
 

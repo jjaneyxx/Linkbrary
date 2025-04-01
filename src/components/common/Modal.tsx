@@ -1,10 +1,10 @@
-import { useModalStore } from '@store/useModalStore';
-import Button from './Button';
 import closeModal from '@assets/icons/close-modal.svg';
-import { ChangeEvent, MouseEvent } from 'react';
 import { useFolderStore } from '@store/useFolderStore';
+import { useModalStore } from '@store/useModalStore';
 import clsx from 'clsx';
+import { ChangeEvent, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from './Button';
 
 const Modal = () => {
   const handleModalClose = useModalStore((state) => state.closeModal);
@@ -18,8 +18,10 @@ const Modal = () => {
   const modalLink = useModalStore((state) => state.linkInput);
 
   const folders = useFolderStore((state) => state.folders);
-  const selectedFolder = useFolderStore((state) => state.selectedFolder);
-  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
+  const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
+  // get folder name from folder id
+  const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
   const navigate = useNavigate();
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
@@ -27,8 +29,8 @@ const Modal = () => {
     e.stopPropagation();
   };
 
-  const handleFolderSelected = (folderName: string, folderId?: number) => {
-    setSelectedFolder(folderName);
+  const handleFolderSelected = (folderId: number) => {
+    setSelectedFolderId(selectedFolderId);
     if (!folderId) {
       navigate(`/links`);
     } else {
@@ -57,11 +59,11 @@ const Modal = () => {
                     key={folder.id}
                     children={folder.name}
                     onClick={() => {
-                      handleFolderSelected(folder.name, folder.id);
+                      handleFolderSelected(folder.id);
                     }}
                     className={clsx(
                       'p-2',
-                      selectedFolder === folder.name &&
+                      selectedFolderName === folder.name &&
                         'text-primary cursor-pointer rounded-lg bg-[#F0F6FF]',
                     )}
                   />
@@ -71,7 +73,7 @@ const Modal = () => {
           )}
 
           {/* 폴더 삭제 */}
-          {modalMode === 'delete' && <div className="mb-6">{selectedFolder}</div>}
+          {modalMode === 'delete' && <div className="mb-6">{selectedFolderName}</div>}
 
           {modalMode !== 'delete' && modalMode !== 'addLink' && (
             <input

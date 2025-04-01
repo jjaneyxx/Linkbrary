@@ -41,7 +41,7 @@ const FolderTabs = () => {
     navigate(`?${params.toString()}`);
   };
 
-  // 새로고침 이후 path 에서 folderId 를 읽어와서 그대로 selectedFolderId 에 반영하기
+  // remain current state after refresh
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const folderId = params.get('folder');
