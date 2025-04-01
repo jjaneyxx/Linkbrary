@@ -1,12 +1,11 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
-import { AuthContextProvider } from '@contexts/AuthContext';
-import MainLayout from '@components/layout/MainLayout';
 import AuthLayout from '@components/layout/AuthLayout';
-import Landing from '@pages/Landing/Landing';
-import LinkPage from '@pages/Links/LinkPage';
+import MainLayout from '@components/layout/MainLayout';
+import { AuthContextProvider } from '@contexts/AuthContext';
 import Login from '@pages/auth/LoginPage';
 import Signup from '@pages/auth/SignupPage';
+import Landing from '@pages/Landing/Landing';
+import LinkPage from '@pages/Links/LinkPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const AppRouter = () => {
   return (

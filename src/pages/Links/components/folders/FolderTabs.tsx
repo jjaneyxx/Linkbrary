@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import Folder from './Folder';
-import { clsx } from 'clsx';
-import { getAllFolders, GetFoldersResponse } from '@api/folder/api';
+import { getAllFolders } from '@api/folder/api';
 import { useFolderStore } from '@store/useFolderStore';
+import { clsx } from 'clsx';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Folder from './Folder';
 
 // show added folders
 const FolderTabs = () => {
@@ -11,16 +11,14 @@ const FolderTabs = () => {
   const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
   const setFoldersStore = useFolderStore((state) => state.setFolders);
   const navigate = useNavigate();
-
-  // getAllFolders API 응답을 state 로 저장
-  const [folders, setFolders] = useState<GetFoldersResponse[]>([]);
+  // get latest folders state from store
+  const folders = useFolderStore.getState().folders;
 
   useEffect(() => {
     const showAllFolders = async () => {
       try {
+        // response : object array
         const response = await getAllFolders();
-        // 로컬, 전역 상태에 각각 folders 를 저장
-        setFolders(response);
         setFoldersStore(response);
       } catch (error) {
         console.log(error);
