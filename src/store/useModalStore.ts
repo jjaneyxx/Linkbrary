@@ -14,7 +14,7 @@ interface ModalState {
     title: string,
     buttonText: string,
     onConfirm: (input: string) => void,
-    mode: string,
+    mode?: string,
     linkInput?: string,
   ) => void;
   closeModal: () => void;

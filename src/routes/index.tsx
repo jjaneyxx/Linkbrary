@@ -1,13 +1,11 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
-import Landing from '../pages/Landing/Landing';
-import LinkPage from '../pages/Links/LinkPage';
-import Favorite from '../pages/Favorite/Favorite';
-import Login from '../pages/auth/LoginPage';
-import Signup from '../pages/auth/SignupPage';
-import MainLayout from '../components/layout/MainLayout';
-import AuthLayout from '../components/layout/AuthLayout';
-import { AuthContextProvider } from '../contexts/AuthContext';
+import AuthLayout from '@components/layout/AuthLayout';
+import MainLayout from '@components/layout/MainLayout';
+import { AuthContextProvider } from '@contexts/AuthContext';
+import Login from '@pages/auth/LoginPage';
+import Signup from '@pages/auth/SignupPage';
+import Landing from '@pages/Landing/Landing';
+import LinkPage from '@pages/Links/LinkPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const AppRouter = () => {
   return (
@@ -17,8 +15,6 @@ const AppRouter = () => {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Landing />}></Route>
             <Route path="/links" element={<LinkPage />}></Route>
-            <Route path="/links/folder/:folderId" element={<LinkPage />}></Route>
-            <Route path="/favorite" element={<Favorite />}></Route>
           </Route>
 
           <Route element={<AuthLayout />}>

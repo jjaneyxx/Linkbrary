@@ -1,12 +1,12 @@
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
 import OAuthSection from './components/OAuthSection';
-import Button from '../../components/common/Button';
+import Button from '@components/common/Button';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signIn } from '../../api/auth/api';
+import { signIn } from '@api/auth/api';
 import axios from 'axios';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '@contexts/AuthContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');

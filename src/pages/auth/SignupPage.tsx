@@ -1,9 +1,9 @@
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
-import Button from '../../components/common/Button';
+import Button from '@components/common/Button';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signUp } from '../../api/auth/api';
+import { signUp } from '@api/auth/api';
 import axios from 'axios';
 
 const Signup: React.FC = () => {

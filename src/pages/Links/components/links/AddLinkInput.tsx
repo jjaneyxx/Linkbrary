@@ -1,29 +1,29 @@
-import addLinkIcon from '../../assets/icons/add-link.svg';
-import Button from '../../components/common/Button';
+import { postLink } from '@api/link/api';
+import addLinkIcon from '@assets/icons/add-link.svg';
+import Button from '@components/common/Button';
+import { useFolderStore } from '@store/useFolderStore';
+import { useLinkStore } from '@store/useLinkStore';
+import { useModalStore } from '@store/useModalStore';
 import { FormEvent, useState } from 'react';
-import { useModalStore } from '../../store/useModalStore';
-import { postLink } from '../../api/link/api';
-import { useParams } from 'react-router-dom';
-import { useLinkStore } from '../../store/useLinkStore';
 
 const AddLinkInput = () => {
   const [linkInput, setLinkInput] = useState<string>(''); // local
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const addLink = useLinkStore((state) => state.addLink);
-  const { folderId } = useParams();
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
 
   const handlePostLink = async () => {
     // store 의 최신 상태 link 가져옴
     const modalLink = useModalStore.getState().linkInput;
 
-    if (!folderId || !modalLink) {
+    if (!selectedFolderId || !modalLink) {
       return;
     }
 
     const linkData = {
       url: modalLink,
-      folderId: parseInt(folderId),
+      folderId: selectedFolderId,
     };
 
     console.log('모달 데이터', linkData);
@@ -43,9 +43,7 @@ const AddLinkInput = () => {
   const handleAddLink = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const urlRegex = /^(https?|ftp):\/\/(-\.)?([^\s\/?\.#-]+\.?)+(\/[^\s]*)?$/i;
-
-    if (linkInput === '' || !urlRegex.test(linkInput)) {
+    if (linkInput === '') {
       alert('유효한 링크를 입력해주세요🔗');
       return;
     }

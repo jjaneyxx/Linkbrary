@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useState } from 'react';
-import { getUser } from '../api/user/api';
+import { getUser } from '@api/user/api';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 

@@ -1,10 +1,9 @@
-import { useModalStore } from '../../store/useModalStore';
-import Button from './Button';
-import closeModal from '../../assets/icons/close-modal.svg';
-import { ChangeEvent, MouseEvent } from 'react';
-import { useFolderStore } from '../../store/useFolderStore';
+import closeModal from '@assets/icons/close-modal.svg';
+import { useFolderStore } from '@store/useFolderStore';
+import { useModalStore } from '@store/useModalStore';
 import clsx from 'clsx';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, MouseEvent } from 'react';
+import Button from './Button';
 
 const Modal = () => {
   const handleModalClose = useModalStore((state) => state.closeModal);
@@ -14,33 +13,24 @@ const Modal = () => {
   const setModalInput = useModalStore((state) => state.setInput);
   const modalOnConfirm = useModalStore((state) => state.onConfirm);
   const modalMode = useModalStore((state) => state.mode);
-
   const modalLink = useModalStore((state) => state.linkInput);
-
   const folders = useFolderStore((state) => state.folders);
-  const selectedFolder = useFolderStore((state) => state.selectedFolder);
-  const setSelectedFolder = useFolderStore((state) => state.setSelectedFolder);
-  const navigate = useNavigate();
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
+  const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
+  // get folder name from folder id
+  const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
     // event bubbling 방지
     e.stopPropagation();
   };
 
-  const handleFolderSelected = (folderName: string, folderId?: number) => {
-    setSelectedFolder(folderName);
-    if (!folderId) {
-      navigate(`/links`);
-    } else {
-      navigate(`/links/folder/${folderId}`);
-    }
-  };
   return (
     <div className="fixed inset-0 z-40 bg-black/50" onClick={handleModalClose}>
       {/* Modal */}
       <div
         onClick={preventEventBubbling}
-        className="absolute top-1/2 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center rounded-[15px] border border-[#CCD5E3] bg-white px-10 py-8"
+        className="absolute top-1/2 left-1/2 z-50 flex w-[360px] -translate-x-1/2 -translate-y-1/2 transform flex-col items-center rounded-[15px] border border-[#CCD5E3] bg-white px-10 py-8"
       >
         <div className="relative flex flex-col items-center">
           <span className="rounded-lg px-[15px] py-[18px] text-xl leading-1 font-bold text-[#373740]">
@@ -56,12 +46,10 @@ const Modal = () => {
                   <div
                     key={folder.id}
                     children={folder.name}
-                    onClick={() => {
-                      handleFolderSelected(folder.name, folder.id);
-                    }}
+                    onClick={() => setSelectedFolderId(folder.id)}
                     className={clsx(
                       'p-2',
-                      selectedFolder === folder.name &&
+                      selectedFolderId === folder.id &&
                         'text-primary cursor-pointer rounded-lg bg-[#F0F6FF]',
                     )}
                   />
@@ -71,7 +59,7 @@ const Modal = () => {
           )}
 
           {/* 폴더 삭제 */}
-          {modalMode === 'delete' && <div className="mb-6">{selectedFolder}</div>}
+          {modalMode === 'delete' && <div className="mb-6">{selectedFolderName}</div>}
 
           {modalMode !== 'delete' && modalMode !== 'addLink' && (
             <input

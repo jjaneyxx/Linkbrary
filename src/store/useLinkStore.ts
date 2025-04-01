@@ -1,22 +1,23 @@
+import { LinkResponse } from '@api/link/api';
 import { create } from 'zustand';
-import { LinkResponse } from '../api/link/api';
 
-// 전체 링크 리스트 관리
 interface LinkListState {
   linkList: LinkResponse[];
   addLink: (link: LinkResponse) => void;
   setLinkList: (links: LinkResponse[]) => void;
+  selectedLinkId: number | null;
+  setSelectedLinkId: (value: number | null) => void;
 }
 
 export const useLinkStore = create<LinkListState>((set) => ({
   linkList: [],
+  setLinkList: (links) => set({ linkList: links }),
 
-  // 추가된 링크를 기존의 배열에 추가
+  selectedLinkId: null,
+  setSelectedLinkId: (value) => set({ selectedLinkId: value }),
+
   addLink: (link) =>
     set((state) => ({
       linkList: [link, ...state.linkList],
     })),
-
-  // 링크 리스트
-  setLinkList: (links) => set({ linkList: links }),
 }));
