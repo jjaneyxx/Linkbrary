@@ -6,10 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import Folder from './Folder';
 
 const FolderTabs = () => {
-  // get latest folders state from store
-  const folders = useFolderStore.getState().folders;
+  const folders = useFolderStore.getState().folders; // get latest folders state from store
   const setFoldersStore = useFolderStore((state) => state.setFolders);
-
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
 
@@ -42,6 +40,13 @@ const FolderTabs = () => {
     params.set('folder', folderId.toString());
     navigate(`?${params.toString()}`);
   };
+
+  // 새로고침 이후 path 에서 folderId 를 읽어와서 그대로 selectedFolderId 에 반영하기
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const folderId = params.get('folder');
+    if (folderId) setSelectedFolderId(Number(folderId));
+  }, []);
 
   return (
     <div className="border-blue flex gap-2">
