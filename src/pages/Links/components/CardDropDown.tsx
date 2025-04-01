@@ -1,11 +1,32 @@
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useModalStore } from '../../../store/useModalStore';
+import { deleteLink } from '../../../api/link/api';
+import { useParams } from 'react-router-dom';
 
 const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
   const [isSelected, setIsSelected] = useState<string>('');
+  const openModal = useModalStore((state) => state.openModal);
+  const closeModal = useModalStore((state) => state.closeModal);
+  const { linkId } = useParams();
+  const linkIdNumber = Number(linkId);
+
+  const handleDeleteLink = async () => {
+    try {
+      // test
+      await deleteLink(linkIdNumber);
+      alert('링크 삭제 성공');
+      closeModal();
+    } catch (error) {
+      alert('링크 삭제 실패');
+      console.log('error', error);
+    }
+  };
 
   const handleDropDownSelected = (value: string) => {
     setIsSelected(value);
+    // 삭제하는 link 전달
+    openModal('링크 삭제', '삭제하기', handleDeleteLink, 'delete');
   };
 
   if (isDropDownOpen === false) {

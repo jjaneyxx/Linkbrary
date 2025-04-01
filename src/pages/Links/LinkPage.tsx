@@ -37,7 +37,6 @@ const LinkPage: React.FC = () => {
         pageSize: 10,
       });
 
-      console.log('selected folder links', folderId, response.list);
       setLinkList(response.list);
     };
     fetchFolderLinks();

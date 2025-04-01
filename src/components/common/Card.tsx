@@ -6,9 +6,10 @@ import CardDropDown from '../../pages/Links/components/CardDropDown';
 
 type CardProps = {
   link: LinkResponse;
+  onClick: () => void;
 };
 
-const Card = ({ link }: CardProps) => {
+const Card = ({ link, onClick }: CardProps) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +32,10 @@ const Card = ({ link }: CardProps) => {
   }, []);
 
   return (
-    <div className="flex h-[334px] w-full cursor-pointer flex-col rounded-[15px] border">
+    <div
+      className="flex h-[334px] w-full cursor-pointer flex-col rounded-[15px] border"
+      onClick={onClick}
+    >
       {/* link image*/}
       <div className="h-[200px] rounded-t-[15px]">
         <img
