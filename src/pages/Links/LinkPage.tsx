@@ -7,6 +7,7 @@ import { getAllLinks } from '@api/link/api';
 import { useLinkStore } from '@store/useLinkStore';
 import { useEffect, useState } from 'react';
 
+import { useFolderStore } from '@store/useFolderStore';
 import { FolderControls } from './components/folders/FolderControls';
 import AddLinkInput from './components/links/AddLinkInput';
 import { LinkGallery } from './components/links/LinkGallery';
@@ -15,15 +16,18 @@ import { LinkPagination } from './components/links/LinkPagination';
 const LinkPage: React.FC = () => {
   const setLinkList = useLinkStore((state) => state.setLinkList);
   const [totalLinkCount, setTotalLinkCount] = useState<number>(0);
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
 
   useEffect(() => {
-    const fetchAllLinks = async () => {
-      const response = await getAllLinks({ page: 1, pageSize: 10 });
-      setLinkList(response.list);
-      setTotalLinkCount(response.totalCount);
-    };
-    fetchAllLinks();
-  }, []);
+    if (selectedFolderId === null) {
+      const fetchAllLinks = async () => {
+        const response = await getAllLinks({ page: 1, pageSize: 10 });
+        setLinkList(response.list);
+        setTotalLinkCount(response.totalCount);
+      };
+      fetchAllLinks();
+    }
+  }, [selectedFolderId === null]);
 
   const isOpen = useModalStore((state) => state.isOpen);
   return (
