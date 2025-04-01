@@ -3,7 +3,6 @@ import { useFolderStore } from '@store/useFolderStore';
 import { useModalStore } from '@store/useModalStore';
 import clsx from 'clsx';
 import { ChangeEvent, MouseEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 const Modal = () => {
@@ -14,32 +13,16 @@ const Modal = () => {
   const setModalInput = useModalStore((state) => state.setInput);
   const modalOnConfirm = useModalStore((state) => state.onConfirm);
   const modalMode = useModalStore((state) => state.mode);
-
   const modalLink = useModalStore((state) => state.linkInput);
-
   const folders = useFolderStore((state) => state.folders);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
   // get folder name from folder id
   const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
-  const navigate = useNavigate();
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
     // event bubbling 방지
     e.stopPropagation();
-  };
-
-  const handleFolderSelected = (folderId: number | null) => {
-    setSelectedFolderId(folderId);
-
-    if (!folderId) {
-      navigate('/links');
-      return;
-    }
-    // add query string
-    const params = new URLSearchParams();
-    params.set('folder', folderId.toString());
-    navigate(`?${params.toString()}`);
   };
 
   return (
@@ -47,7 +30,7 @@ const Modal = () => {
       {/* Modal */}
       <div
         onClick={preventEventBubbling}
-        className="absolute top-1/2 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 transform flex-col items-center rounded-[15px] border border-[#CCD5E3] bg-white px-10 py-8"
+        className="absolute top-1/2 left-1/2 z-50 flex w-[360px] -translate-x-1/2 -translate-y-1/2 transform flex-col items-center rounded-[15px] border border-[#CCD5E3] bg-white px-10 py-8"
       >
         <div className="relative flex flex-col items-center">
           <span className="rounded-lg px-[15px] py-[18px] text-xl leading-1 font-bold text-[#373740]">
@@ -63,12 +46,10 @@ const Modal = () => {
                   <div
                     key={folder.id}
                     children={folder.name}
-                    onClick={() => {
-                      handleFolderSelected(folder.id);
-                    }}
+                    onClick={() => setSelectedFolderId(folder.id)}
                     className={clsx(
                       'p-2',
-                      selectedFolderName === folder.name &&
+                      selectedFolderId === folder.id &&
                         'text-primary cursor-pointer rounded-lg bg-[#F0F6FF]',
                     )}
                   />
