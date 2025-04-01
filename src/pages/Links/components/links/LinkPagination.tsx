@@ -1,6 +1,6 @@
 import leftArrow from '@assets/icons/left-arrow.svg';
-import rightArrow from '@assets/icons/right-arrow.svg';
 import page1 from '@assets/icons/pagination-1.svg';
+import rightArrow from '@assets/icons/right-arrow.svg';
 import { useEffect } from 'react';
 
 type PaginationProps = {
@@ -13,6 +13,7 @@ type PaginationProps = {
 export const LinkPagination = ({ totalLinkCount }: PaginationProps) => {
   useEffect(() => {
     const pageNumber = Math.floor(totalLinkCount / 10) + 1;
+    console.log(pageNumber);
   });
 
   return (

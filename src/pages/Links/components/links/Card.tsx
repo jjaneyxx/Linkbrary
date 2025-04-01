@@ -1,6 +1,6 @@
 import { LinkResponse } from '@api/link/api';
-import fallBackImage from '@assets/images/card-fallback.svg';
 import kebap from '@assets/icons/link-kebap.svg';
+import fallBackImage from '@assets/images/card-fallback.svg';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import CardDropDown from './CardDropDown';
 
@@ -13,7 +13,7 @@ const Card = ({ link, onClick }: CardProps) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
-  const handleDropDown = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleDropDown = () => {
     setIsDropDownOpen((prev) => !prev);
   };
 
