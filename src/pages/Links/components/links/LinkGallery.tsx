@@ -34,24 +34,15 @@ export const LinkGallery = () => {
     fetchFolderLinks();
   }, [selectedFolderId, searchParam]);
 
-  const handleLinkSelected = (linkId: number) => {
+  const handleLinkSelected = (linkId: number, linkUrl: string) => {
     setSelectedLinkId(linkId);
 
     if (!linkId) {
       navigate(`/links`);
       return;
     }
-    // add query string
-    const params = new URLSearchParams();
-    params.set('link', linkId.toString());
 
-    // "전체" 탭에서 링크 선택
-    if (selectedFolderId === null) {
-      navigate(`?${params.toString()}`);
-      return;
-    }
-    // select link from selected folder
-    navigate(`?folder=${selectedFolderId}&${params.toString()}`);
+    window.open(linkUrl);
   };
 
   // "전체" 탭의 링크 선택 후 새로 고침하는 경우
@@ -64,7 +55,7 @@ export const LinkGallery = () => {
   return (
     <div className="mt-6 grid grid-cols-3 gap-5">
       {linkList.map((link) => (
-        <Card key={link.id} link={link} onClick={() => handleLinkSelected(link.id)} />
+        <Card key={link.id} link={link} onClick={() => handleLinkSelected(link.id, link.url)} />
       ))}
     </div>
   );
