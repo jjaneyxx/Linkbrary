@@ -1,19 +1,15 @@
 import leftArrow from '@assets/icons/left-arrow.svg';
 import page1 from '@assets/icons/pagination-1.svg';
 import rightArrow from '@assets/icons/right-arrow.svg';
+import { usePaginationStore } from '@store/usePaginationStore';
 import { useEffect } from 'react';
 
-type PaginationProps = {
-  totalLinkCount: number;
-};
-
-// totalLinkCount / 10 = 0 -> page 1
-// totalLinkCount / 10 = 1 -> page 2
-
-export const LinkPagination = ({ totalLinkCount }: PaginationProps) => {
+export const LinkPagination = () => {
+  const totalLinkCount = usePaginationStore((state) => state.totalCount);
   useEffect(() => {
-    const pageNumber = Math.floor(totalLinkCount / 10) + 1;
-    console.log(pageNumber);
+    const maxPageNumber = Math.floor(totalLinkCount / 10) + 1;
+    console.log('maxPageNumber', maxPageNumber);
+    // maxPageNumber 에 따라 페이지 번호 렌더링
   });
 
   return (
