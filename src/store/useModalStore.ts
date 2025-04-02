@@ -10,6 +10,9 @@ interface ModalState {
   setInput: (value: string) => void;
   onConfirm: (input: string) => void;
 
+  modalSelectedFolderId: number | null;
+  setModalSelectedFolderId: (value: number) => void;
+
   openModal: (
     title: string,
     buttonText: string,
@@ -30,6 +33,10 @@ export const useModalStore = create<ModalState>((set) => ({
   linkInput: '',
   setInput: (value) => set({ input: value }),
   onConfirm: () => {}, // 기본값으로 비어있는 함수
+
+  modalSelectedFolderId: null,
+  setModalSelectedFolderId: (value) => set({ modalSelectedFolderId: value }),
+
   openModal: (title, buttonText, onConfirm, mode, linkInput) =>
     set({ isOpen: true, title, buttonText, onConfirm, mode, linkInput }),
   closeModal: () =>
