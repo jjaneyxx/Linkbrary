@@ -1,33 +1,60 @@
 import leftArrow from '@assets/icons/left-arrow.svg';
-import page1 from '@assets/icons/pagination/page-1.svg';
-import page2 from '@assets/icons/pagination/page-2.svg';
-import page3 from '@assets/icons/pagination/page-3.svg';
-import page4 from '@assets/icons/pagination/page-4.svg';
-import page5 from '@assets/icons/pagination/page-5.svg';
-import page6 from '@assets/icons/pagination/page-6.svg';
-import page7 from '@assets/icons/pagination/page-7.svg';
-import page8 from '@assets/icons/pagination/page-8.svg';
-import page9 from '@assets/icons/pagination/page-9.svg';
 import rightArrow from '@assets/icons/right-arrow.svg';
 import { usePaginationStore } from '@store/usePaginationStore';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const LinkPagination = () => {
   const totalLinkCount = usePaginationStore((state) => state.totalCount);
+  const setCurrentPage = usePaginationStore((state) => state.setCurrentPage);
+  const navigate = useNavigate();
+  // 선택된 페이지 번호에 스타일을 주기 위해
+  const [selectedPage, setSelectedPage] = useState<number>(1);
+
+  console.log('totalLinkCount', totalLinkCount);
 
   const maxPageNumber =
     totalLinkCount % 9 === 0 ? Math.floor(totalLinkCount / 9) : Math.floor(totalLinkCount / 9) + 1;
 
   const pageNumberList = Array.from({ length: maxPageNumber }, (_, i) => i + 1);
-  const pageNumberIcons = [page1, page2, page3, page4, page5, page6, page7, page8, page9];
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber); // store
+    setSelectedPage(pageNumber); // for button style
+    // add query string
+    const params = new URLSearchParams();
+    params.set('page', pageNumber.toString());
+    params.set('pageSize', '9');
+    navigate(`?${params.toString()}`);
+  };
 
   return (
     <div className="mt-10 flex justify-center gap-1">
       <button>
         <img src={leftArrow} className="mr-2.5 cursor-pointer" />
       </button>
+
       {pageNumberList.map((pageNumber) => (
-        <button key={pageNumber}>
-          <img src={pageNumberIcons[pageNumber - 1]} alt="pagination number" />
+        <button
+          key={pageNumber}
+          className="cursor-pointer"
+          onClick={() => handlePageChange(pageNumber)}
+        >
+          {/* insert svg icon */}
+          <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="8" fill="#F7F7F7" />
+            <text
+              x="50%"
+              y="50%"
+              text-anchor="middle"
+              fill={selectedPage === pageNumber ? '#000000' : '#C4C4C4'}
+              font-size="18"
+              font-family="Arial, sans-serif"
+              dy=".3em"
+            >
+              {pageNumber}
+            </text>
+          </svg>
         </button>
       ))}
 
