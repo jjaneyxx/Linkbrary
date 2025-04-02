@@ -1,15 +1,14 @@
 import leftArrow from '@assets/icons/left-arrow.svg';
 import rightArrow from '@assets/icons/right-arrow.svg';
 import { usePaginationStore } from '@store/usePaginationStore';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const LinkPagination = () => {
   const totalLinkCount = usePaginationStore((state) => state.totalCount);
   const setCurrentPage = usePaginationStore((state) => state.setCurrentPage);
+  const currentPage = usePaginationStore((state) => state.currentPage);
   const navigate = useNavigate();
-  // 선택된 페이지 번호에 스타일을 주기 위해
-  const [selectedPage, setSelectedPage] = useState<number>(1);
+  // const [selectedPage, setSelectedPage] = useState<number>(1);
 
   console.log('totalLinkCount', totalLinkCount);
 
@@ -20,7 +19,7 @@ export const LinkPagination = () => {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber); // store
-    setSelectedPage(pageNumber); // for button style
+    // setSelectedPage(pageNumber);
     // add query string
     const params = new URLSearchParams();
     params.set('page', pageNumber.toString());
@@ -47,7 +46,7 @@ export const LinkPagination = () => {
               x="50%"
               y="50%"
               text-anchor="middle"
-              fill={selectedPage === pageNumber ? '#000000' : '#C4C4C4'}
+              fill={currentPage === pageNumber ? '#000000' : '#C4C4C4'}
               font-size="18"
               font-family="Arial, sans-serif"
               dy=".3em"
