@@ -45,10 +45,10 @@ export const LinkPagination = () => {
             <text
               x="50%"
               y="50%"
-              text-anchor="middle"
+              textAnchor="middle"
               fill={currentPage === pageNumber ? '#000000' : '#C4C4C4'}
-              font-size="18"
-              font-family="Arial, sans-serif"
+              fontSize="18"
+              fontFamily="Arial, sans-serif"
               dy=".3em"
             >
               {pageNumber}
