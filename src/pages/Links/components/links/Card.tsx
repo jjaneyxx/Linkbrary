@@ -13,7 +13,8 @@ const Card = ({ link, onClick }: CardProps) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
-  const handleDropDown = () => {
+  const handleDropDown = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setIsDropDownOpen((prev) => !prev);
   };
 
