@@ -2,6 +2,7 @@ import leftArrow from '@assets/icons/left-arrow.svg';
 import rightArrow from '@assets/icons/right-arrow.svg';
 import { useFolderStore } from '@store/useFolderStore';
 import { usePaginationStore } from '@store/usePaginationStore';
+import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 
 export const LinkPagination = () => {
@@ -32,8 +33,8 @@ export const LinkPagination = () => {
 
   return (
     <div className="mt-10 flex justify-center gap-1">
-      <button>
-        <img src={leftArrow} className="mr-2.5 cursor-pointer" />
+      <button className={clsx('mr-2.5 cursor-pointer', currentPage === 1 && 'hidden')}>
+        <img src={leftArrow} />
       </button>
 
       {pageNumberList.map((pageNumber) => (
@@ -60,8 +61,8 @@ export const LinkPagination = () => {
         </button>
       ))}
 
-      <button>
-        <img src={rightArrow} className="ml-2.5 cursor-pointer" />
+      <button className={clsx('ml-2.5 cursor-pointer', currentPage === maxPageNumber && 'hidden')}>
+        <img src={rightArrow} />
       </button>
     </div>
   );
