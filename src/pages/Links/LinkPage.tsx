@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 
 import { useFolderStore } from '@store/useFolderStore';
 import { usePaginationStore } from '@store/usePaginationStore';
+import { useSearchParams } from 'react-router-dom';
 import { FolderControls } from './components/folders/FolderControls';
 import AddLinkInput from './components/links/AddLinkInput';
 import { LinkGallery } from './components/links/LinkGallery';
@@ -19,18 +20,23 @@ const LinkPage: React.FC = () => {
   const setLinkList = useLinkStore((state) => state.setLinkList);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setTotalLinkCount = usePaginationStore((state) => state.setTotalCount);
+  const [searchParams] = useSearchParams();
 
   // fetch all links
   useEffect(() => {
-    if (selectedFolderId === null) {
-      const fetchAllLinks = async () => {
-        const response = await getAllLinks({ page: 1, pageSize: 9 });
-        setLinkList(response.list);
-        setTotalLinkCount(response.totalCount); // store
-      };
-      fetchAllLinks();
-    }
-  }, [selectedFolderId === null]);
+    if (selectedFolderId !== null) return;
+
+    const pageParam = searchParams.get('page');
+    const currentPage = !pageParam ? 1 : parseInt(pageParam);
+    console.log('currentPage', currentPage);
+
+    const fetchAllLinks = async () => {
+      const response = await getAllLinks({ page: currentPage, pageSize: 9 });
+      setLinkList(response.list);
+      setTotalLinkCount(response.totalCount); // store
+    };
+    fetchAllLinks();
+  }, [selectedFolderId, searchParams]);
 
   console.log('currentLinkList', currentLinkList);
 
