@@ -12,6 +12,7 @@ export const LinkGallery = () => {
   const setLinkList = useLinkStore((state) => state.setLinkList);
   const navigate = useNavigate();
 
+  // fetch folder links
   useEffect(() => {
     const fetchFolderLinks = async () => {
       if (!selectedFolderId) return;

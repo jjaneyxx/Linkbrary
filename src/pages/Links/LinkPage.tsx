@@ -14,20 +14,24 @@ import { LinkGallery } from './components/links/LinkGallery';
 import { LinkPagination } from './components/links/LinkPagination';
 
 const LinkPage: React.FC = () => {
+  const currentLinkList = useLinkStore.getState().linkList;
   const setLinkList = useLinkStore((state) => state.setLinkList);
   const [totalLinkCount, setTotalLinkCount] = useState<number>(0);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
 
+  // fetch all links
   useEffect(() => {
     if (selectedFolderId === null) {
       const fetchAllLinks = async () => {
-        const response = await getAllLinks({ page: 1, pageSize: 10 });
+        const response = await getAllLinks({ page: 1, pageSize: 9 });
         setLinkList(response.list);
         setTotalLinkCount(response.totalCount);
       };
       fetchAllLinks();
     }
   }, [selectedFolderId === null]);
+
+  console.log('currentLinkList', currentLinkList);
 
   const isOpen = useModalStore((state) => state.isOpen);
   return (
