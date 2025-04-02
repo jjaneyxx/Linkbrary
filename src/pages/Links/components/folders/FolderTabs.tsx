@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Folder from './Folder';
 
 const FolderTabs = () => {
-  const folders = useFolderStore.getState().folders; // get latest folders state from store
+  const folders = useFolderStore((state) => state.folders);
   const setFoldersStore = useFolderStore((state) => state.setFolders);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
@@ -19,6 +19,7 @@ const FolderTabs = () => {
         // response : object array
         const response = await getAllFolders();
         setFoldersStore(response);
+        console.log('all folders', response);
       } catch (error) {
         console.log(error);
       }

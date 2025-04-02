@@ -15,10 +15,14 @@ const Modal = () => {
   const modalMode = useModalStore((state) => state.mode);
   const modalLink = useModalStore((state) => state.linkInput);
   const folders = useFolderStore((state) => state.folders);
-  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
-  const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
+
+  // 변경 : modal store 에서 selectedFolderId 를 따로 관리
+  const modalSelectedFolderId = useModalStore((state) => state.modalSelectedFolderId);
+  const setModalSelectedFolderId = useModalStore((state) => state.setModalSelectedFolderId);
+
   // get folder name from folder id
-  const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
+  const selectedFolderName =
+    folders.find((folder) => folder.id === modalSelectedFolderId)?.name ?? '';
 
   const preventEventBubbling = (e: MouseEvent<HTMLDivElement>) => {
     // event bubbling 방지
@@ -46,10 +50,10 @@ const Modal = () => {
                   <div
                     key={folder.id}
                     children={folder.name}
-                    onClick={() => setSelectedFolderId(folder.id)}
+                    onClick={() => setModalSelectedFolderId(folder.id)}
                     className={clsx(
                       'p-2',
-                      selectedFolderId === folder.id &&
+                      modalSelectedFolderId === folder.id &&
                         'text-primary cursor-pointer rounded-lg bg-[#F0F6FF]',
                     )}
                   />

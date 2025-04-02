@@ -1,7 +1,6 @@
 import { postLink } from '@api/link/api';
 import addLinkIcon from '@assets/icons/add-link.svg';
 import Button from '@components/common/Button';
-import { useFolderStore } from '@store/useFolderStore';
 import { useLinkStore } from '@store/useLinkStore';
 import { useModalStore } from '@store/useModalStore';
 import { FormEvent, useState } from 'react';
@@ -11,26 +10,23 @@ const AddLinkInput = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const addLink = useLinkStore((state) => state.addLink);
-  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
 
   const handlePostLink = async () => {
-    // store 의 최신 상태 link 가져옴
+    // get recent state of linkInput, selectedFolderId from modal store
     const modalLink = useModalStore.getState().linkInput;
+    const modalSelectedFolderId = useModalStore.getState().modalSelectedFolderId;
 
-    if (!selectedFolderId || !modalLink) {
-      return;
-    }
+    if (!modalSelectedFolderId || !modalLink) return;
 
     const linkData = {
       url: modalLink,
-      folderId: selectedFolderId,
+      folderId: modalSelectedFolderId,
     };
 
-    console.log('모달 데이터', linkData);
+    console.log(linkData);
 
     try {
       const response = await postLink(linkData);
-      console.log(response);
       addLink(response); // add link to linkList (global)
       closeModal();
       setLinkInput('');

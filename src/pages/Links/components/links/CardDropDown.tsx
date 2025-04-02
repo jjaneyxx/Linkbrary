@@ -12,6 +12,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
 
   const [isSelected, setIsSelected] = useState<string>('');
 
+  // delete link
   const handleDeleteLink = async () => {
     if (!selectedLinkId) return;
 
@@ -25,19 +26,18 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
     }
   };
 
+  // put link
   const handlePutLink = async () => {
     if (!selectedLinkId) return;
 
     // brings recent input
     const modalLinkInput = useModalStore.getState().input;
-    console.log(modalLinkInput);
 
     if (!modalLinkInput) {
       alert('유효한 링크를 입력하세요');
       return;
     }
 
-    // input 에 입력된 link
     const linkData = {
       url: modalLinkInput,
     };

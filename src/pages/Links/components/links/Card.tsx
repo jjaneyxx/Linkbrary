@@ -13,7 +13,8 @@ const Card = ({ link, onClick }: CardProps) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
-  const handleDropDown = () => {
+  const handleDropDown = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setIsDropDownOpen((prev) => !prev);
   };
 
@@ -48,8 +49,8 @@ const Card = ({ link, onClick }: CardProps) => {
       {/*link info*/}
       <div className="flex-1 rounded-b-[15px] px-5 py-[15px]">
         <div className="mb-2.5 flex justify-between">
-          <div>00 minutes ago</div>
-          <div ref={dropDownRef}>
+          <div className="overflow-hidden whitespace-nowrap">{link.title}</div>
+          <div className="ml-5 shrink-0" ref={dropDownRef}>
             <button className="relative cursor-pointer" onClick={handleDropDown}>
               <img src={kebap} alt="kepab button" />
               {isDropDownOpen && <CardDropDown isDropDownOpen={isDropDownOpen} />}

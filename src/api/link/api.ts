@@ -72,7 +72,7 @@ export const postLink = async (data: PostLinkBody) => {
 
 // get all Links
 export const getAllLinks = async (data: GetAllLinksBody) => {
-  const { page = 1, pageSize = 10, search } = data;
+  const { page = 1, pageSize = 9, search } = data;
   const response = await apiClient.get<LinksResponse>('/links', {
     params: { page, pageSize, search },
   });
