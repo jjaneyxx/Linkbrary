@@ -33,7 +33,10 @@ export const LinkPagination = () => {
 
   return (
     <div className="mt-10 flex justify-center gap-1">
-      <button className={clsx('mr-2.5 cursor-pointer', currentPage === 1 && 'hidden')}>
+      <button
+        className={clsx('mr-2.5 cursor-pointer', currentPage === 1 && 'hidden')}
+        onClick={() => handlePageChange(currentPage - 1)}
+      >
         <img src={leftArrow} />
       </button>
 
@@ -61,7 +64,10 @@ export const LinkPagination = () => {
         </button>
       ))}
 
-      <button className={clsx('ml-2.5 cursor-pointer', currentPage === maxPageNumber && 'hidden')}>
+      <button
+        className={clsx('ml-2.5 cursor-pointer', currentPage === maxPageNumber && 'hidden')}
+        onClick={() => handlePageChange(currentPage + 1)}
+      >
         <img src={rightArrow} />
       </button>
     </div>
