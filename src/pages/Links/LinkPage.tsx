@@ -16,7 +16,6 @@ import { LinkGallery } from './components/links/LinkGallery';
 import { LinkPagination } from './components/links/LinkPagination';
 
 const LinkPage: React.FC = () => {
-  const currentLinkList = useLinkStore.getState().linkList;
   const setLinkList = useLinkStore((state) => state.setLinkList);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setTotalLinkCount = usePaginationStore((state) => state.setTotalCount);
@@ -36,9 +35,7 @@ const LinkPage: React.FC = () => {
       setTotalLinkCount(response.totalCount); // store
     };
     fetchAllLinks();
-  }, [selectedFolderId, searchParams]);
-
-  console.log('currentLinkList', currentLinkList);
+  }, [searchParams]);
 
   const isOpen = useModalStore((state) => state.isOpen);
   return (
