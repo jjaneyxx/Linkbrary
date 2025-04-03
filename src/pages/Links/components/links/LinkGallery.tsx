@@ -42,6 +42,19 @@ export const LinkGallery = () => {
       return;
     }
 
+    // add query string
+    const params = new URLSearchParams();
+    params.set('link', linkId.toString());
+
+    // "전체" 탭에서 링크 선택
+    if (selectedFolderId === null) {
+      navigate(`?${params.toString()}`);
+      window.open(linkUrl);
+      return;
+    }
+
+    // select link from selected folder
+    navigate(`?folder=${selectedFolderId}&${params.toString()}`);
     window.open(linkUrl);
   };
 

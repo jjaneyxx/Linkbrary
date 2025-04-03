@@ -67,10 +67,10 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
   }
 
   return (
-    <ul className="absolute left-0 flex w-25 flex-col border bg-white">
+    <ul className="absolute left-0 flex w-25 flex-col bg-white shadow-lg">
       <li
         className={clsx(
-          'cursor-pointer px-3 py-[7px] text-[14px]',
+          'cursor-pointer px-3 py-[7px] text-[14px] hover:bg-[#E7EFFB]',
           isSelected === 'delete' && 'text-primary bg-[#E7EFFB]',
         )}
         onClick={(e) => {
@@ -82,7 +82,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
       </li>
       <li
         className={clsx(
-          'cursor-pointer px-3 py-[7px] text-[14px]',
+          'cursor-pointer px-3 py-[7px] text-[14px] hover:bg-[#E7EFFB]',
           isSelected === 'edit' && 'text-primary bg-[#E7EFFB]',
         )}
         onClick={(e) => {
