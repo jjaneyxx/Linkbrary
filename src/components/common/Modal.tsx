@@ -87,7 +87,9 @@ const Modal = () => {
           />
 
           {/*close button*/}
-          <button className="absolute -top-4 right-4">
+          <button
+            className={clsx('absolute -top-4 -right-4', modalMode === 'addLink' && 'right-4')}
+          >
             <img
               src={closeModal}
               alt="close modal"
