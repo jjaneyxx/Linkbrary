@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <div className="mt-25 h-40 bg-black px-26 pt-8 pb-27">
       <div className="flex justify-between">
-        <span className="text-[#676767]">©codeit - 2023</span>
+        <span className="text-[#676767]">©codeit - 2025</span>
         <div className="flex justify-between gap-7.5">
           <Link to="/privacy" className="text-[#CFCFCF]">
             Privacy Policy
