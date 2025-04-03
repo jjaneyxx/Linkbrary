@@ -58,14 +58,16 @@ export const LinkGallery = () => {
     window.open(linkUrl);
   };
 
-  // "전체" 탭의 링크 선택 후 새로 고침하는 경우
+  // "전체" 탭의 링크 선택 후 새로고침
   useEffect(() => {
     if (selectedFolderId === null) {
       navigate('/links');
     }
   }, []);
 
-  return (
+  return linkList.length === 0 ? (
+    <div className="mt-6 flex h-25 items-center justify-center">저장된 링크가 없습니다</div>
+  ) : (
     <div className="mt-6 grid grid-cols-3 gap-5">
       {linkList.map((link) => (
         <Card key={link.id} link={link} onClick={() => handleLinkSelected(link.id, link.url)} />

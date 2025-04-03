@@ -1,6 +1,7 @@
 import leftArrow from '@assets/icons/left-arrow.svg';
 import rightArrow from '@assets/icons/right-arrow.svg';
 import { useFolderStore } from '@store/useFolderStore';
+import { useLinkStore } from '@store/useLinkStore';
 import { usePaginationStore } from '@store/usePaginationStore';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +11,11 @@ export const LinkPagination = () => {
   const currentPage = usePaginationStore((state) => state.currentPage);
   const setCurrentPage = usePaginationStore((state) => state.setCurrentPage);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
+  const linkList = useLinkStore.getState().linkList;
   const navigate = useNavigate();
+
+  // remove component from DOM
+  if (linkList.length === 0) return null;
 
   const maxPageNumber =
     totalLinkCount % 9 === 0 ? Math.floor(totalLinkCount / 9) : Math.floor(totalLinkCount / 9) + 1;
