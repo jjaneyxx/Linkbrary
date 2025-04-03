@@ -37,7 +37,7 @@ const Card = ({ link, onClick }: CardProps) => {
 
   return (
     <div
-      className="flex h-[334px] w-full cursor-pointer flex-col rounded-[15px] border"
+      className="flex h-[334px] w-full cursor-pointer flex-col rounded-[15px] shadow-lg transition duration-200 ease-out hover:scale-105"
       onClick={onClick}
     >
       {/* link image*/}
@@ -50,7 +50,7 @@ const Card = ({ link, onClick }: CardProps) => {
         <div>{link.favorite}</div>
       </div>
       {/*link info*/}
-      <div className="flex-1 rounded-b-[15px] px-5 py-[15px]">
+      <div className="flex flex-1 flex-col rounded-b-[15px] px-5 py-[15px]">
         <div className="mb-2.5 flex justify-between">
           <div className="overflow-hidden whitespace-nowrap">{link.title}</div>
           <div className="ml-5 shrink-0" ref={dropDownRef}>
@@ -60,8 +60,8 @@ const Card = ({ link, onClick }: CardProps) => {
             </button>
           </div>
         </div>
-        <div className="line-clamp-2">{link.description}</div>
-        <div>{link.createdAt}</div>
+        <div className="line-clamp-2 min-h-[3rem]">{link.description}</div>
+        <div className="mt-1">{link.createdAt.split('T')[0]}</div>
       </div>
     </div>
   );
