@@ -43,8 +43,8 @@ const Modal = () => {
 
           {/* 링크 추가 */}
           {modalMode === 'addLink' && (
-            <div>
-              <div className="mb-6">{modalLink}</div>
+            <div className="w-[360px] px-10">
+              <div className="mb-6 w-full truncate text-center">{modalLink}</div>
               <div className="mb-6 flex flex-col gap-0.5">
                 {folders.map((folder) => (
                   <div
@@ -87,7 +87,7 @@ const Modal = () => {
           />
 
           {/*close button*/}
-          <button className="absolute -top-4 -right-6">
+          <button className="absolute -top-4 right-4">
             <img
               src={closeModal}
               alt="close modal"
