@@ -3,6 +3,7 @@
 
 body {
   font-family: var(--font-pre);
+  min-width: 1200px;
 }
 
 @theme {
