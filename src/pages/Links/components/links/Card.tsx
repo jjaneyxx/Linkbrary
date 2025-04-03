@@ -1,6 +1,7 @@
 import { LinkResponse } from '@api/link/api';
 import kebap from '@assets/icons/link-kebap.svg';
 import fallBackImage from '@assets/images/card-fallback.svg';
+import { useLinkStore } from '@store/useLinkStore';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import CardDropDown from './CardDropDown';
 
@@ -11,10 +12,12 @@ type CardProps = {
 
 const Card = ({ link, onClick }: CardProps) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const setSelectedLinkId = useLinkStore((state) => state.setSelectedLinkId);
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   const handleDropDown = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    setSelectedLinkId(link.id);
     setIsDropDownOpen((prev) => !prev);
   };
 
