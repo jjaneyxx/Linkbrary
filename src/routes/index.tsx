@@ -1,25 +1,32 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
-import Landing from '../pages/landing';
-import Login from '../pages/login';
-import Signup from '../pages/signup';
-import Links from '../pages/links';
-import Favorite from '../pages/favorite';
-import Layout from '../layout';
+import AuthLayout from '@components/layout/AuthLayout';
+import MainLayout from '@components/layout/MainLayout';
+import { AuthContextProvider } from '@contexts/AuthContext';
+import Login from '@pages/auth/LoginPage';
+import Signup from '@pages/auth/SignupPage';
+import { Faq } from '@pages/Landing/Faq';
+import Landing from '@pages/Landing/Landing';
+import { Privacy } from '@pages/Landing/Privacy';
+import LinkPage from '@pages/Links/LinkPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Landing />}></Route>
-          <Route path="/links" element={<Links />}></Route>
-          <Route path="/favorite" element={<Favorite />}></Route>
-        </Route>
+      <AuthContextProvider>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Landing />}></Route>
+            <Route path="/links" element={<LinkPage />}></Route>
+            <Route path="/privacy" element={<Privacy />}></Route>
+            <Route path="/faq" element={<Faq />}></Route>
+          </Route>
 
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/signup" element={<Signup />}></Route>
-      </Routes>
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+          </Route>
+        </Routes>
+      </AuthContextProvider>
     </BrowserRouter>
   );
 };
