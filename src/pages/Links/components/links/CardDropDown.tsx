@@ -63,7 +63,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
       closeModal();
     } catch (error) {
       alert('링크 수정 실패');
-      console.log('error', error);
+      console.error('error', error);
     }
   };
 

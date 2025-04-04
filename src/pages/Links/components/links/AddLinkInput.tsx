@@ -41,7 +41,7 @@ const AddLinkInput = () => {
       setLinkInput('');
       closeModal();
     } catch (error) {
-      console.log('링크 추가 실패', error);
+      console.error('링크 추가 실패', error);
     }
   };
 
