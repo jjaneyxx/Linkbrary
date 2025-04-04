@@ -1,4 +1,5 @@
 import { postFolder } from '@api/folder/api';
+import { useFolderStore } from '@store/useFolderStore';
 import { useModalStore } from '@store/useModalStore';
 import axios from 'axios';
 import FolderTabs from './FolderTabs';
@@ -6,6 +7,7 @@ import FolderTabs from './FolderTabs';
 const FolderTabsWithCreate = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
+  const fetchFolders = useFolderStore((state) => state.fetchFolders);
 
   const handlePostFolder = async (input: string) => {
     if (input === '') return;
@@ -13,10 +15,12 @@ const FolderTabsWithCreate = () => {
     const folderData = {
       name: input,
     };
+
     try {
       const response = await postFolder(folderData);
+      console.log('created folder', response);
+      fetchFolders();
       alert('폴더 추가 성공');
-      console.log(response);
       closeModal();
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
