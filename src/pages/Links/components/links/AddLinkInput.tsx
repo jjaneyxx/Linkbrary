@@ -16,6 +16,7 @@ const AddLinkInput = () => {
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
   const fetchFolderLinks = useLinkStore((state) => state.fetchFolderLinks);
+  const setLoading = useModalStore((state) => state.setLoading);
 
   const handlePostLink = async () => {
     // get recent state of linkInput, selectedFolderId from modal store
@@ -31,6 +32,7 @@ const AddLinkInput = () => {
     };
 
     try {
+      setLoading(true);
       await postLink(linkData);
 
       if (selectedFolderId) {
@@ -38,12 +40,15 @@ const AddLinkInput = () => {
       } else {
         fetchAllLinks(currentPage);
       }
+
       toast.success('링크가 추가되었습니다.');
       setLinkInput('');
       closeModal();
     } catch (error) {
       toast.error('링크 삭제에 실패했습니다. 다시 시도해주세요.');
       console.error('error', error);
+    } finally {
+      setLoading(false);
     }
   };
 

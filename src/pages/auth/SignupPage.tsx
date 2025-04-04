@@ -12,6 +12,8 @@ const Signup: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [isLoadingAuth, setIsLoadingAuth] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,6 +29,7 @@ const Signup: React.FC = () => {
       name: userName,
     };
     try {
+      setIsLoadingAuth(true);
       const response = await signUp(formData);
       localStorage.setItem('accessToken', response.accessToken);
       toast.success('회원가입이 완료되었습니다.');
@@ -36,6 +39,8 @@ const Signup: React.FC = () => {
         console.log('서버 응답 : ', error.response.data);
       }
       toast.error('이미 사용 중인 이메일입니다.');
+    } finally {
+      setIsLoadingAuth(false);
     }
   };
 
@@ -117,7 +122,11 @@ const Signup: React.FC = () => {
           disabled={!isConfirmPasswordValid}
           errorMessage="비밀번호가 일치하지 않습니다."
         />
-        <Button text="회원가입" className="mb-8 h-[53px] w-[400px] py-4" />
+        <Button
+          text="회원가입"
+          className="mb-8 h-[53px] w-[400px] py-4"
+          isLoadingAuth={isLoadingAuth}
+        />
       </form>
     </div>
   );

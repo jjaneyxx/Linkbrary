@@ -14,6 +14,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
   const { handleLogin } = useAuth();
+  const [isLoadingAuth, setIsLoadingAuth] = useState(false);
 
   const handleLoginSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ const Login: React.FC = () => {
     localStorage.removeItem('accessToken');
 
     try {
+      setIsLoadingAuth(true);
       const response = await signIn(formData);
       localStorage.setItem('accessToken', response.accessToken);
       toast.success('로그인 되었습니다.');
@@ -42,6 +44,8 @@ const Login: React.FC = () => {
         console.log('응답 : ', error.response.data);
       }
       toast.error('이메일 또는 비밀번호를 다시 확인해주세요.');
+    } finally {
+      setIsLoadingAuth(false);
     }
   };
 
@@ -94,7 +98,11 @@ const Login: React.FC = () => {
           disabled={!isPasswordValid}
           errorMessage="비밀번호는 8자 이상 작성해 주세요."
         />
-        <Button text="로그인" className="mb-8 h-[53px] w-[400px] py-4" />
+        <Button
+          text="로그인"
+          className="mb-8 h-[53px] w-[400px] py-4"
+          isLoadingAuth={isLoadingAuth}
+        />
       </form>
       <OAuthSection />
     </div>

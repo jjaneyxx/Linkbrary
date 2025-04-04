@@ -85,6 +85,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     useFolderStore.persist.clearStorage();
     usePaginationStore.persist.clearStorage();
     useLinkStore.getState().setLinkList([]);
+    localStorage.removeItem('accessToken');
 
     setIsLoggedIn(false);
     toast.success('로그아웃 되었습니다.');
