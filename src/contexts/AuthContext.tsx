@@ -46,7 +46,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         if (axios.isAxiosError(error) && error.response) {
           setUser(undefined);
           setIsLoggedIn(false);
-          console.log('응답 : ', error.response.status);
+          console.error('응답 : ', error.response.status);
         }
       }
     };
@@ -71,7 +71,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         navigate('/links');
       } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-          console.log('서버 응답 : ', error.response);
+          console.error('서버 응답 : ', error.response);
         }
         setIsLoggedIn(false);
         toast.error('토큰이 만료되었습니다. 다시 로그인해주세요');

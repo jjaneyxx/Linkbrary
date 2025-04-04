@@ -1,10 +1,9 @@
-import { FormEvent } from 'react';
 import searchLink from '@assets/icons/search-link.svg';
+import { FormEvent } from 'react';
 
 const SearchLinkInput = () => {
   const handleSearchLink = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('search link');
   };
   return (
     <form onSubmit={handleSearchLink} className="mt-10">

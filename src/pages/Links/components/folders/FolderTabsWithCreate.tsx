@@ -27,7 +27,7 @@ const FolderTabsWithCreate = () => {
       closeModal();
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.log('응답 : ', error.response.data);
+        console.error('응답 : ', error.response.data);
       }
       toast.error('폴더 추가에 실패했습니다. 다시 시도해주세요.');
     } finally {

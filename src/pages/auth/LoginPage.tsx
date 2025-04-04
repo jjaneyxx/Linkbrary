@@ -41,7 +41,7 @@ const Login: React.FC = () => {
       navigate('/links');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.log('응답 : ', error.response.data);
+        console.error('응답 : ', error.response.data);
       }
       toast.error('이메일 또는 비밀번호를 다시 확인해주세요.');
     } finally {

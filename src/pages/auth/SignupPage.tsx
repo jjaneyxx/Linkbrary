@@ -36,7 +36,7 @@ const Signup: React.FC = () => {
       navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.log('서버 응답 : ', error.response.data);
+        console.error('서버 응답 : ', error.response.data);
       }
       toast.error('이미 사용 중인 이메일입니다.');
     } finally {
