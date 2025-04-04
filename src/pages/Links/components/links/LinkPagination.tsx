@@ -21,9 +21,6 @@ export const LinkPagination = () => {
     totalLinkCount % 9 === 0 ? Math.floor(totalLinkCount / 9) : Math.floor(totalLinkCount / 9) + 1;
   const pageNumberList = Array.from({ length: maxPageNumber }, (_, i) => i + 1);
 
-  console.log('totalLinkCount', totalLinkCount);
-  console.log('maxPageNumber', maxPageNumber);
-
   // click pagination number
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber); // store

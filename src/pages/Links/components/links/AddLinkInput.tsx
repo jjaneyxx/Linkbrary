@@ -12,8 +12,9 @@ const AddLinkInput = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const folders = useFolderStore.getState().folders;
-
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
+  const fetchFolderLinks = useLinkStore((state) => state.fetchFolderLinks);
 
   const handlePostLink = async () => {
     // get recent state of linkInput, selectedFolderId from modal store
@@ -31,6 +32,11 @@ const AddLinkInput = () => {
     try {
       await postLink(linkData);
       fetchAllLinks(currentPage);
+      if (selectedFolderId) {
+        fetchFolderLinks(selectedFolderId, currentPage);
+      } else {
+        fetchAllLinks(currentPage);
+      }
       closeModal();
       setLinkInput('');
       alert('링크 추가 성공');
