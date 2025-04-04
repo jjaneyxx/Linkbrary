@@ -31,15 +31,15 @@ const AddLinkInput = () => {
 
     try {
       await postLink(linkData);
-      fetchAllLinks(currentPage);
+
       if (selectedFolderId) {
         fetchFolderLinks(selectedFolderId, currentPage);
       } else {
         fetchAllLinks(currentPage);
       }
-      closeModal();
-      setLinkInput('');
       alert('링크 추가 성공');
+      setLinkInput('');
+      closeModal();
     } catch (error) {
       console.log('링크 추가 실패', error);
     }
