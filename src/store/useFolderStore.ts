@@ -19,7 +19,7 @@ export const useFolderStore = create<FolderState>((set) => ({
       const folders = await getAllFolders();
       set({ folders }); // {folders : folders}
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 }));

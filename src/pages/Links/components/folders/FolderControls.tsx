@@ -10,20 +10,23 @@ import { AxiosError } from 'axios';
 export const FolderControls = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
-
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
-
   const folders = useFolderStore((state) => state.folders);
+  const fetchFolders = useFolderStore((state) => state.fetchFolders);
+
   // get folder name from folder id
   const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
-
   // remove component from DOM
   if (selectedFolderId === null) return null;
 
   // rename folder
   const handlePutFolder = async (input: string) => {
-    if (input === '' || !selectedFolderId) return;
+    if (input === '') {
+      alert('수정할 폴더 이름이 비어 있어요');
+      return;
+    }
+    if (!selectedFolderId) return;
 
     const folderData = {
       name: input,
@@ -32,9 +35,10 @@ export const FolderControls = () => {
     try {
       const response = await putFolderById(selectedFolderId, folderData);
       setSelectedFolderId(response.id);
+      fetchFolders();
       closeModal();
     } catch (error) {
-      console.log('폴더 수정 실패', error);
+      console.error('폴더 수정 실패', error);
     }
   };
 
@@ -44,6 +48,7 @@ export const FolderControls = () => {
 
     try {
       await deleteFolderById(selectedFolderId);
+      fetchFolders();
       alert('폴더 삭제 성공');
       closeModal();
     } catch (error) {
