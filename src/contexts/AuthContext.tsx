@@ -1,4 +1,7 @@
 import { getUser } from '@api/user/api';
+import { useFolderStore } from '@store/useFolderStore';
+import { useLinkStore } from '@store/useLinkStore';
+import { usePaginationStore } from '@store/usePaginationStore';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -79,7 +82,10 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    useFolderStore.persist.clearStorage();
+    usePaginationStore.persist.clearStorage();
+    useLinkStore.getState().setLinkList([]);
+
     setIsLoggedIn(false);
     alert('로그아웃 성공');
     navigate('/login');

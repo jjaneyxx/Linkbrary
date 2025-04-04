@@ -1,10 +1,10 @@
+import { signUp } from '@api/auth/api';
+import Button from '@components/common/Button';
+import axios from 'axios';
+import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
-import Button from '@components/common/Button';
-import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signUp } from '@api/auth/api';
-import axios from 'axios';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -29,7 +29,7 @@ const Signup: React.FC = () => {
       const response = await signUp(formData);
       localStorage.setItem('accessToken', response.accessToken);
       alert('회원가입 성공');
-      navigate('/links');
+      navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         console.log('서버 응답 : ', error.response.data);
