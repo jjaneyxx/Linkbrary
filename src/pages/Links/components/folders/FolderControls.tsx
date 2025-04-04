@@ -4,9 +4,11 @@ import deleteFolder from '@assets/icons/delete-folder.svg';
 import renameFolder from '@assets/icons/rename-folder.svg';
 import shareFolder from '@assets/icons/share-folder.svg';
 import { useFolderStore } from '@store/useFolderStore';
+import { useLinkStore } from '@store/useLinkStore';
 import { useModalStore } from '@store/useModalStore';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export const FolderControls = () => {
   const openModal = useModalStore((state) => state.openModal);
@@ -15,6 +17,8 @@ export const FolderControls = () => {
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
   const folders = useFolderStore((state) => state.folders);
   const fetchFolders = useFolderStore((state) => state.fetchFolders);
+  const navigate = useNavigate();
+  const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
 
   // get folder name from folder id
   const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
@@ -50,8 +54,11 @@ export const FolderControls = () => {
     try {
       await deleteFolderById(selectedFolderId);
       fetchFolders();
-      toast.success('폴더가 삭제되었습니다.');
       closeModal();
+      setSelectedFolderId(null);
+      navigate('/links');
+      fetchAllLinks(1);
+      toast.success('폴더가 삭제되었습니다.');
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;
       const errorName = axiosError.response?.data.name;
