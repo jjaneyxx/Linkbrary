@@ -15,6 +15,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
   const currentPage = usePaginationStore.getState().currentPage;
   const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
   const fetchFolderLinks = useLinkStore((state) => state.fetchFolderLinks);
+  const setLoading = useModalStore((state) => state.setLoading);
 
   const [isSelected, setIsSelected] = useState<string>('');
 
@@ -23,6 +24,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
     if (!selectedLinkId) return;
 
     try {
+      setLoading(true);
       await deleteLink(selectedLinkId);
       if (selectedFolderId) {
         fetchFolderLinks(selectedFolderId, currentPage);
@@ -33,7 +35,9 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
       closeModal();
     } catch (error) {
       toast.error('링크 삭제에 실패했습니다. 다시 시도해주세요.');
-      console.log('error', error);
+      console.error('error', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +58,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
     };
 
     try {
+      setLoading(true);
       await putLink(selectedLinkId, linkData);
       if (selectedFolderId) {
         fetchFolderLinks(selectedFolderId, currentPage);
@@ -65,6 +70,8 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
     } catch (error) {
       toast.error('링크 수정 중 오류가 발생했습니다. 다시 시도해주세요.');
       console.error('error', error);
+    } finally {
+      setLoading(false);
     }
   };
 

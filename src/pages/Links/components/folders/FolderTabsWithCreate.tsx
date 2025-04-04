@@ -9,6 +9,7 @@ const FolderTabsWithCreate = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const fetchFolders = useFolderStore((state) => state.fetchFolders);
+  const setLoading = useModalStore((state) => state.setLoading);
 
   const handlePostFolder = async (input: string) => {
     if (input === '') return;
@@ -18,15 +19,19 @@ const FolderTabsWithCreate = () => {
     };
 
     try {
+      setLoading(true);
+
       await postFolder(folderData);
       fetchFolders();
       toast.success('폴더가 추가되었습니다.');
       closeModal();
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        console.log('응답 : ', error.response.data);
+        console.error('응답 : ', error.response.data);
       }
       toast.error('폴더 추가에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setLoading(false);
     }
   };
 

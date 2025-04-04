@@ -19,6 +19,7 @@ export const FolderControls = () => {
   const fetchFolders = useFolderStore((state) => state.fetchFolders);
   const navigate = useNavigate();
   const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
+  const setLoading = useModalStore((state) => state.setLoading);
 
   // get folder name from folder id
   const selectedFolderName = folders.find((folder) => folder.id === selectedFolderId)?.name ?? '';
@@ -38,12 +39,15 @@ export const FolderControls = () => {
     };
 
     try {
+      setLoading(true);
       const response = await putFolderById(selectedFolderId, folderData);
       setSelectedFolderId(response.id);
       fetchFolders();
       closeModal();
     } catch (error) {
       console.error('폴더 수정 실패', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +56,7 @@ export const FolderControls = () => {
     if (!selectedFolderId) return;
 
     try {
+      setLoading(true);
       await deleteFolderById(selectedFolderId);
       fetchFolders();
       closeModal();
@@ -68,6 +73,8 @@ export const FolderControls = () => {
       } else {
         toast.error('폴더 삭제에 실패했습니다. 다시 시도해주세요.');
       }
+    } finally {
+      setLoading(false);
     }
   };
 

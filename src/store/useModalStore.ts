@@ -13,6 +13,9 @@ interface ModalState {
   modalSelectedFolderId: number | null;
   setModalSelectedFolderId: (value: number) => void;
 
+  isLoading: boolean;
+  setLoading: (value: boolean) => void;
+
   openModal: (
     title: string,
     buttonText: string,
@@ -36,6 +39,9 @@ export const useModalStore = create<ModalState>((set) => ({
 
   modalSelectedFolderId: null,
   setModalSelectedFolderId: (value) => set({ modalSelectedFolderId: value }),
+
+  isLoading: false,
+  setLoading: (value) => set({ isLoading: value }),
 
   openModal: (title, buttonText, onConfirm, mode, linkInput) =>
     set({ isOpen: true, title, buttonText, onConfirm, mode, linkInput }),
