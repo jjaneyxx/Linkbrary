@@ -17,8 +17,7 @@ const FolderTabsWithCreate = () => {
     };
 
     try {
-      const response = await postFolder(folderData);
-      console.log('created folder', response);
+      await postFolder(folderData);
       fetchFolders();
       alert('폴더 추가 성공');
       closeModal();

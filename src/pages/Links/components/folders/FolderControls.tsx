@@ -70,7 +70,7 @@ export const FolderControls = () => {
     } else if (mode === 'delete') {
       openModal('폴더 삭제', '삭제하기', handleDeleteFolder, mode);
     } else if (mode === 'share') {
-      alert('🙏 아직 준비 중인 기능이에요');
+      alert('🙏 아직 준비 중인 기능입니다');
     }
   };
 

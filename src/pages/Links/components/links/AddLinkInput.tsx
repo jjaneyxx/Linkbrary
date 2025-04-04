@@ -4,6 +4,7 @@ import Button from '@components/common/Button';
 import { useFolderStore } from '@store/useFolderStore';
 import { useLinkStore } from '@store/useLinkStore';
 import { useModalStore } from '@store/useModalStore';
+import { usePaginationStore } from '@store/usePaginationStore';
 import { FormEvent, useState } from 'react';
 
 const AddLinkInput = () => {
@@ -11,12 +12,14 @@ const AddLinkInput = () => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const folders = useFolderStore.getState().folders;
-  const addLink = useLinkStore((state) => state.addLink);
+
+  const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
 
   const handlePostLink = async () => {
     // get recent state of linkInput, selectedFolderId from modal store
     const modalLink = useModalStore.getState().linkInput;
     const modalSelectedFolderId = useModalStore.getState().modalSelectedFolderId;
+    const currentPage = usePaginationStore.getState().currentPage;
 
     if (!modalSelectedFolderId || !modalLink) return;
 
@@ -25,11 +28,9 @@ const AddLinkInput = () => {
       folderId: modalSelectedFolderId,
     };
 
-    console.log(linkData);
-
     try {
-      const response = await postLink(linkData);
-      addLink(response); // add link to linkList (global)
+      await postLink(linkData);
+      fetchAllLinks(currentPage);
       closeModal();
       setLinkInput('');
       alert('링크 추가 성공');
