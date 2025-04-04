@@ -1,14 +1,19 @@
 import { deleteLink, putLink } from '@api/link/api';
+import { useFolderStore } from '@store/useFolderStore';
 import { useLinkStore } from '@store/useLinkStore';
 import { useModalStore } from '@store/useModalStore';
+import { usePaginationStore } from '@store/usePaginationStore';
 import clsx from 'clsx';
 import { useState } from 'react';
 
 const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
-
+  const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const selectedLinkId = useLinkStore((state) => state.selectedLinkId);
+  const currentPage = usePaginationStore.getState().currentPage;
+  const fetchAllLinks = useLinkStore((state) => state.fetchAllLinks);
+  const fetchFolderLinks = useLinkStore((state) => state.fetchFolderLinks);
 
   const [isSelected, setIsSelected] = useState<string>('');
 
@@ -18,6 +23,11 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
 
     try {
       await deleteLink(selectedLinkId);
+      if (selectedFolderId) {
+        fetchFolderLinks(selectedFolderId, currentPage);
+      } else {
+        fetchAllLinks(currentPage);
+      }
       alert('링크 삭제 성공');
       closeModal();
     } catch (error) {
@@ -42,7 +52,6 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
       url: modalLinkInput,
     };
 
-    // test
     try {
       const response = await putLink(selectedLinkId, linkData);
       console.log(response); // 수정된 링크 본문

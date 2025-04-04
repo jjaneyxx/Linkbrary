@@ -1,4 +1,3 @@
-import { getAllFolders } from '@api/folder/api';
 import { useFolderStore } from '@store/useFolderStore';
 import { clsx } from 'clsx';
 import { useEffect } from 'react';
@@ -7,24 +6,13 @@ import Folder from './Folder';
 
 const FolderTabs = () => {
   const folders = useFolderStore((state) => state.folders);
-  const setFoldersStore = useFolderStore((state) => state.setFolders);
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
+  const fetchFolders = useFolderStore((state) => state.fetchFolders);
   const navigate = useNavigate();
 
-  // getAllFolders API
   useEffect(() => {
-    const showAllFolders = async () => {
-      try {
-        // response : object array
-        const response = await getAllFolders();
-        setFoldersStore(response);
-        console.log('all folders', response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    showAllFolders();
+    fetchFolders(); // getAllFolders API
   }, []);
 
   // set selectedFolder, query string
