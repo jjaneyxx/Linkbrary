@@ -44,7 +44,7 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
     const modalLinkInput = useModalStore.getState().input;
 
     if (!modalLinkInput) {
-      alert('유효한 링크를 입력하세요');
+      alert('수정할 링크가 비어있어요');
       return;
     }
 
@@ -53,12 +53,17 @@ const CardDropDown = ({ isDropDownOpen }: { isDropDownOpen: boolean }) => {
     };
 
     try {
-      const response = await putLink(selectedLinkId, linkData);
-      console.log(response); // 수정된 링크 본문
+      await putLink(selectedLinkId, linkData);
+      if (selectedFolderId) {
+        fetchFolderLinks(selectedFolderId, currentPage);
+      } else {
+        fetchAllLinks(currentPage);
+      }
+      alert('링크 수정 성공');
       closeModal();
     } catch (error) {
       alert('링크 수정 실패');
-      console.log('error', error);
+      console.error('error', error);
     }
   };
 

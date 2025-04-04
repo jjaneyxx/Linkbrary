@@ -15,7 +15,7 @@ export const LinkPagination = () => {
   const navigate = useNavigate();
 
   // remove component from DOM
-  if (linkList.length === 0) return null;
+  if (linkList.length === 0 && totalLinkCount === 0) return null;
 
   const maxPageNumber =
     totalLinkCount % 9 === 0 ? Math.floor(totalLinkCount / 9) : Math.floor(totalLinkCount / 9) + 1;
@@ -29,7 +29,6 @@ export const LinkPagination = () => {
     const params = new URLSearchParams();
     params.set('page', pageNumber.toString());
     params.set('pageSize', '9');
-    console.log('selectedFolderId', selectedFolderId);
     navigate(`?folder=${selectedFolderId}&${params.toString()}`);
   };
 

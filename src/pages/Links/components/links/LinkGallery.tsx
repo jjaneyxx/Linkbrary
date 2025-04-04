@@ -20,7 +20,6 @@ export const LinkGallery = () => {
     const currentPage = !pageParam ? 1 : parseInt(pageParam);
 
     fetchFolderLinks(selectedFolderId, currentPage);
-    console.log('selectedFolderId', selectedFolderId);
   }, [selectedFolderId, searchParam]);
 
   const handleLinkSelected = (linkId: number, linkUrl: string) => {

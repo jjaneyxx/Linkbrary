@@ -1,4 +1,5 @@
 import { useFolderStore } from '@store/useFolderStore';
+import { usePaginationStore } from '@store/usePaginationStore';
 import { clsx } from 'clsx';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ const FolderTabs = () => {
   const selectedFolderId = useFolderStore((state) => state.selectedFolderId);
   const setSelectedFolderId = useFolderStore((state) => state.setSelectedFolderId);
   const fetchFolders = useFolderStore((state) => state.fetchFolders);
+  const setCurrentPage = usePaginationStore((state) => state.setCurrentPage);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +20,7 @@ const FolderTabs = () => {
   // set selectedFolder, query string
   const handleFolderSelected = (folderId: number | null) => {
     setSelectedFolderId(folderId);
+    setCurrentPage(1);
 
     if (!folderId) {
       navigate('/links');
