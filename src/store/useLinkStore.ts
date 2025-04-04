@@ -6,7 +6,6 @@ const setTotalLinkCount = usePaginationStore.getState().setTotalCount;
 
 interface LinkListState {
   linkList: LinkResponse[];
-  addLink: (link: LinkResponse) => void;
   setLinkList: (links: LinkResponse[]) => void;
   selectedLinkId: number | null;
   setSelectedLinkId: (value: number | null) => void;
@@ -19,11 +18,6 @@ export const useLinkStore = create<LinkListState>((set) => ({
 
   selectedLinkId: null,
   setSelectedLinkId: (value) => set({ selectedLinkId: value }),
-
-  addLink: (link) =>
-    set((state) => ({
-      linkList: [link, ...state.linkList],
-    })),
 
   fetchAllLinks: async (currentPage: number) => {
     try {
