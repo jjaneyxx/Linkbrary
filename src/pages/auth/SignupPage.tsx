@@ -2,6 +2,7 @@ import { signUp } from '@api/auth/api';
 import Button from '@components/common/Button';
 import axios from 'axios';
 import { useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
@@ -28,13 +29,13 @@ const Signup: React.FC = () => {
     try {
       const response = await signUp(formData);
       localStorage.setItem('accessToken', response.accessToken);
-      alert('회원가입 성공');
+      toast.success('회원가입이 완료되었습니다.');
       navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         console.log('서버 응답 : ', error.response.data);
       }
-      alert('회원가입 실패');
+      toast.error('이미 사용 중인 이메일입니다.');
     }
   };
 

@@ -1,12 +1,13 @@
+import { signIn } from '@api/auth/api';
+import Button from '@components/common/Button';
+import { useAuth } from '@contexts/AuthContext';
+import axios from 'axios';
+import { useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
 import OAuthSection from './components/OAuthSection';
-import Button from '@components/common/Button';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signIn } from '@api/auth/api';
-import axios from 'axios';
-import { useAuth } from '@contexts/AuthContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -33,14 +34,14 @@ const Login: React.FC = () => {
     try {
       const response = await signIn(formData);
       localStorage.setItem('accessToken', response.accessToken);
-      alert('로그인 성공');
+      toast.success('로그인 되었습니다.');
       handleLogin();
       navigate('/links');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         console.log('응답 : ', error.response.data);
       }
-      alert('로그인 실패');
+      toast.error('이메일 또는 비밀번호를 다시 확인해주세요.');
     }
   };
 

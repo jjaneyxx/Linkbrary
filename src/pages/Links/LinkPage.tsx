@@ -24,7 +24,6 @@ const LinkPage: React.FC = () => {
     const pageParam = searchParams.get('page');
     const currentPage = !pageParam ? 1 : parseInt(pageParam);
     fetchAllLinks(currentPage);
-    console.log('fetchAllLinks 실행');
   }, [searchParams]);
 
   const isOpen = useModalStore((state) => state.isOpen);

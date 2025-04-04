@@ -2,6 +2,7 @@ import { postFolder } from '@api/folder/api';
 import { useFolderStore } from '@store/useFolderStore';
 import { useModalStore } from '@store/useModalStore';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 import FolderTabs from './FolderTabs';
 
 const FolderTabsWithCreate = () => {
@@ -19,13 +20,13 @@ const FolderTabsWithCreate = () => {
     try {
       await postFolder(folderData);
       fetchFolders();
-      alert('폴더 추가 성공');
+      toast.success('폴더가 추가되었습니다.');
       closeModal();
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         console.log('응답 : ', error.response.data);
       }
-      alert('폴더 추가 실패');
+      toast.error('폴더 추가에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
