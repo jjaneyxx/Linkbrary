@@ -6,6 +6,7 @@ import shareFolder from '@assets/icons/share-folder.svg';
 import { useFolderStore } from '@store/useFolderStore';
 import { useModalStore } from '@store/useModalStore';
 import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 export const FolderControls = () => {
   const openModal = useModalStore((state) => state.openModal);
@@ -23,7 +24,7 @@ export const FolderControls = () => {
   // rename folder
   const handlePutFolder = async (input: string) => {
     if (input === '') {
-      alert('수정할 폴더 이름이 비어 있어요');
+      toast.error('수정할 폴더 이름이 비어 있어요');
       return;
     }
     if (!selectedFolderId) return;
@@ -49,16 +50,16 @@ export const FolderControls = () => {
     try {
       await deleteFolderById(selectedFolderId);
       fetchFolders();
-      alert('폴더 삭제 성공');
+      toast.success('폴더가 삭제되었습니다.');
       closeModal();
     } catch (error) {
       const axiosError = error as AxiosError<ErrorResponse>;
-      console.error('폴더 삭제 실패', axiosError.response?.data.name);
-
       const errorName = axiosError.response?.data.name;
       if (errorName === 'PrismaClientKnownRequestError') {
-        alert('폴더 안 링크를 먼저 삭제해주세요');
+        toast.error('폴더 안에 링크가 있어 삭제할 수 없습니다.');
         closeModal();
+      } else {
+        toast.error('폴더 삭제에 실패했습니다. 다시 시도해주세요.');
       }
     }
   };
@@ -70,7 +71,7 @@ export const FolderControls = () => {
     } else if (mode === 'delete') {
       openModal('폴더 삭제', '삭제하기', handleDeleteFolder, mode);
     } else if (mode === 'share') {
-      alert('🙏 아직 준비 중인 기능입니다');
+      toast.error('🙏 아직 준비 중인 기능입니다');
     }
   };
 

@@ -1,4 +1,3 @@
-// 폴더 기본 : bg-white, 호버 : #E7EFFB, 선택 : primary
 type FolderProps = {
   children: string;
   className?: string;

@@ -6,6 +6,7 @@ import { useLinkStore } from '@store/useLinkStore';
 import { useModalStore } from '@store/useModalStore';
 import { usePaginationStore } from '@store/usePaginationStore';
 import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const AddLinkInput = () => {
   const [linkInput, setLinkInput] = useState<string>(''); // local
@@ -37,11 +38,12 @@ const AddLinkInput = () => {
       } else {
         fetchAllLinks(currentPage);
       }
-      alert('링크 추가 성공');
+      toast.success('링크가 추가되었습니다.');
       setLinkInput('');
       closeModal();
     } catch (error) {
-      console.error('링크 추가 실패', error);
+      toast.error('링크 삭제에 실패했습니다. 다시 시도해주세요.');
+      console.error('error', error);
     }
   };
 
@@ -49,12 +51,12 @@ const AddLinkInput = () => {
     e.preventDefault();
 
     if (linkInput === '') {
-      alert('링크를 입력해주세요 🙋‍♂️');
+      toast.error('링크를 입력해주세요 🙋‍♂️');
       return;
     }
 
     if (folders.length === 0) {
-      alert('폴더를 먼저 만들어주세요 📁');
+      toast.error('폴더를 먼저 만들어주세요 📁');
       return;
     }
 

@@ -4,6 +4,7 @@ import { useLinkStore } from '@store/useLinkStore';
 import { usePaginationStore } from '@store/usePaginationStore';
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 type AuthContextType = {
@@ -55,13 +56,13 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   const handleLogin = () => {
     const accessToken = localStorage.getItem('accessToken');
 
-    // 토큰이 있는 경우
+    // no access token
     if (!accessToken) {
       navigate('/login');
       return;
     }
 
-    // 토큰이 있는 경우
+    // hast access token
     const verifyUser = async () => {
       try {
         const response = await getUser();
@@ -69,12 +70,11 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         setIsLoggedIn(true);
         navigate('/links');
       } catch (error) {
-        // 토큰이 만료된 경우
         if (axios.isAxiosError(error) && error.response) {
           console.log('서버 응답 : ', error.response);
         }
         setIsLoggedIn(false);
-        alert('토큰이 만료되었습니다. 다시 로그인해주세요');
+        toast.error('토큰이 만료되었습니다. 다시 로그인해주세요');
         navigate('/login');
       }
     };
@@ -87,7 +87,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     useLinkStore.getState().setLinkList([]);
 
     setIsLoggedIn(false);
-    alert('로그아웃 성공');
+    toast.success('로그아웃 되었습니다.');
     navigate('/login');
   };
 
