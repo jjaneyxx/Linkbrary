@@ -45,7 +45,7 @@ const AddLinkInput = () => {
       setLinkInput('');
       closeModal();
     } catch (error) {
-      toast.error('링크 삭제에 실패했습니다. 다시 시도해주세요.');
+      toast.error('링크 추가에 실패했습니다. 다시 시도해주세요.');
       console.error('error', error);
     } finally {
       setLoading(false);
