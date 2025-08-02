@@ -2,12 +2,13 @@ import { signIn } from '@api/auth/api';
 import Button from '@components/common/Button';
 import { useAuth } from '@contexts/AuthContext';
 import axios from 'axios';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
 import OAuthSection from './components/OAuthSection';
+import { isEmailValid, isPasswordValid } from '@utils/authValidation';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -49,24 +50,6 @@ const Login: React.FC = () => {
     }
   };
 
-  const isEmailValid = useMemo(() => {
-    const emailRegEx =
-      /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-    if (email === '') {
-      return true;
-    } else {
-      return emailRegEx.test(email);
-    }
-  }, [email]);
-
-  const isPasswordValid = useMemo(() => {
-    if (password === '') {
-      return true;
-    } else {
-      return password.length >= 8;
-    }
-  }, [password]);
-
   return (
     <div className="flex flex-col items-center">
       <AuthPrompt prompt="회원이 아니신가요?" linkText="회원 가입하기" linkTo="/signup" />
@@ -81,11 +64,11 @@ const Login: React.FC = () => {
           placeholder="이메일을 입력하세요"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mb-4"
-          disabled={!isEmailValid}
+          disabled={!isEmailValid(email)}
           errorMessage="이메일 형식으로 작성해 주세요."
         />
 
+        {/* Compound Component Pattern*/}
         <InputWithError.Label label="비밀번호" id="password" />
         <InputWithError
           type="password"
@@ -94,8 +77,7 @@ const Login: React.FC = () => {
           placeholder="비밀번호를 입력하세요"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mb-4"
-          disabled={!isPasswordValid}
+          disabled={!isPasswordValid(password)}
           errorMessage="비밀번호는 8자 이상 작성해 주세요."
         />
         <Button

@@ -11,9 +11,9 @@ export const Label = ({ label, id }: { label: string; id: string }) => {
   return <label htmlFor={id}>{label}</label>;
 };
 
-const InputWithError = ({ className, disabled, errorMessage, ...rest }: InputProps) => {
+const InputWithError = ({ disabled, errorMessage, ...rest }: InputProps) => {
   return (
-    <div className={`mt-3 mb-6 flex flex-col gap-3 ${className}`}>
+    <div className="mt-3 mb-6 flex flex-col gap-3">
       <input
         {...rest}
         className={clsx(

@@ -1,4 +1,3 @@
-import AuthLayout from '@components/layout/AuthLayout';
 import MainLayout from '@components/layout/MainLayout';
 import { AuthContextProvider } from '@contexts/AuthContext';
 import Login from '@pages/auth/LoginPage';
@@ -7,7 +6,8 @@ import { Faq } from '@pages/Landing/Faq';
 import Landing from '@pages/Landing/Landing';
 import { Privacy } from '@pages/Landing/Privacy';
 import LinkPage from '@pages/Links/LinkPage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import AuthLayout from '@components/layout/AuthLayout';
 
 const AppRouter = () => {
   return (

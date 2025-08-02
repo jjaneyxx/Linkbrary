@@ -1,0 +1,55 @@
+{
+  "hash": "0dec48ec",
+  "configHash": "a15568fe",
+  "lockfileHash": "1933e4ec",
+  "browserHash": "56130fc8",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "99e68522",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "80d7e026",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "0853a9d6",
+      "needsInterop": true
+    },
+    "react-hot-toast": {
+      "src": "../../node_modules/react-hot-toast/dist/index.mjs",
+      "file": "react-hot-toast.js",
+      "fileHash": "c5627ad2",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "ddfbb008",
+      "needsInterop": false
+    },
+    "react-router": {
+      "src": "../../node_modules/react-router/dist/development/index.mjs",
+      "file": "react-router.js",
+      "fileHash": "2bd21ed1",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ZWVBAM5B": {
+      "file": "chunk-ZWVBAM5B.js"
+    },
+    "chunk-SY4HHCYH": {
+      "file": "chunk-SY4HHCYH.js"
+    },
+    "chunk-GT27OAPC": {
+      "file": "chunk-GT27OAPC.js"
+    }
+  }
+}
