@@ -17,6 +17,11 @@ const Signup: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const isFormValid = email != '' && password !== '' 
+  && isEmailValid(email) && isPasswordValid(password) 
+  && isPasswordConfirmValid(password, passwordConfirm) && isUserNameValid(userName); 
+
+
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 폼 유효성 검사
@@ -106,6 +111,7 @@ const Signup: React.FC = () => {
         <Button
           text="회원가입"
           className="mb-8 h-[53px] w-[400px] py-4"
+          disabled={!isFormValid}
           isLoadingAuth={isLoadingAuth}
         />
       </form>
