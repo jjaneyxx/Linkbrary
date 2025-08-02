@@ -86,7 +86,6 @@ const Login: React.FC = () => {
           isLoadingAuth={isLoadingAuth}
         />
       </form>
-      <OAuthSection />
     </div>
   );
 };
