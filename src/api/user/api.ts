@@ -9,7 +9,7 @@ interface GetUserResponse {
 }
 
 interface PostCheckEmailBody {
-  email: string;
+  email: string ; 
 }
 
 interface PostCheckEmailResponse {

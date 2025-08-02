@@ -15,7 +15,3 @@ export const isUserNameValid = (userName : string) => {
 export const isPasswordConfirmValid = (password : string, passwordConfirm : string) => {
     return password === passwordConfirm;
 }
-
-export const isFormValid = (email : string, password : string, userName : string, passwordConfirm : string) => {
-    return isEmailValid(email) && isPasswordValid(password) && isUserNameValid(userName) && isPasswordConfirmValid(password, passwordConfirm);
-}

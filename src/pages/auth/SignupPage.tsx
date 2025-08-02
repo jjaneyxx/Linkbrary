@@ -1,12 +1,13 @@
 import { signUp } from '@api/auth/api';
 import Button from '@components/common/Button';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
 import { isUserNameValid, isEmailValid, isPasswordValid, isPasswordConfirmValid } from '@utils/authValidation';
+import { postCheckEmail } from '@api/user/api';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -20,6 +21,44 @@ const Signup: React.FC = () => {
   const isFormValid = email != '' && password !== '' 
   && isEmailValid(email) && isPasswordValid(password) 
   && isPasswordConfirmValid(password, passwordConfirm) && isUserNameValid(userName); 
+
+  // 타입아웃 식별자, 초기값 {current : null} 반환
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null); 
+
+  // 이메일 중복 검사 postCheckEmail
+  const checkEmailAvailability = async () => {
+    try {
+      const response = await postCheckEmail({email}); 
+      console.log(response); 
+    } catch(error){
+      console.log(error); 
+    }
+  }
+
+  // 이메일 중복 검사 API 를 호출 
+  useEffect(() => {
+    // 이전 타이머 정리
+    if(debounceTimerRef.current){
+      clearTimeout(debounceTimerRef.current); 
+    }
+
+    // 유효성 검사 : 이메일이 비어있거나 형식이 잘못되었으면 검사 안 함
+    if(!email || !isEmailValid(email)) return; 
+
+    // 새 타이머 설정
+    debounceTimerRef.current = setTimeout(() => {
+      checkEmailAvailability(); 
+    }, 500)
+
+    // cleanup 함수 반환 ? 
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+
+  }, [email]); 
+
 
 
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
