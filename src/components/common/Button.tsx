@@ -17,20 +17,24 @@ const Button = ({
   onClick,
   type = 'submit',
   modalMode,
+  disabled, 
   isLoadingAuth = false,
 }: ButtonProps) => {
   const isLoading = useModalStore((state) => state.isLoading);
 
   return (
     <button
+      disabled={disabled || isLoading || isLoadingAuth}
       type={type}
-      disabled={isLoading}
       className={clsx(
         `rounded-lg text-center font-semibold text-white ${className}`,
-        modalMode === 'delete' ? 'bg-red' : 'bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE]',
-        isLoading || isLoadingAuth
+        disabled || isLoading || isLoadingAuth
           ? 'cursor-not-allowed opacity-50'
           : 'cursor-pointer hover:opacity-90',
+        // modal 
+        modalMode === 'delete' 
+        ? 'bg-red' 
+        : 'bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE]',
       )}
       onClick={onClick}
     >

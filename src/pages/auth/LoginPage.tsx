@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
-import OAuthSection from './components/OAuthSection';
 import { isEmailValid, isPasswordValid } from '@utils/authValidation';
 
 const Login: React.FC = () => {
@@ -16,20 +15,18 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const { handleLogin } = useAuth();
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
+  
+  const isFormValid = email != '' && password !== '' && isEmailValid(email) && isPasswordValid(password)
 
   const handleLoginSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 폼 유효성 검사
-    if (!isEmailValid || !isPasswordValid) {
-      return;
-    }
+    if(!isFormValid) return; 
 
     const formData = {
       email,
       password,
     };
-
     // api 요청 전 token 제거
     localStorage.removeItem('accessToken');
 
@@ -84,6 +81,7 @@ const Login: React.FC = () => {
           text="로그인"
           className="mb-8 h-[53px] w-[400px] py-4"
           isLoadingAuth={isLoadingAuth}
+          disabled={!isFormValid}
         />
       </form>
     </div>
