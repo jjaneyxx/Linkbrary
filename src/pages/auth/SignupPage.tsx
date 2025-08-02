@@ -1,17 +1,18 @@
 import { signUp } from '@api/auth/api';
 import Button from '@components/common/Button';
 import axios from 'axios';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
+import { isUserNameValid, isEmailValid, isPasswordValid, isPasswordConfirmValid } from '@utils/authValidation';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('');
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
 
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Signup: React.FC = () => {
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // 폼 유효성 검사
-    if (!isEmailValid || !isUserNameValid || !isPasswordValid || !isConfirmPasswordValid) {
+    if (!isEmailValid || !isUserNameValid || !isPasswordValid || !isPasswordConfirmValid) {
       return;
     }
     // API 로직
@@ -44,26 +45,6 @@ const Signup: React.FC = () => {
     }
   };
 
-  const isUserNameValid = userName.length <= 10;
-  const isConfirmPasswordValid = password === confirmPassword;
-
-  const isEmailValid = useMemo(() => {
-    const emailRegEx =
-      /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-    if (email === '') {
-      return true;
-    } else {
-      return emailRegEx.test(email);
-    }
-  }, [email]);
-
-  const isPasswordValid = useMemo(() => {
-    if (password === '') {
-      return true;
-    } else {
-      return password.length >= 8;
-    }
-  }, [password]);
 
   return (
     <div className="flex flex-col items-center">
@@ -80,7 +61,7 @@ const Signup: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="mb-4"
-          disabled={!isEmailValid}
+          disabled={!isEmailValid(email)}
           errorMessage="이메일 형식으로 작성해 주세요."
         />
 
@@ -93,7 +74,7 @@ const Signup: React.FC = () => {
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           className="mb-4"
-          disabled={!isUserNameValid}
+          disabled={!isUserNameValid(userName)}
           errorMessage="닉네임은 열 자 이하로 작성해주세요."
         />
 
@@ -106,20 +87,20 @@ const Signup: React.FC = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="mb-4"
-          disabled={!isPasswordValid}
+          disabled={!isPasswordValid(password)}
           errorMessage="비밀번호는 8자 이상 작성해 주세요."
         />
 
-        <InputWithError.Label label="비밀번호 확인" id="confirm-password" />
+        <InputWithError.Label label="비밀번호 확인" id="password-confirm" />
         <InputWithError
           type="password"
-          name="confirmPassword"
+          name="passwordConfirm"
           autoComplete="new-password"
           placeholder="비밀번호를 한번 더 입력해 주세요"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={passwordConfirm}
+          onChange={(e) => setPasswordConfirm(e.target.value)}
           className="mb-[30px]"
-          disabled={!isConfirmPasswordValid}
+          disabled={!isPasswordConfirmValid(password, passwordConfirm)}
           errorMessage="비밀번호가 일치하지 않습니다."
         />
         <Button

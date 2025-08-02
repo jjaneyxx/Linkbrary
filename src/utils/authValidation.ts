@@ -14,3 +14,10 @@ export const isPasswordValid = (password: string) => {
         return password.length >= 8;
     }
 }
+
+export const isUserNameValid = (userName : string) => {
+    return userName.length <= 10;
+}
+export const isPasswordConfirmValid = (password : string, passwordConfirm : string) => {
+    return password === passwordConfirm;
+}
