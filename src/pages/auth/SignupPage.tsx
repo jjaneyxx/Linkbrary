@@ -14,7 +14,7 @@ const Signup: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
-  const [emailErrorMessage, setEmailErrorMessage] = useState("이메일 형식으로 작성해 주세요.")
+  const [emailErrorMessage, setEmailErrorMessage] = useState("")
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
 
   const navigate = useNavigate();
@@ -23,11 +23,9 @@ const Signup: React.FC = () => {
   && isEmailValid(email) && isPasswordValid(password) 
   && isPasswordConfirmValid(password, passwordConfirm) && isUserNameValid(userName); 
 
-  // useRef 는 객체를 반환 { current : <초기값> }
-  // debounceTimerRef.current 로 접근해야 실제 값을 읽을 수 있음
+  // 타이머 ID 저장을 위한 ref 생성
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null); 
 
-  // 이메일 중복 검사 postCheckEmail
   const checkEmailAvailability = async () => {
     try {
       const response = await postCheckEmail({email}); 
@@ -40,15 +38,12 @@ const Signup: React.FC = () => {
     }
   }
 
-  // 이메일 중복 검사 API 를 호출 
+  // 이메일 중복 검사 API 호출 
   useEffect(() => {
-
     if(!email || !isEmailValid(email)) return; 
 
-    // set new timer
-    // 500 초 이후 함수 호출
+    // set new timer : 500 초 이후 함수 호출
     debounceTimerRef.current = setTimeout(() => {
-
       checkEmailAvailability(); 
     }, 500)
 
@@ -58,10 +53,7 @@ const Signup: React.FC = () => {
         clearTimeout(debounceTimerRef.current);
       }
     };
-
   }, [email]); 
-
-
 
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -90,7 +82,6 @@ const Signup: React.FC = () => {
       setIsLoadingAuth(false);
     }
   };
-  // !isEmailValid(email)
 
 
   return (
@@ -108,8 +99,8 @@ const Signup: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="mb-4"
-          disabled={!isEmailValid(email)}
-          errorMessage={emailErrorMessage}
+          isValid={isEmailValid(email)}
+          emailErrorMessage={emailErrorMessage}
         />
 
         <InputWithError.Label label="이름" id="user-name" />
@@ -121,8 +112,7 @@ const Signup: React.FC = () => {
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           className="mb-4"
-          disabled={!isUserNameValid(userName)}
-          errorMessage="닉네임은 열 자 이하로 작성해주세요."
+          isValid={isUserNameValid(userName)}
         />
 
         <InputWithError.Label label="비밀번호" id="password" />
@@ -134,8 +124,7 @@ const Signup: React.FC = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="mb-4"
-          disabled={!isPasswordValid(password)}
-          errorMessage="비밀번호는 8자 이상 작성해 주세요."
+          isValid={isPasswordValid(password)}
         />
 
         <InputWithError.Label label="비밀번호 확인" id="password-confirm" />
@@ -147,8 +136,7 @@ const Signup: React.FC = () => {
           value={passwordConfirm}
           onChange={(e) => setPasswordConfirm(e.target.value)}
           className="mb-[30px]"
-          disabled={!isPasswordConfirmValid(password, passwordConfirm)}
-          errorMessage="비밀번호가 일치하지 않습니다."
+          isValid={isPasswordConfirmValid(password, passwordConfirm)}
         />
         <Button
           text="회원가입"
