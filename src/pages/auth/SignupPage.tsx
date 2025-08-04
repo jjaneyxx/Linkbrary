@@ -14,6 +14,7 @@ const Signup: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState("이메일 형식으로 작성해 주세요.")
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
 
   const navigate = useNavigate();
@@ -22,35 +23,36 @@ const Signup: React.FC = () => {
   && isEmailValid(email) && isPasswordValid(password) 
   && isPasswordConfirmValid(password, passwordConfirm) && isUserNameValid(userName); 
 
-  // 타입아웃 식별자, 초기값 {current : null} 반환
+  // useRef 는 객체를 반환 { current : <초기값> }
+  // debounceTimerRef.current 로 접근해야 실제 값을 읽을 수 있음
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null); 
 
   // 이메일 중복 검사 postCheckEmail
   const checkEmailAvailability = async () => {
     try {
       const response = await postCheckEmail({email}); 
-      console.log(response); 
-    } catch(error){
-      console.log(error); 
+      if (response.isUsableEmail) setEmailErrorMessage(""); 
+    } catch (error) {
+      if(axios.isAxiosError(error) && error.response && error.response.status === 409){
+        setEmailErrorMessage(error.response.data.message)
+        console.log(error.response.data.message); // 이미 존재하는 이메일입니다
+      }
     }
   }
 
   // 이메일 중복 검사 API 를 호출 
   useEffect(() => {
-    // 이전 타이머 정리
-    if(debounceTimerRef.current){
-      clearTimeout(debounceTimerRef.current); 
-    }
 
-    // 유효성 검사 : 이메일이 비어있거나 형식이 잘못되었으면 검사 안 함
     if(!email || !isEmailValid(email)) return; 
 
-    // 새 타이머 설정
+    // set new timer
+    // 500 초 이후 함수 호출
     debounceTimerRef.current = setTimeout(() => {
+
       checkEmailAvailability(); 
     }, 500)
 
-    // cleanup 함수 반환 ? 
+    // cleanup timeID
     return () => {
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
@@ -88,6 +90,7 @@ const Signup: React.FC = () => {
       setIsLoadingAuth(false);
     }
   };
+  // !isEmailValid(email)
 
 
   return (
@@ -106,7 +109,7 @@ const Signup: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           className="mb-4"
           disabled={!isEmailValid(email)}
-          errorMessage="이메일 형식으로 작성해 주세요."
+          errorMessage={emailErrorMessage}
         />
 
         <InputWithError.Label label="이름" id="user-name" />

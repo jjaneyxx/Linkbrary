@@ -61,6 +61,7 @@ const Login: React.FC = () => {
           placeholder="이메일을 입력하세요"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+
           disabled={!isEmailValid(email)}
           errorMessage="이메일 형식으로 작성해 주세요."
         />

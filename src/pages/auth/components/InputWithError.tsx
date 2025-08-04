@@ -21,7 +21,7 @@ const InputWithError = ({ disabled, errorMessage, ...rest }: InputProps) => {
           disabled && 'border-red',
         )}
       />
-      {disabled && <ErrorMessage text={errorMessage} />}
+      {errorMessage && <ErrorMessage text={errorMessage} />}
     </div>
   );
 };
