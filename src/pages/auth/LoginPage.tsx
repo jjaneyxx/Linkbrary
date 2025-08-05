@@ -61,9 +61,7 @@ const Login: React.FC = () => {
           placeholder="이메일을 입력하세요"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-
-          disabled={!isEmailValid(email)}
-          errorMessage="이메일 형식으로 작성해 주세요."
+          isValid={isEmailValid(email)}
         />
 
         {/* Compound Component Pattern*/}
@@ -75,8 +73,7 @@ const Login: React.FC = () => {
           placeholder="비밀번호를 입력하세요"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          disabled={!isPasswordValid(password)}
-          errorMessage="비밀번호는 8자 이상 작성해 주세요."
+          isValid={isPasswordValid(password)}
         />
         <Button
           text="로그인"
