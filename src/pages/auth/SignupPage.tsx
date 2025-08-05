@@ -21,7 +21,9 @@ const Signup: React.FC = () => {
 
   const isFormValid = email != '' && password !== '' 
   && isEmailValid(email) && isPasswordValid(password) 
-  && isPasswordConfirmValid(password, passwordConfirm) && isUserNameValid(userName); 
+  && isPasswordConfirmValid(password, passwordConfirm) 
+  && isUserNameValid(userName)
+  && ( emailErrorMessage ===  "" ); 
 
   // 타이머 ID 저장을 위한 ref 생성
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null); 
@@ -51,6 +53,7 @@ const Signup: React.FC = () => {
     return () => {
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
+        setEmailErrorMessage(''); 
       }
     };
   }, [email]); 
