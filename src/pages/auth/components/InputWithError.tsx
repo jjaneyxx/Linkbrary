@@ -18,6 +18,13 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
   const [helperText, setHelperText] = useState<string>(''); 
 
   useEffect(() => {
+    // emailErrorMessage가 있으면 우선적으로 표시
+    if(emailErrorMessage) {
+      setHelperText(emailErrorMessage);
+      return;
+    }
+    
+    // isValid가 false일 때만 기본 에러 메시지 표시
     if(!isValid){
       switch(name){
   
@@ -25,7 +32,7 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
         setHelperText("유효한 형식의 이메일을 작성해주세요."); 
         break; 
   
-        case "username" : 
+        case "user-name" : 
         setHelperText("닉네임은 열 자 이하로 작성해주세요.")
         break; 
   
@@ -37,8 +44,10 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
         setHelperText("비밀번호가 일치하지 않습니다.")
         break; 
       }
+    } else {
+      // 유효한 상태이고 emailErrorMessage도 없으면 헬퍼 텍스트 초기화
+      setHelperText("");
     }
-    if(emailErrorMessage) setHelperText(emailErrorMessage)
   }, [isValid, name, emailErrorMessage])
 
   return (
@@ -47,10 +56,10 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
         {...rest}
         className={clsx(
           'h-[60px] rounded-lg border border-gray-300 bg-white px-[15px] py-[18px]',
-          !isValid && 'border-red',
+          (!isValid || emailErrorMessage) && 'border-red',
         )}
       />
-      {!isValid && <ErrorMessage text={helperText} />}
+      {(!isValid || emailErrorMessage) && <ErrorMessage text={helperText} />}
     </div>
   );
 };
