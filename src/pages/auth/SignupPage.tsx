@@ -33,7 +33,7 @@ const Signup: React.FC = () => {
       const response = await postCheckEmail({email}); 
       if (response.isUsableEmail) setEmailErrorMessage(""); 
     } catch (error) {
-      if(axios.isAxiosError(error) && error.response && error.response.status === 409){
+      if(axios.isAxiosError(error) && error.response?.status === 409){
         setEmailErrorMessage(error.response.data.message)
         console.log(error.response.data.message); // 이미 존재하는 이메일입니다
       }
@@ -80,7 +80,6 @@ const Signup: React.FC = () => {
       if (axios.isAxiosError(error) && error.response) {
         console.error('서버 응답 : ', error.response.data);
       }
-      toast.error('이미 사용 중인 이메일입니다.');
     } finally {
       setIsLoadingAuth(false);
     }
