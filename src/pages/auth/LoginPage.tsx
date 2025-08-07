@@ -52,7 +52,7 @@ const Login: React.FC = () => {
       <AuthPrompt prompt="회원이 아니신가요?" linkText="회원 가입하기" linkTo="/signup" />
 
       <form onSubmit={handleLoginSuccess}>
-        <InputWithHelperText.Label label="이메일" id="user-email" />
+        <InputWithHelperText.Label label="이메일" htmlFor="user-email" />
         <InputWithHelperText
           id="user-email"
           type="email"
@@ -65,7 +65,7 @@ const Login: React.FC = () => {
         />
 
         {/* Compound Component Pattern*/}
-        <InputWithHelperText.Label label="비밀번호" id="password" />
+        <InputWithHelperText.Label label="비밀번호" htmlFor="password" />
         <InputWithHelperText
           type="password"
           name="password"

@@ -13,7 +13,7 @@ export const Label = ({ label, htmlFor }: { label: string; htmlFor: string }) =>
   return <label htmlFor={htmlFor}>{label}</label>;
 };
 
-const InputWithHelperText = ({ name, id, isValid, emailHelperText, ...rest }: InputProps) => {
+const InputWithHelperText = ({ name, isValid, emailHelperText, ...rest }: InputProps) => {
   const [helperText, setHelperText] = useState<string>(''); 
 
   useEffect(() => {
