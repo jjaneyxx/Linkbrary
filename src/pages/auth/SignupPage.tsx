@@ -54,15 +54,15 @@ const Signup: React.FC = () => {
     }
   };
 
+  // label htmlFor, input id
 
   return (
     <div className="flex flex-col items-center">
       <AuthPrompt prompt="이미 회원이신가요?" linkText="로그인 하기" linkTo="/login" />
 
       <form onSubmit={handleSignupSuccess}>
-        <InputWithHelperText.Label label="이메일" id="user-email" />
+        <InputWithHelperText.Label label="이메일" htmlFor="email" />
         <InputWithHelperText
-          id="user-email"
           type="email"
           name="email"
           autoComplete="email"
@@ -74,10 +74,10 @@ const Signup: React.FC = () => {
           emailHelperText={emailHelperText} // 5. 업데이트된 에러 메시지 props 로 전달 
         />
 
-        <InputWithHelperText.Label label="이름" id="user-name" />
+        <InputWithHelperText.Label label="이름" htmlFor="username" />
         <InputWithHelperText
           type="text"
-          name="user-name"
+          name="username"
           autoComplete="username"
           placeholder="원하는 닉네임을 적어주세요"
           value={userName}
@@ -86,7 +86,7 @@ const Signup: React.FC = () => {
           isValid={isUserNameValid(userName)}
         />
 
-        <InputWithHelperText.Label label="비밀번호" id="password" />
+        <InputWithHelperText.Label label="비밀번호" htmlFor="password" />
         <InputWithHelperText
           type="password"
           name="password"
@@ -98,7 +98,7 @@ const Signup: React.FC = () => {
           isValid={isPasswordValid(password)}
         />
 
-        <InputWithHelperText.Label label="비밀번호 확인" id="password-confirm" />
+        <InputWithHelperText.Label label="비밀번호 확인" htmlFor="passwordConfirm" />
         <InputWithHelperText
           type="password"
           name="passwordConfirm"

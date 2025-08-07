@@ -9,11 +9,11 @@ type InputProps = {
   className?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const Label = ({ label, id }: { label: string; id: string }) => {
-  return <label htmlFor={id}>{label}</label>;
+export const Label = ({ label, htmlFor }: { label: string; htmlFor: string }) => {
+  return <label htmlFor={htmlFor}>{label}</label>;
 };
 
-const InputWithHelperText = ({ name, isValid, emailHelperText, ...rest }: InputProps) => {
+const InputWithHelperText = ({ name, id, isValid, emailHelperText, ...rest }: InputProps) => {
   const [helperText, setHelperText] = useState<string>(''); 
 
   useEffect(() => {
@@ -23,7 +23,6 @@ const InputWithHelperText = ({ name, isValid, emailHelperText, ...rest }: InputP
       setHelperText(emailHelperText);
       return;
     }
-    
     // 유효하지 않은 입력일 경우 헬퍼 텍스트 표시
     if(!isValid){
       switch(name){
@@ -53,6 +52,7 @@ const InputWithHelperText = ({ name, isValid, emailHelperText, ...rest }: InputP
     <div className="mt-3 mb-6 flex flex-col gap-3">
       <input
         {...rest}
+        id={name}
         className={clsx(
           'h-[60px] rounded-lg border border-gray-300 bg-white px-[15px] py-[18px]',
           (!isValid || emailHelperText) && 'border-red',
