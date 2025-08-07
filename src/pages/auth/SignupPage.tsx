@@ -5,7 +5,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
-import InputWithError from './components/InputWithError';
+import InputWithHelperText from './components/InputWithHelperText';
 import { isUserNameValid, isEmailValid, isPasswordValid, isPasswordConfirmValid } from '@utils/authValidation';
 import { useEmailDebounce } from '@utils/useDebounce';
 
@@ -60,8 +60,8 @@ const Signup: React.FC = () => {
       <AuthPrompt prompt="이미 회원이신가요?" linkText="로그인 하기" linkTo="/login" />
 
       <form onSubmit={handleSignupSuccess}>
-        <InputWithError.Label label="이메일" id="user-email" />
-        <InputWithError
+        <InputWithHelperText.Label label="이메일" id="user-email" />
+        <InputWithHelperText
           id="user-email"
           type="email"
           name="email"
@@ -74,8 +74,8 @@ const Signup: React.FC = () => {
           emailHelperText={emailHelperText} // 5. 업데이트된 에러 메시지 props 로 전달 
         />
 
-        <InputWithError.Label label="이름" id="user-name" />
-        <InputWithError
+        <InputWithHelperText.Label label="이름" id="user-name" />
+        <InputWithHelperText
           type="text"
           name="user-name"
           autoComplete="username"
@@ -86,8 +86,8 @@ const Signup: React.FC = () => {
           isValid={isUserNameValid(userName)}
         />
 
-        <InputWithError.Label label="비밀번호" id="password" />
-        <InputWithError
+        <InputWithHelperText.Label label="비밀번호" id="password" />
+        <InputWithHelperText
           type="password"
           name="password"
           autoComplete="new-password"
@@ -98,8 +98,8 @@ const Signup: React.FC = () => {
           isValid={isPasswordValid(password)}
         />
 
-        <InputWithError.Label label="비밀번호 확인" id="password-confirm" />
-        <InputWithError
+        <InputWithHelperText.Label label="비밀번호 확인" id="password-confirm" />
+        <InputWithHelperText
           type="password"
           name="passwordConfirm"
           autoComplete="new-password"

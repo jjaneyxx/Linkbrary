@@ -6,7 +6,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
-import InputWithError from './components/InputWithError';
+import InputWithHelperText from './components/InputWithHelperText';
 import { isEmailValid, isPasswordValid } from '@utils/authValidation';
 
 const Login: React.FC = () => {
@@ -52,8 +52,8 @@ const Login: React.FC = () => {
       <AuthPrompt prompt="회원이 아니신가요?" linkText="회원 가입하기" linkTo="/signup" />
 
       <form onSubmit={handleLoginSuccess}>
-        <InputWithError.Label label="이메일" id="user-email" />
-        <InputWithError
+        <InputWithHelperText.Label label="이메일" id="user-email" />
+        <InputWithHelperText
           id="user-email"
           type="email"
           name="email"
@@ -65,8 +65,8 @@ const Login: React.FC = () => {
         />
 
         {/* Compound Component Pattern*/}
-        <InputWithError.Label label="비밀번호" id="password" />
-        <InputWithError
+        <InputWithHelperText.Label label="비밀번호" id="password" />
+        <InputWithHelperText
           type="password"
           name="password"
           autoComplete="new-password"

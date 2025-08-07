@@ -13,7 +13,7 @@ export const Label = ({ label, id }: { label: string; id: string }) => {
   return <label htmlFor={id}>{label}</label>;
 };
 
-const InputWithError = ({ name, isValid, emailHelperText, ...rest }: InputProps) => {
+const InputWithHelperText = ({ name, isValid, emailHelperText, ...rest }: InputProps) => {
   const [helperText, setHelperText] = useState<string>(''); 
 
   useEffect(() => {
@@ -64,6 +64,6 @@ const InputWithError = ({ name, isValid, emailHelperText, ...rest }: InputProps)
 };
 
 // Label 컴포넌트를 하위 컴포넌트로 등록
-InputWithError.Label = Label;
-export default InputWithError;
+InputWithHelperText.Label = Label;
+export default InputWithHelperText;
 
