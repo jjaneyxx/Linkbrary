@@ -5,26 +5,26 @@ import clsx from 'clsx';
 type InputProps = {
   name: string; 
   isValid? : boolean; 
-  emailErrorMessage? : string; 
+  emailHelperText? : string; 
   className?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
-// Label 컴포넌트 분리
 export const Label = ({ label, id }: { label: string; id: string }) => {
   return <label htmlFor={id}>{label}</label>;
 };
 
-const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProps) => {
+const InputWithError = ({ name, isValid, emailHelperText, ...rest }: InputProps) => {
   const [helperText, setHelperText] = useState<string>(''); 
 
   useEffect(() => {
-    // emailErrorMessage가 있으면 우선적으로 표시
-    if(emailErrorMessage) {
-      setHelperText(emailErrorMessage);
+
+    // 중복된 이메일일 경우 헬퍼 텍스트 우선 표시
+    if(emailHelperText) {
+      setHelperText(emailHelperText);
       return;
     }
     
-    // isValid가 false일 때만 기본 에러 메시지 표시
+    // 유효하지 않은 입력일 경우 헬퍼 텍스트 표시
     if(!isValid){
       switch(name){
   
@@ -45,10 +45,9 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
         break; 
       }
     } else {
-      // 유효한 상태이고 emailErrorMessage도 없으면 헬퍼 텍스트 초기화
       setHelperText("");
     }
-  }, [isValid, name, emailErrorMessage])
+  }, [isValid, name, emailHelperText])
 
   return (
     <div className="mt-3 mb-6 flex flex-col gap-3">
@@ -56,10 +55,10 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
         {...rest}
         className={clsx(
           'h-[60px] rounded-lg border border-gray-300 bg-white px-[15px] py-[18px]',
-          (!isValid || emailErrorMessage) && 'border-red',
+          (!isValid || emailHelperText) && 'border-red',
         )}
       />
-      {(!isValid || emailErrorMessage) && <ErrorMessage text={helperText} />}
+      {(!isValid || emailHelperText) && <ErrorMessage text={helperText} />}
     </div>
   );
 };
@@ -67,3 +66,4 @@ const InputWithError = ({ name, isValid, emailErrorMessage, ...rest }: InputProp
 // Label 컴포넌트를 하위 컴포넌트로 등록
 InputWithError.Label = Label;
 export default InputWithError;
+

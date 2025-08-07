@@ -1,63 +1,31 @@
 import { signUp } from '@api/auth/api';
 import Button from '@components/common/Button';
 import axios from 'axios';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import AuthPrompt from './components/AuthPrompt';
 import InputWithError from './components/InputWithError';
 import { isUserNameValid, isEmailValid, isPasswordValid, isPasswordConfirmValid } from '@utils/authValidation';
-import { postCheckEmail } from '@api/user/api';
+import { useEmailDebounce } from '@utils/useDebounce';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirm, setPasswordConfirm] = useState<string>('');
-  const [emailErrorMessage, setEmailErrorMessage] = useState("")
   const [isLoadingAuth, setIsLoadingAuth] = useState(false);
 
   const navigate = useNavigate();
+
+  const emailHelperText = useEmailDebounce(email); 
 
   const isFormValid = email != '' && password !== '' 
   && isEmailValid(email) && isPasswordValid(password) 
   && isPasswordConfirmValid(password, passwordConfirm) 
   && isUserNameValid(userName)
-  && ( emailErrorMessage ===  "" ); 
+  && ( emailHelperText ===  "" ); 
 
-  // 타이머 ID 저장을 위한 ref 생성
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null); 
-
-  // 3. 중복 이메일 검사 API 호출 함수
-  const checkEmailAvailability = async () => {
-    try {
-      const response = await postCheckEmail({email}); 
-      if (response.isUsableEmail) setEmailErrorMessage(""); 
-    } catch (error) {
-      if(axios.isAxiosError(error) && error.response?.status === 409){
-        // 4. emailErrorMessage 상태 업데이트 (이메일 중복 검사 결과 메시지)
-        setEmailErrorMessage(error.response.data.message)
-      }
-    }
-  }
-
-  // 2. email 상태 변경에 따른 useEffect 실행
-  useEffect(() => {
-    if(!email || !isEmailValid(email)) return; 
-
-    // set new timer : 500 초 이후 함수 호출
-    debounceTimerRef.current = setTimeout(() => {
-      checkEmailAvailability(); 
-    }, 500)
-
-    // cleanup timeID
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-        setEmailErrorMessage(''); 
-      }
-    };
-  }, [email]); 
 
   const handleSignupSuccess = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,7 +71,7 @@ const Signup: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)} // 1. 유저 이메일 필드 입력
           className="mb-4"
           isValid={isEmailValid(email)} 
-          emailErrorMessage={emailErrorMessage} // 5. 업데이트된 에러 메시지 props 로 전달 
+          emailHelperText={emailHelperText} // 5. 업데이트된 에러 메시지 props 로 전달 
         />
 
         <InputWithError.Label label="이름" id="user-name" />
