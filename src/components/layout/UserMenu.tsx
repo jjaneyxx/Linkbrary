@@ -16,14 +16,14 @@ const UserMenu = ({ onLogout, user }: UserMenuProps) => {
   return (
     <div className="flex items-center gap-6">
       <button
-        className="cursor-pointer rounded-sm border border-[#6D6AFE] bg-[#E7EFFB] px-3 py-2.5 text-sm"
+        className="cursor-pointer rounded-sm border border-[#F59E0B] bg-[#E7EFFB] px-3 py-2.5 text-sm"
         onClick={() => toast.error('🙏 아직 준비 중인 기능입니다')}
       >
         ⭐ 즐겨찾기
       </button>
       <button
         onClick={onLogout}
-        className="cursor-pointer rounded-sm border border-[#6D6AFE] bg-[#E7EFFB] px-3 py-2.5 text-sm"
+        className="cursor-pointer rounded-sm border border-[#F59E0B] bg-[#E7EFFB] px-3 py-2.5 text-sm"
       >
         👋 로그아웃
       </button>

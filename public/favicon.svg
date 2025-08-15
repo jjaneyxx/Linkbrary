@@ -1,10 +1,10 @@
 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
   <!-- 배경 -->
-  <rect width="32" height="32" rx="6" fill="#6D6AFE"/>
+  <rect width="32" height="32" rx="6" fill="#F59E0B"/>
   
   <!-- 북마크 리본 아이콘 -->
   <path d="M10 6 L22 6 Q23 6 23 7 L23 26 L16 21 L9 26 L9 7 Q9 6 10 6 Z" fill="white"/>
   
   <!-- 내부 디테일 -->
-  <circle cx="16" cy="13" r="2" fill="#6D6AFE"/>
+  <circle cx="16" cy="13" r="2" fill="#F59E0B"/>
 </svg>

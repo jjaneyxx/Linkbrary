@@ -25,8 +25,9 @@ const checkEmailAvailability = async () => {
 useEffect(() => {
     if(!email || !isEmailValid(email)) return; 
 
-    // set new timer : 500 초 이후 함수 호출
+    // set new timer : 500ms 이후 함수 호출
     debounceTimerRef.current = setTimeout(() => {
+        // 이메일 중복 검사 API 호출
         checkEmailAvailability(); 
     }, 500)
 

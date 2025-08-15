@@ -27,8 +27,6 @@ export const useFolderStore = create<FolderState>()(
         }
       },
     }),
-    {
-      name: 'folder-store',
-    },
+    { name: 'folder-store' },
   ),
 );

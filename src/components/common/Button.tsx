@@ -34,7 +34,7 @@ const Button = ({
         // modal 
         modalMode === 'delete' 
         ? 'bg-red' 
-        : 'bg-gradient-to-r from-[#6D6AFE] to-[#6AE3FE]',
+        : 'bg-gradient-to-r from-[#F59E0B] to-[#6AE3FE]',
       )}
       onClick={onClick}
     >
