@@ -10,7 +10,7 @@ const Landing: React.FC = () => {
   const { handleLogin } = useAuth();
   return (
     <div>
-      <section className="bg-gray-100 text-center">
+      <section className="bg-yellow text-center">
         <div className="flex flex-col text-[64px] leading-tight font-bold">
           <span className="mt-[70px] bg-gradient-to-r from-[#F59E0B] to-[#FF9F9F] bg-[length:75%] bg-clip-text text-transparent">
             세상의 모든 정보<span className="text-black">를</span>

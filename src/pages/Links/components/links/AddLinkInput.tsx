@@ -68,7 +68,7 @@ const AddLinkInput = () => {
     openModal('폴더에 추가', '추가하기', handlePostLink, 'addLink', linkInput);
   };
   return (
-    <form onSubmit={handleAddLink} className="bg-gray-100 lg:px-80 lg:pt-15 lg:pb-22.5">
+    <form onSubmit={handleAddLink} className="bg-[#FFF7E6] lg:px-80 lg:pt-15 lg:pb-22.5">
       <div className="border-primary flex justify-between rounded-2xl border bg-white px-5 py-4">
         <div className="flex w-full items-center">
           <img src={addLinkIcon} alt="add link icon" className="mr-3 w-5" />
