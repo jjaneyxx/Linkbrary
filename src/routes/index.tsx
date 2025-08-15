@@ -8,14 +8,18 @@ import { Privacy } from '@pages/Landing/Privacy';
 import LinkPage from '@pages/Links/LinkPage';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import AuthLayout from '@components/layout/AuthLayout';
+import LandingLayout from '@components/layout/LandingLayout';
 
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <AuthContextProvider>
         <Routes>
-          <Route element={<MainLayout />}>
+          <Route element={<LandingLayout />} >
             <Route path="/" element={<Landing />}></Route>
+          </Route>
+
+          <Route element={<MainLayout />}>
             <Route path="/links" element={<LinkPage />}></Route>
             <Route path="/privacy" element={<Privacy />}></Route>
             <Route path="/faq" element={<Faq />}></Route>
