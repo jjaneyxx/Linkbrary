@@ -45,6 +45,11 @@ const Card = ({ link, onClick }: CardProps) => {
         <img
           src={link.imageSource || fallBackImage}
           alt={link.title}
+          fetchPriority='high' // LCP 이미지에 우선 순위 
+          loading='eager' // 지연 로딩 방지
+          decoding='async' // 이미지 디코딩 비동기 처리
+          width={386} // 화면 상 카드 크기
+          height={200}
           className="max-h-[200px] w-full rounded-t-[15px] object-cover"
         />
         <div>{link.favorite}</div>
